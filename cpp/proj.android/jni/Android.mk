@@ -20,7 +20,11 @@ LOCAL_LDLIBS := -landroid \
 -llog
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 LOCAL_WHOLE_STATIC_LIBRARIES := PluginSdkboxAds \
-sdkbox
+sdkbox \
+PluginAdColony \
+PluginFyber \
+PluginChartboost \
+PluginVungle
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
@@ -37,6 +41,10 @@ $(call import-add-path, $(LOCAL_PATH))
 $(call import-module,./prebuilt-mk)
 $(call import-module, ./sdkbox)
 $(call import-module, ./pluginsdkboxads)
+$(call import-module, ./pluginadcolony)
+$(call import-module, ./pluginfyber)
+$(call import-module, ./pluginchartboost)
+$(call import-module, ./pluginvungle)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
