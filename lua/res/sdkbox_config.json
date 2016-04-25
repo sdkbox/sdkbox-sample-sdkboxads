@@ -3,6 +3,9 @@
         "GoogleAnalytics": {
             "trackingCode": "UA-17485141-7"
         }, 
+        "Facebook": {
+            "debug": true
+        }, 
         "LeadBolt": {
             "api_key": "is2byYEVjbXiFjVjaYIt6sM4aEIqMWZ3", 
             "ads": {
@@ -63,23 +66,6 @@
         "Youtube": {
             "debug": true, 
             "developer_key": "AIzaSyDMuDjrVSL3uj_QvlI3bbjKn5I4nNB1XZk"
-        }, 
-        "InMobi": {
-            "version": 1, 
-            "account_id": "922cc696d9fa475097651b5cad78567d", 
-            "ads": {
-                "ad2": {
-                    "type": "interstitial", 
-                    "id": "1449919424310"
-                }, 
-                "ad1": {
-                    "width": 300, 
-                    "type": "banner", 
-                    "id": "1447081423897", 
-                    "alignment": "top", 
-                    "height": 50
-                }
-            }
         }, 
         "AdColony": {
             "debug": true, 
@@ -151,11 +137,27 @@
         }, 
         "Fyber": {
             "debug": true, 
+            "toast": true, 
             "token": "48e8452e9f008fe6d2ef61d742ce6c06", 
-            "id": "35669"
+            "id": "35669", 
+            "appid": "35669"
         }, 
-        "Facebook": {
-            "debug": true
+        "InMobi": {
+            "version": 1, 
+            "account_id": "922cc696d9fa475097651b5cad78567d", 
+            "ads": {
+                "ad2": {
+                    "type": "interstitial", 
+                    "id": "1449919424310"
+                }, 
+                "ad1": {
+                    "width": 300, 
+                    "type": "banner", 
+                    "id": "1447081423897", 
+                    "alignment": "top", 
+                    "height": 50
+                }
+            }
         }, 
         "Appodeal": {
             "app_key": "7acb75c06e543c3c49452f4acb0711377d77b63993cbad49"
@@ -179,6 +181,12 @@
             }
         }, 
         "Chartboost": {
+            "id": "4f7b433509b6025804000002", 
+            "cache": {
+                "Default": true, 
+                "Level Complete": true, 
+                "__ADS__": true
+            }, 
             "ads": {
                 "Default": {
                     "type": "interstitial"
@@ -190,12 +198,6 @@
                     "type": "more_app"
                 }
             }, 
-            "cache": {
-                "Default": true, 
-                "Level Complete": true, 
-                "__ADS__": true
-            }, 
-            "id": "4f7b433509b6025804000002", 
             "signature": "dd2d41b69ac01b80f443f5b6cf06096d457f82bd"
         }, 
         "iap": {
@@ -309,6 +311,8 @@
             }
         }, 
         "Fyber": {
+            "debug": true, 
+            "toast": true, 
             "token": "34a9643edf4d3052d2bc1928b2e34d8d", 
             "appid": "35561"
         }, 
@@ -337,6 +341,7 @@
             "key": "FE74A9C4-1288-4F6F-8D6E-C365699F2C72"
         }, 
         "Vungle": {
+            "debug": true, 
             "id": "5535dc14a104ddf07600001c", 
             "ads": {
                 "reward": {
@@ -351,6 +356,7 @@
             }
         }, 
         "Chartboost": {
+            "id": "4f21c409cd1cb2fb7000001b", 
             "ads": {
                 "Default": {
                     "type": "interstitial"
@@ -362,7 +368,6 @@
                     "type": "more_app"
                 }
             }, 
-            "id": "4f21c409cd1cb2fb7000001b", 
             "signature": "92e2de2fd7070327bdeb54c15a5295309c6fcd2d"
         }, 
         "AdColony": {

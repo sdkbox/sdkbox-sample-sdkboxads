@@ -31,22 +31,29 @@ var HelloWorldLayer = cc.Layer.extend({
     },
 
     createTestMenu:function() {
+        sdkbox.PluginSdkboxAds.init();
+        sdkbox.PluginSdkboxAds.setListener({
+            onAdAction : function(ad_unit_id, zone_location_place_you_name_it, action_type) {
+                cc.log("onAdAction, ad_unit_id: " + String(ad_unit_id) + ", zone_location_place_you_name_it: " + String(zone_location_place_you_name_it) + ", action_type: " + String(action_type));
+            },
+            onRewardAction : function(ad_unit_id, zone_id, reward_amount, reward_succeed) {
+                cc.log("onRewardAction, ad_unit_id: " + String(ad_unit_id) + ", zone_id: " + String(zone_id) + ", reward_amount: " + String(reward_amount) + ", reward_succeed: " + String(reward_succeed));
+            }
+        });
+
         var menu = new cc.Menu();
 
-        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("Test Item 1", "sans", 28), function() {
-            cc.log("Test Item 1");
+        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("play placement 1", "sans", 28), function() {
+            cc.log("play placement 1");
+            sdkbox.PluginSdkboxAds.placement("placement-1")
         });
         menu.addChild(item1);
 
-        var item2 = new cc.MenuItemLabel(new cc.LabelTTF("Test Item 2", "sans", 28), function() {
-            cc.log("Test Item 2");
+        var item2 = new cc.MenuItemLabel(new cc.LabelTTF("play placement 2", "sans", 28), function() {
+            cc.log("play placement 2");
+            sdkbox.PluginSdkboxAds.placement("placement-2")
         });
         menu.addChild(item2);
-
-        var item3 = new cc.MenuItemLabel(new cc.LabelTTF("Test Item 3", "sans", 28), function() {
-            cc.log("Test Item 3");
-        });
-        menu.addChild(item3);
 
         var winsize = cc.winSize;
         menu.x = winsize.width / 2;

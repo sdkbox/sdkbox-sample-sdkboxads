@@ -12,6 +12,14 @@
 #include "js_module_register.h"
 #endif
 #ifdef SDKBOX_ENABLED
+#include "PluginChartboostJS.hpp"
+#include "PluginChartboostJSHelper.h"
+#endif
+#ifdef SDKBOX_ENABLED
+#include "PluginFyberJS.hpp"
+#include "PluginFyberJSHelper.h"
+#endif
+#ifdef SDKBOX_ENABLED
 #include "PluginSdkboxAdsJS.hpp"
 #include "PluginSdkboxAdsJSHelper.h"
 #endif
@@ -74,6 +82,14 @@ bool AppDelegate::applicationDidFinishLaunching()
 #else
     js_module_register();
     ScriptingCore* sc = ScriptingCore::getInstance();
+#ifdef SDKBOX_ENABLED
+    sc->addRegisterCallback(register_all_PluginChartboostJS);
+    sc->addRegisterCallback(register_all_PluginChartboostJS_helper);
+#endif
+#ifdef SDKBOX_ENABLED
+    sc->addRegisterCallback(register_all_PluginFyberJS);
+    sc->addRegisterCallback(register_all_PluginFyberJS_helper);
+#endif
 #ifdef SDKBOX_ENABLED
     sc->addRegisterCallback(register_all_PluginSdkboxAdsJS);
     sc->addRegisterCallback(register_all_PluginSdkboxAdsJS_helper);

@@ -18,14 +18,29 @@ hellojavascript/main.cpp \
 ../../Classes/PluginSdkboxAdsJSHelper.cpp \
 ../../Classes/PluginSdkboxAdsJSHelper.h \
 ../../Classes/SDKBoxJSHelper.cpp \
-../../Classes/SDKBoxJSHelper.h
+../../Classes/SDKBoxJSHelper.h \
+../../Classes/PluginFyberJS.cpp \
+../../Classes/PluginFyberJS.hpp \
+../../Classes/PluginFyberJSHelper.cpp \
+../../Classes/PluginFyberJSHelper.h \
+../../Classes/PluginChartboostJS.cpp \
+../../Classes/PluginChartboostJS.hpp \
+../../Classes/PluginChartboostJSHelper.cpp \
+../../Classes/PluginChartboostJSHelper.h \
+../../Classes/PluginVungleJS.cpp \
+../../Classes/PluginVungleJS.hpp \
+../../Classes/PluginVungleJSHelper.cpp \
+../../Classes/PluginVungleJSHelper.h
 
 LOCAL_CPPFLAGS := -DSDKBOX_ENABLED
 LOCAL_LDLIBS := -landroid \
 -llog
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 LOCAL_WHOLE_STATIC_LIBRARIES := PluginSdkboxAds \
-sdkbox
+sdkbox \
+PluginFyber \
+PluginChartboost \
+PluginVungle
 
 LOCAL_STATIC_LIBRARIES := cocos2d_js_static
 LOCAL_STATIC_LIBRARIES += cocos2d_simulator_static
@@ -38,3 +53,6 @@ $(call import-module,scripting/js-bindings/proj.android/prebuilt-mk)
 $(call import-module,tools/simulator/libsimulator/proj.android/prebuilt-mk)
 $(call import-module, ./sdkbox)
 $(call import-module, ./pluginsdkboxads)
+$(call import-module, ./pluginfyber)
+$(call import-module, ./pluginchartboost)
+$(call import-module, ./pluginvungle)

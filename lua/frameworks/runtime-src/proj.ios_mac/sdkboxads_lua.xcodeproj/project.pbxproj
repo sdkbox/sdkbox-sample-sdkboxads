@@ -9,10 +9,14 @@
 /* Begin PBXBuildFile section */
 		01FE48CE987C1505B95E4744 /* libsimulator iOS.a */ = {isa = PBXBuildFile; fileRef = C39F4EA6B9087FA84FAC007D /* libsimulator iOS.a */; };
 		111246409DEA17F15554AAFD /* PluginSdkboxAdsLua.cpp */ = {isa = PBXBuildFile; fileRef = 91EB4F73AA2A822F3E9C94CF /* PluginSdkboxAdsLua.cpp */; };
+		12854C0CBA62D7054AA081D7 /* PluginChartboost.framework */ = {isa = PBXBuildFile; fileRef = 35EB481E87EFB33AF256CFA1 /* PluginChartboost.framework */; };
 		15A8A4491834C64F00142BE0 /* Icon-114.png */ = {isa = PBXBuildFile; fileRef = 5023810C17EBBCAC00990C9B /* Icon-114.png */; };
 		1AF4C403178663F200122817 /* libz.dylib */ = {isa = PBXBuildFile; fileRef = 1AF4C402178663F200122817 /* libz.dylib */; };
+		2CF544F9A866F0DDAAEEE12C /* PluginFyberLuaHelper.cpp */ = {isa = PBXBuildFile; fileRef = 2F2E4D9C965F5BA0FF7C7E71 /* PluginFyberLuaHelper.cpp */; };
+		373043FE9C4D30E8B1B3FAAE /* PluginChartboostLuaHelper.cpp */ = {isa = PBXBuildFile; fileRef = 81FB4251917F57D5C4B696FD /* PluginChartboostLuaHelper.cpp */; };
 		39A9417982823B21687F9BBD /* GameController.framework */ = {isa = PBXBuildFile; fileRef = 0D2D40D7B87EDD725C7ADDC8 /* GameController.framework */; };
 		3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework */ = {isa = PBXBuildFile; fileRef = 3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */; };
+		41864F26ADAC697619D78DD3 /* PluginChartboostLua.cpp */ = {isa = PBXBuildFile; fileRef = 5CF54A188D6FC18E93BE0DF7 /* PluginChartboostLua.cpp */; };
 		44F04DA286A5DF17F3940ACE /* libluacocos2d iOS.a */ = {isa = PBXBuildFile; fileRef = 74504302983F5C5C58C8380A /* libluacocos2d iOS.a */; };
 		5023811817EBBCAC00990C9B /* AppController.mm */ = {isa = PBXBuildFile; fileRef = 5023810817EBBCAC00990C9B /* AppController.mm */; };
 		5023811917EBBCAC00990C9B /* Default-568h@2x.png */ = {isa = PBXBuildFile; fileRef = 5023810917EBBCAC00990C9B /* Default-568h@2x.png */; };
@@ -37,24 +41,33 @@
 		5200BECA1A53D9A500AC45E4 /* Security.framework */ = {isa = PBXBuildFile; fileRef = 5200BEC91A53D9A500AC45E4 /* Security.framework */; };
 		521A8E7019F0C3D200D177D7 /* Default-667h@2x.png */ = {isa = PBXBuildFile; fileRef = 521A8E6E19F0C3D200D177D7 /* Default-667h@2x.png */; };
 		521A8E7119F0C3D200D177D7 /* Default-736h@3x.png */ = {isa = PBXBuildFile; fileRef = 521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */; };
+		536545ACA7FE551269BB34F5 /* CoreTelephony.framework */ = {isa = PBXBuildFile; fileRef = 196246D198E8CFE5C42BEC2F /* CoreTelephony.framework */; };
 		5CF44AA38A00C9F59E39D879 /* libcocos2d iOS.a */ = {isa = PBXBuildFile; fileRef = 55AA4481BDB4DD681262F849 /* libcocos2d iOS.a */; };
+		6E824B1AAC4114A2B93B06F0 /* PluginVungleLuaHelper.cpp */ = {isa = PBXBuildFile; fileRef = 5BEF4A5DADC753DA81AB6C65 /* PluginVungleLuaHelper.cpp */; };
 		71CB4BE0BBD0D927B9E86C2F /* AdSupport.framework */ = {isa = PBXBuildFile; fileRef = F7EA43639DB3A072C99CB6F3 /* AdSupport.framework */; };
 		732D4BE0B15760CBE249070B /* StoreKit.framework */ = {isa = PBXBuildFile; fileRef = E6EF463C8ED98EB9A3FFC2C1 /* StoreKit.framework */; };
+		79424BAC9B854715E3ACBEBF /* PluginFyberLua.cpp */ = {isa = PBXBuildFile; fileRef = 17E04356A2A4A355C6BC6ABE /* PluginFyberLua.cpp */; };
 		7EA64DD2AA55601756785B17 /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = 393E4D23B45E3D70581B6C90 /* WebKit.framework */; };
 		84DD451DA15AD4C150B119C2 /* SDKBoxLuaHelper.cpp */ = {isa = PBXBuildFile; fileRef = 257145AFA54A499146A82348 /* SDKBoxLuaHelper.cpp */; };
 		9FA3AE4E1BE9BCC900FC9645 /* CFNetwork.framework */ = {isa = PBXBuildFile; fileRef = 9FA3AE4D1BE9BCC900FC9645 /* CFNetwork.framework */; };
 		9FC760451A677A4A00D1E6E7 /* SimpleConfigParser.cpp */ = {isa = PBXBuildFile; fileRef = 9FC760411A67791200D1E6E7 /* SimpleConfigParser.cpp */; };
 		9FFE009F1ACCF59E00D6E35A /* lua_debugger.c */ = {isa = PBXBuildFile; fileRef = 9FFE009B1ACCF59E00D6E35A /* lua_debugger.c */; };
 		9FFE00A11ACCF59E00D6E35A /* RuntimeLuaImpl.cpp */ = {isa = PBXBuildFile; fileRef = 9FFE009D1ACCF59E00D6E35A /* RuntimeLuaImpl.cpp */; };
+		A2F24A4EA305CF46EAF22E21 /* Chartboost.framework */ = {isa = PBXBuildFile; fileRef = C5F042D2839794451E469A5A /* Chartboost.framework */; };
 		A6644565B786BDEBFDEC56A2 /* SystemConfiguration.framework */ = {isa = PBXBuildFile; fileRef = AEA44E4FBB9611E03B8B5EC2 /* SystemConfiguration.framework */; };
+		B2834C199055735462C70092 /* PluginVungle.framework */ = {isa = PBXBuildFile; fileRef = 2B8549BF8FBD5F830DD32B98 /* PluginVungle.framework */; };
 		BC31411CABFDFA6BB990FCA3 /* sdkbox.framework */ = {isa = PBXBuildFile; fileRef = 52F949928857DD8FEBFF0E14 /* sdkbox.framework */; };
 		C03781B918BF655400FE4F13 /* res */ = {isa = PBXBuildFile; fileRef = C03781B718BF655400FE4F13 /* res */; };
 		C03781BB18BF655400FE4F13 /* src */ = {isa = PBXBuildFile; fileRef = C03781B818BF655400FE4F13 /* src */; };
 		C05D1C121923449100B808A4 /* config.json */ = {isa = PBXBuildFile; fileRef = C05D1C111923449100B808A4 /* config.json */; };
 		C063418C8BA55458F43D7108 /* CoreMedia.framework */ = {isa = PBXBuildFile; fileRef = F9B042528E9CE3BBC0AEED21 /* CoreMedia.framework */; };
+		CE4E4553AAA1C2C7EE514EA5 /* PluginFyber.framework */ = {isa = PBXBuildFile; fileRef = 6BD64678827B1F681CDE6F37 /* PluginFyber.framework */; };
 		D6B061351803AC000077942B /* CoreMotion.framework */ = {isa = PBXBuildFile; fileRef = D6B061341803AC000077942B /* CoreMotion.framework */; };
 		DAD743C1AE8B84C1ADF7C301 /* libsqlite3.dylib */ = {isa = PBXBuildFile; fileRef = 9BE240CCB585556BED2C8E99 /* libsqlite3.dylib */; };
 		DB8D4CD0AF4C696C3567DC33 /* PluginSdkboxAdsLuaHelper.cpp */ = {isa = PBXBuildFile; fileRef = 477348D3A218789A15B1BCE9 /* PluginSdkboxAdsLuaHelper.cpp */; };
+		E27746AF8B249B2BBB04E631 /* PluginVungleLua.cpp */ = {isa = PBXBuildFile; fileRef = 28EF457CBCE13639AD5F2E03 /* PluginVungleLua.cpp */; };
+		E5B44054B47388F5B1E53A30 /* VungleSDK.framework */ = {isa = PBXBuildFile; fileRef = 2185439D840B2D388F9DC863 /* VungleSDK.framework */; };
+		E5E74D49B5C0301D98D65D79 /* CoreLocation.framework */ = {isa = PBXBuildFile; fileRef = A7824512B7B58F79083DD206 /* CoreLocation.framework */; };
 		ED545A891B68A23E00C3958E /* libiconv.dylib */ = {isa = PBXBuildFile; fileRef = ED545A881B68A23E00C3958E /* libiconv.dylib */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -68,15 +81,26 @@
 
 /* Begin PBXFileReference section */
 		0D2D40D7B87EDD725C7ADDC8 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
+		0E334551A2408C0C13C180D6 /* PluginFyberLua.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginFyberLua.hpp; path = ../Classes/PluginFyberLua.hpp; sourceTree = SOURCE_ROOT; };
 		15427CE2198F237300DC375D /* lua_module_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_module_register.h; path = ../Classes/lua_module_register.h; sourceTree = "<group>"; };
 		15A8A4871834C90E00142BE0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2d-x/cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		17E04356A2A4A355C6BC6ABE /* PluginFyberLua.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginFyberLua.cpp; path = ../Classes/PluginFyberLua.cpp; sourceTree = SOURCE_ROOT; };
+		196246D198E8CFE5C42BEC2F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
 		1AF4C402178663F200122817 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		1B9148BAB879FD8348B136F9 /* PluginSdkboxAdsLua.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginSdkboxAdsLua.hpp; path = ../Classes/PluginSdkboxAdsLua.hpp; sourceTree = SOURCE_ROOT; };
+		2185439D840B2D388F9DC863 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VungleSDK.framework; path = VungleSDK.framework; sourceTree = SOURCE_ROOT; };
 		257145AFA54A499146A82348 /* SDKBoxLuaHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SDKBoxLuaHelper.cpp; path = ../Classes/SDKBoxLuaHelper.cpp; sourceTree = SOURCE_ROOT; };
+		28EF457CBCE13639AD5F2E03 /* PluginVungleLua.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginVungleLua.cpp; path = ../Classes/PluginVungleLua.cpp; sourceTree = SOURCE_ROOT; };
+		2B8549BF8FBD5F830DD32B98 /* PluginVungle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginVungle.framework; path = PluginVungle.framework; sourceTree = SOURCE_ROOT; };
+		2F2E4D9C965F5BA0FF7C7E71 /* PluginFyberLuaHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginFyberLuaHelper.cpp; path = ../Classes/PluginFyberLuaHelper.cpp; sourceTree = SOURCE_ROOT; };
+		339A429E99434A5A2D56A56E /* PluginFyberLuaHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginFyberLuaHelper.h; path = ../Classes/PluginFyberLuaHelper.h; sourceTree = SOURCE_ROOT; };
+		35EB481E87EFB33AF256CFA1 /* PluginChartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginChartboost.framework; path = PluginChartboost.framework; sourceTree = SOURCE_ROOT; };
 		393E4D23B45E3D70581B6C90 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/WebKit.framework; sourceTree = DEVELOPER_DIR; };
 		3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
+		42524E5A8A35A87A4D504304 /* PluginVungleLua.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginVungleLua.hpp; path = ../Classes/PluginVungleLua.hpp; sourceTree = SOURCE_ROOT; };
 		477348D3A218789A15B1BCE9 /* PluginSdkboxAdsLuaHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginSdkboxAdsLuaHelper.cpp; path = ../Classes/PluginSdkboxAdsLuaHelper.cpp; sourceTree = SOURCE_ROOT; };
+		485947BCB9DE54F99F1965FE /* PluginChartboostLua.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginChartboostLua.hpp; path = ../Classes/PluginChartboostLua.hpp; sourceTree = SOURCE_ROOT; };
 		5023810717EBBCAC00990C9B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5023810817EBBCAC00990C9B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		5023810917EBBCAC00990C9B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -110,8 +134,12 @@
 		521A8E6F19F0C3D200D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		52F949928857DD8FEBFF0E14 /* sdkbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = sdkbox.framework; path = sdkbox.framework; sourceTree = SOURCE_ROOT; };
 		55AA4481BDB4DD681262F849 /* libcocos2d iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d iOS.a"; path = "$(SRCROOT)/../../../../../sdkbox-cocos2d-x-binary/prebuilt/ios/libcocos2d iOS.a"; sourceTree = "<absolute>"; };
+		5BEF4A5DADC753DA81AB6C65 /* PluginVungleLuaHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginVungleLuaHelper.cpp; path = ../Classes/PluginVungleLuaHelper.cpp; sourceTree = SOURCE_ROOT; };
+		5CF54A188D6FC18E93BE0DF7 /* PluginChartboostLua.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginChartboostLua.cpp; path = ../Classes/PluginChartboostLua.cpp; sourceTree = SOURCE_ROOT; };
+		6BD64678827B1F681CDE6F37 /* PluginFyber.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginFyber.framework; path = PluginFyber.framework; sourceTree = SOURCE_ROOT; };
 		74504302983F5C5C58C8380A /* libluacocos2d iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libluacocos2d iOS.a"; path = "$(SRCROOT)/../../../../../sdkbox-cocos2d-x-binary/prebuilt/ios/libluacocos2d iOS.a"; sourceTree = "<absolute>"; };
 		7B2E4D3BA22090929FCCDD98 /* PluginSdkboxAdsLuaHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginSdkboxAdsLuaHelper.h; path = ../Classes/PluginSdkboxAdsLuaHelper.h; sourceTree = SOURCE_ROOT; };
+		81FB4251917F57D5C4B696FD /* PluginChartboostLuaHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginChartboostLuaHelper.cpp; path = ../Classes/PluginChartboostLuaHelper.cpp; sourceTree = SOURCE_ROOT; };
 		91EB4F73AA2A822F3E9C94CF /* PluginSdkboxAdsLua.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginSdkboxAdsLua.cpp; path = ../Classes/PluginSdkboxAdsLua.cpp; sourceTree = SOURCE_ROOT; };
 		9BE240CCB585556BED2C8E99 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		9FA3AE4D1BE9BCC900FC9645 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
@@ -123,11 +151,15 @@
 		9FFE009C1ACCF59E00D6E35A /* lua_debugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_debugger.h; sourceTree = "<group>"; };
 		9FFE009D1ACCF59E00D6E35A /* RuntimeLuaImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeLuaImpl.cpp; sourceTree = "<group>"; };
 		9FFE009E1ACCF59E00D6E35A /* RuntimeLuaImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeLuaImpl.h; sourceTree = "<group>"; };
+		A7824512B7B58F79083DD206 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
 		AEA44E4FBB9611E03B8B5EC2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		C03781B718BF655400FE4F13 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../../res; sourceTree = "<group>"; };
 		C03781B818BF655400FE4F13 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../../src; sourceTree = "<group>"; };
 		C05D1C111923449100B808A4 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = config.json; path = ../../../config.json; sourceTree = "<group>"; };
 		C39F4EA6B9087FA84FAC007D /* libsimulator iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsimulator iOS.a"; path = "$(SRCROOT)/../../../../../sdkbox-cocos2d-x-binary/prebuilt/ios/libsimulator iOS.a"; sourceTree = "<absolute>"; };
+		C5F042D2839794451E469A5A /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chartboost.framework; path = Chartboost.framework; sourceTree = SOURCE_ROOT; };
+		CF824EFFAA894C7E44FC4DED /* PluginChartboostLuaHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginChartboostLuaHelper.h; path = ../Classes/PluginChartboostLuaHelper.h; sourceTree = SOURCE_ROOT; };
+		D52D4453817A9FA37A9A0838 /* PluginVungleLuaHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginVungleLuaHelper.h; path = ../Classes/PluginVungleLuaHelper.h; sourceTree = SOURCE_ROOT; };
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		DA9E7D871AB1ABCC004B27C8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		E6EF463C8ED98EB9A3FFC2C1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -181,6 +213,13 @@
 				A6644565B786BDEBFDEC56A2 /* SystemConfiguration.framework */,
 				7EA64DD2AA55601756785B17 /* WebKit.framework */,
 				39A9417982823B21687F9BBD /* GameController.framework */,
+				CE4E4553AAA1C2C7EE514EA5 /* PluginFyber.framework */,
+				E5E74D49B5C0301D98D65D79 /* CoreLocation.framework */,
+				536545ACA7FE551269BB34F5 /* CoreTelephony.framework */,
+				12854C0CBA62D7054AA081D7 /* PluginChartboost.framework */,
+				A2F24A4EA305CF46EAF22E21 /* Chartboost.framework */,
+				B2834C199055735462C70092 /* PluginVungle.framework */,
+				E5B44054B47388F5B1E53A30 /* VungleSDK.framework */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +347,13 @@
 				AEA44E4FBB9611E03B8B5EC2 /* SystemConfiguration.framework */,
 				393E4D23B45E3D70581B6C90 /* WebKit.framework */,
 				0D2D40D7B87EDD725C7ADDC8 /* GameController.framework */,
+				6BD64678827B1F681CDE6F37 /* PluginFyber.framework */,
+				A7824512B7B58F79083DD206 /* CoreLocation.framework */,
+				196246D198E8CFE5C42BEC2F /* CoreTelephony.framework */,
+				35EB481E87EFB33AF256CFA1 /* PluginChartboost.framework */,
+				C5F042D2839794451E469A5A /* Chartboost.framework */,
+				2B8549BF8FBD5F830DD32B98 /* PluginVungle.framework */,
+				2185439D840B2D388F9DC863 /* VungleSDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -325,6 +371,18 @@
 				7B2E4D3BA22090929FCCDD98 /* PluginSdkboxAdsLuaHelper.h */,
 				EE7E44489A879B046AA26D39 /* SDKBoxLuaHelper.h */,
 				257145AFA54A499146A82348 /* SDKBoxLuaHelper.cpp */,
+				0E334551A2408C0C13C180D6 /* PluginFyberLua.hpp */,
+				17E04356A2A4A355C6BC6ABE /* PluginFyberLua.cpp */,
+				2F2E4D9C965F5BA0FF7C7E71 /* PluginFyberLuaHelper.cpp */,
+				339A429E99434A5A2D56A56E /* PluginFyberLuaHelper.h */,
+				485947BCB9DE54F99F1965FE /* PluginChartboostLua.hpp */,
+				5CF54A188D6FC18E93BE0DF7 /* PluginChartboostLua.cpp */,
+				81FB4251917F57D5C4B696FD /* PluginChartboostLuaHelper.cpp */,
+				CF824EFFAA894C7E44FC4DED /* PluginChartboostLuaHelper.h */,
+				42524E5A8A35A87A4D504304 /* PluginVungleLua.hpp */,
+				28EF457CBCE13639AD5F2E03 /* PluginVungleLua.cpp */,
+				5BEF4A5DADC753DA81AB6C65 /* PluginVungleLuaHelper.cpp */,
+				D52D4453817A9FA37A9A0838 /* PluginVungleLuaHelper.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -369,7 +427,7 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 			};
-			buildConfigurationList = F293B3C215EB7BE500256477 /* Build configuration list for PBXProject "Unity-iPhone" */;
+			buildConfigurationList = F293B3C215EB7BE500256477 /* Build configuration list for PBXNativeTarget "TARGET_NAME" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -450,6 +508,12 @@
 				111246409DEA17F15554AAFD /* PluginSdkboxAdsLua.cpp */,
 				DB8D4CD0AF4C696C3567DC33 /* PluginSdkboxAdsLuaHelper.cpp */,
 				84DD451DA15AD4C150B119C2 /* SDKBoxLuaHelper.cpp */,
+				79424BAC9B854715E3ACBEBF /* PluginFyberLua.cpp */,
+				2CF544F9A866F0DDAAEEE12C /* PluginFyberLuaHelper.cpp */,
+				41864F26ADAC697619D78DD3 /* PluginChartboostLua.cpp */,
+				373043FE9C4D30E8B1B3FAAE /* PluginChartboostLuaHelper.cpp */,
+				E27746AF8B249B2BBB04E631 /* PluginVungleLua.cpp */,
+				6E824B1AAC4114A2B93B06F0 /* PluginVungleLuaHelper.cpp */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +600,11 @@
 					"$(SRCROOT)/../../../../../sdkbox-cocos2d-x-binary/prebuilt/ios",
 					"\"sdkbox.framework\"",
 					"\"PluginSdkboxAds.framework\"",
+					"\"PluginFyber.framework\"",
+					"\"PluginChartboost.framework\"",
+					"\"Chartboost.framework\"",
+					"\"PluginVungle.framework\"",
+					"\"VungleSDK.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
@@ -588,6 +657,11 @@
 					"$(SRCROOT)/../../../../../sdkbox-cocos2d-x-binary/prebuilt/ios",
 					"\"sdkbox.framework\"",
 					"\"PluginSdkboxAds.framework\"",
+					"\"PluginFyber.framework\"",
+					"\"PluginChartboost.framework\"",
+					"\"Chartboost.framework\"",
+					"\"PluginVungle.framework\"",
+					"\"VungleSDK.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
@@ -616,7 +690,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F293B3C215EB7BE500256477 /* Build configuration list for PBXProject "Unity-iPhone" */ = {
+		F293B3C215EB7BE500256477 /* Build configuration list for PBXNativeTarget "TARGET_NAME" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F293B6C215EB7BEA00256477 /* Debug */,

@@ -17,14 +17,29 @@ hellolua/main.cpp \
 ../../Classes/PluginSdkboxAdsLuaHelper.cpp \
 ../../Classes/PluginSdkboxAdsLuaHelper.h \
 ../../Classes/SDKBoxLuaHelper.h \
-../../Classes/SDKBoxLuaHelper.cpp
+../../Classes/SDKBoxLuaHelper.cpp \
+../../Classes/PluginFyberLua.hpp \
+../../Classes/PluginFyberLua.cpp \
+../../Classes/PluginFyberLuaHelper.cpp \
+../../Classes/PluginFyberLuaHelper.h \
+../../Classes/PluginChartboostLua.cpp \
+../../Classes/PluginChartboostLua.hpp \
+../../Classes/PluginChartboostLuaHelper.cpp \
+../../Classes/PluginChartboostLuaHelper.h \
+../../Classes/PluginVungleLua.hpp \
+../../Classes/PluginVungleLua.cpp \
+../../Classes/PluginVungleLuaHelper.cpp \
+../../Classes/PluginVungleLuaHelper.h
 
 LOCAL_CPPFLAGS := -DSDKBOX_ENABLED
 LOCAL_LDLIBS := -landroid \
 -llog
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 LOCAL_WHOLE_STATIC_LIBRARIES := PluginSdkboxAds \
-sdkbox
+sdkbox \
+PluginFyber \
+PluginChartboost \
+PluginVungle
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
@@ -42,6 +57,9 @@ $(call import-module,scripting/lua-bindings/proj.android/prebuilt-mk)
 $(call import-module,tools/simulator/libsimulator/proj.android/prebuilt-mk)
 $(call import-module, ./sdkbox)
 $(call import-module, ./pluginsdkboxads)
+$(call import-module, ./pluginfyber)
+$(call import-module, ./pluginchartboost)
+$(call import-module, ./pluginvungle)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
