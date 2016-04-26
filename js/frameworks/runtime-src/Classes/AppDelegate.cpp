@@ -12,6 +12,10 @@
 #include "js_module_register.h"
 #endif
 #ifdef SDKBOX_ENABLED
+#include "PluginAdColonyJS.hpp"
+#include "PluginAdColonyJSHelper.h"
+#endif
+#ifdef SDKBOX_ENABLED
 #include "PluginChartboostJS.hpp"
 #include "PluginChartboostJSHelper.h"
 #endif
@@ -82,6 +86,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 #else
     js_module_register();
     ScriptingCore* sc = ScriptingCore::getInstance();
+#ifdef SDKBOX_ENABLED
+    sc->addRegisterCallback(register_all_PluginAdColonyJS);
+    sc->addRegisterCallback(register_all_PluginAdColonyJS_helper);
+#endif
 #ifdef SDKBOX_ENABLED
     sc->addRegisterCallback(register_all_PluginChartboostJS);
     sc->addRegisterCallback(register_all_PluginChartboostJS_helper);

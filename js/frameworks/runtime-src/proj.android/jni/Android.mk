@@ -30,7 +30,15 @@ hellojavascript/main.cpp \
 ../../Classes/PluginVungleJS.cpp \
 ../../Classes/PluginVungleJS.hpp \
 ../../Classes/PluginVungleJSHelper.cpp \
-../../Classes/PluginVungleJSHelper.h
+../../Classes/PluginVungleJSHelper.h \
+../../Classes/PluginAdColonyJS.cpp \
+../../Classes/PluginAdColonyJSHelper.cpp \
+../../Classes/PluginLeadBoltJS.cpp \
+../../Classes/PluginLeadBoltJSHelper.cpp \
+../../Classes/PluginAdMobJS.cpp \
+../../Classes/PluginAdMobJSHelper.cpp \
+../../Classes/PluginInMobiJS.cpp \
+../../Classes/PluginInMobiJSHelper.cpp
 
 LOCAL_CPPFLAGS := -DSDKBOX_ENABLED
 LOCAL_LDLIBS := -landroid \
@@ -40,7 +48,11 @@ LOCAL_WHOLE_STATIC_LIBRARIES := PluginSdkboxAds \
 sdkbox \
 PluginFyber \
 PluginChartboost \
-PluginVungle
+PluginVungle \
+PluginAdColony \
+PluginLeadBolt \
+PluginAdMob \
+PluginInMobi
 
 LOCAL_STATIC_LIBRARIES := cocos2d_js_static
 LOCAL_STATIC_LIBRARIES += cocos2d_simulator_static
@@ -56,3 +68,7 @@ $(call import-module, ./pluginsdkboxads)
 $(call import-module, ./pluginfyber)
 $(call import-module, ./pluginchartboost)
 $(call import-module, ./pluginvungle)
+$(call import-module, ./pluginadcolony)
+$(call import-module, ./pluginleadbolt)
+$(call import-module, ./pluginadmob)
+$(call import-module, ./plugininmobi)

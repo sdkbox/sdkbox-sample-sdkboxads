@@ -43,17 +43,89 @@ var HelloWorldLayer = cc.Layer.extend({
 
         var menu = new cc.Menu();
 
-        var item1 = new cc.MenuItemLabel(new cc.LabelTTF("play placement 1", "sans", 28), function() {
-            cc.log("play placement 1");
-            sdkbox.PluginSdkboxAds.placement("placement-1")
-        });
-        menu.addChild(item1);
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("play default ad", "sans", 28), function() {
+            cc.log("play default ad");
+            sdkbox.PluginSdkboxAds.playAd();
+        }));
 
-        var item2 = new cc.MenuItemLabel(new cc.LabelTTF("play placement 2", "sans", 28), function() {
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("play placement 1", "sans", 28), function() {
+            cc.log("play placement 1");
+            sdkbox.PluginSdkboxAds.placement("placement-1");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("play placement 2", "sans", 28), function() {
             cc.log("play placement 2");
-            sdkbox.PluginSdkboxAds.placement("placement-2")
-        });
-        menu.addChild(item2);
+            sdkbox.PluginSdkboxAds.placement("placement-2");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("------", "sans", 28), function() {
+        }));
+
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("AdColony Interstital", "sans", 24), function() {
+            cc.log("AdColony Interstital");
+            sdkbox.PluginSdkboxAds.playAd("AdColony", "video");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("AdColony Reward", "sans", 24), function() {
+            cc.log("AdColony Reward");
+            sdkbox.PluginSdkboxAds.playAd("AdColony", "v4vc");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Fyber Interstital", "sans", 24), function() {
+            cc.log("Fyber Interstital");
+            sdkbox.PluginSdkboxAds.playAd("Fyber", "INTERSTITIAL");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Fyber Reward", "sans", 24), function() {
+            cc.log("Fyber Reward");
+            sdkbox.PluginSdkboxAds.playAd("Fyber", "REWARDED");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Chartboost Interstital", "sans", 24), function() {
+            cc.log("Chartboost Interstital");
+            sdkbox.PluginSdkboxAds.playAd("Chartboost", "Default");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Chartboost Reward", "sans", 24), function() {
+            cc.log("Chartboost Reward");
+            sdkbox.PluginSdkboxAds.playAd("Chartboost", "Level Complete");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Vungle Interstital", "sans", 24), function() {
+            cc.log("Vungle Interstital");
+            sdkbox.PluginSdkboxAds.playAd("Vungle", "video");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Vungle Reward", "sans", 24), function() {
+            cc.log("Vungle Reward");
+            sdkbox.PluginSdkboxAds.playAd("Vungle", "reward");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Bee7 Interstital", "sans", 24), function() {
+            cc.log("Bee7 Interstital");
+            sdkbox.PluginSdkboxAds.playAd("Fyber", "any");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("AdMob Interstital", "sans", 24), function() {
+            cc.log("AdMob Interstital");
+            sdkbox.PluginSdkboxAds.playAd("AdMob", "gameover");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("InMobi Interstital", "sans", 24), function() {
+            cc.log("InMobi Interstital");
+            sdkbox.PluginSdkboxAds.playAd("InMobi", "INTERSTITIAL");
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Leadbolt Interstital load", "sans", 24), function() {
+            cc.log("Leadbolt Interstital load");
+            sdkbox.PluginSdkboxAds.cacheControl("LeadBolt", {"name": "ad1"});
+        }));
+
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Leadbolt Interstital", "sans", 24), function() {
+            cc.log("Leadbolt Interstital");
+            sdkbox.PluginSdkboxAds.playAd("LeadBolt", "ad1");
+        }));
 
         var winsize = cc.winSize;
         menu.x = winsize.width / 2;
