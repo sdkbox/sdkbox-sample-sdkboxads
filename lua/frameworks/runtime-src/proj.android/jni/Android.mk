@@ -29,7 +29,15 @@ hellolua/main.cpp \
 ../../Classes/PluginVungleLua.hpp \
 ../../Classes/PluginVungleLua.cpp \
 ../../Classes/PluginVungleLuaHelper.cpp \
-../../Classes/PluginVungleLuaHelper.h
+../../Classes/PluginVungleLuaHelper.h \
+../../Classes/PluginAdMobLua.cpp \
+../../Classes/PluginAdMobLuaHelper.cpp \
+../../Classes/PluginInMobiLua.cpp \
+../../Classes/PluginInMobiLuaHelper.cpp \
+../../Classes/PluginLeadBoltLua.cpp \
+../../Classes/PluginLeadBoltLuaHelper.cpp \
+../../Classes/PluginAdColonyLua.cpp \
+../../Classes/PluginAdcolonyLuaHelper.cpp
 
 LOCAL_CPPFLAGS := -DSDKBOX_ENABLED
 LOCAL_LDLIBS := -landroid \
@@ -39,7 +47,11 @@ LOCAL_WHOLE_STATIC_LIBRARIES := PluginSdkboxAds \
 sdkbox \
 PluginFyber \
 PluginChartboost \
-PluginVungle
+PluginVungle \
+PluginAdMob \
+PluginInMobi \
+PluginLeadBolt \
+PluginAdColony
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
@@ -60,6 +72,10 @@ $(call import-module, ./pluginsdkboxads)
 $(call import-module, ./pluginfyber)
 $(call import-module, ./pluginchartboost)
 $(call import-module, ./pluginvungle)
+$(call import-module, ./pluginadmob)
+$(call import-module, ./plugininmobi)
+$(call import-module, ./pluginleadbolt)
+$(call import-module, ./pluginadcolony)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END

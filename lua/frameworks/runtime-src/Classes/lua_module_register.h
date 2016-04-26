@@ -11,6 +11,10 @@
 #include "3d/lua_cocos2dx_3d_manual.h"
 #include "audioengine/lua_cocos2dx_audioengine_manual.h"
 #ifdef SDKBOX_ENABLED
+#include "PluginAdColonyLua.hpp"
+#include "PluginAdColonyLuaHelper.h"
+#endif
+#ifdef SDKBOX_ENABLED
 #include "PluginChartboostLua.hpp"
 #include "PluginChartboostLuaHelper.h"
 #endif
@@ -37,6 +41,10 @@ static int lua_module_register(lua_State* L)
     register_spine_module(L);
     register_cocos3d_module(L);
     register_audioengine_module(L);
+#ifdef SDKBOX_ENABLED
+    register_all_PluginAdColonyLua(L);
+    register_all_PluginAdColonyLua_helper(L);
+#endif
 #ifdef SDKBOX_ENABLED
     register_all_PluginChartboostLua(L);
     register_all_PluginChartboostLua_helper(L);
