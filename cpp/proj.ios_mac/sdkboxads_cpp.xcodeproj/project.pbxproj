@@ -10,15 +10,19 @@
 		04654B0EA6AA5FDE4893C6BA /* MessageUI.framework */ = {isa = PBXBuildFile; fileRef = 3A604213AD8BF06DA55BF8B4 /* MessageUI.framework */; };
 		11E94508A2963B2E50541227 /* res */ = {isa = PBXBuildFile; fileRef = 847C4737BB87694BD4544EE6 /* res */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DAF4BD080E714B52766F325 /* PluginInMobi.framework */ = {isa = PBXBuildFile; fileRef = 0B4F41678EBD6D04FE8BB4A9 /* PluginInMobi.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		221B4FE28C507CB2CC96C1FB /* EventKit.framework */ = {isa = PBXBuildFile; fileRef = 82C94547BF1CC0D113CF679C /* EventKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3146498DAB6297AFCB3F7992 /* PluginVungle.framework */ = {isa = PBXBuildFile; fileRef = 035B4EC0A08DE75B71E93085 /* PluginVungle.framework */; };
 		35F14FEFBBC1C8AD6C26FE8D /* MediaPlayer.framework */ = {isa = PBXBuildFile; fileRef = F3084B01B30651C1D430DBBE /* MediaPlayer.framework */; };
+		40FC4CF783C9692E08289FE7 /* SafariServices.framework */ = {isa = PBXBuildFile; fileRef = 85DF4AE9B08B150B3F30DE25 /* SafariServices.framework */; };
 		46494A8AB9A445DAE851363C /* Chartboost.framework */ = {isa = PBXBuildFile; fileRef = 324B41CEB78889FDC62D225D /* Chartboost.framework */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
+		481543D18837F128D23AD7D6 /* libsqlite3.0.tbd */ = {isa = PBXBuildFile; fileRef = 9BB74010A7DCA073F2516569 /* libsqlite3.0.tbd */; };
 		4AF24228B721699D68B0EB58 /* libcocos2d iOS.a */ = {isa = PBXBuildFile; fileRef = EC054D038170C9031CB136DE /* libcocos2d iOS.a */; };
+		4B3249CF800A39DEEBA9A6F4 /* PluginAdMob.framework */ = {isa = PBXBuildFile; fileRef = AC2442DA89AEF4E293BBA2EC /* PluginAdMob.framework */; };
 		4DB145C2ADCCC345AA08D706 /* SystemConfiguration.framework */ = {isa = PBXBuildFile; fileRef = 2AFB44A9B61EF7DA16280871 /* SystemConfiguration.framework */; };
 		503AE10017EB989F00D1A890 /* AppController.mm */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -46,11 +50,13 @@
 		608D4388A3F6CB59AE8EFDF6 /* CoreTelephony.framework */ = {isa = PBXBuildFile; fileRef = EE8544FF9A5C7DD576780D78 /* CoreTelephony.framework */; };
 		60F14BFE8492D1B466403262 /* Social.framework */ = {isa = PBXBuildFile; fileRef = FC4E4B66BCA6C07837A19FB1 /* Social.framework */; };
 		73774226ADC887850C2F2140 /* libsqlite3.dylib */ = {isa = PBXBuildFile; fileRef = 6A2040A5B3B22ED97B06FBE5 /* libsqlite3.dylib */; };
+		865942DB930908BFA911A7FF /* GoogleMobileAds.framework */ = {isa = PBXBuildFile; fileRef = 28D348078128D54B3CF4DCDC /* GoogleMobileAds.framework */; };
 		886641F3B928D4E0CE0050F1 /* CoreLocation.framework */ = {isa = PBXBuildFile; fileRef = F4694C20B2603D20844A91E2 /* CoreLocation.framework */; };
 		8C554825AF7034FF9CC77960 /* CFNetwork.framework */ = {isa = PBXBuildFile; fileRef = 0D204FDE8506DB2223D86F99 /* CFNetwork.framework */; };
 		8CC74798AB456B7BE26E1C5A /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = E9F74498AF54BB9A6A1EEF64 /* WebKit.framework */; };
 		93D944D1A32AA5AAD01D7326 /* sdkbox_config.json */ = {isa = PBXBuildFile; fileRef = ED2F4DAC950ECF2D31D1FB3E /* sdkbox_config.json */; };
 		945C4C46816370C538C4DD99 /* EventKitUI.framework */ = {isa = PBXBuildFile; fileRef = 87DE49E09ACC71A43BB1AD95 /* EventKitUI.framework */; };
+		A66F4BFEA7A0974783AE103F /* libc++.tbd */ = {isa = PBXBuildFile; fileRef = B48B490CB96E48E06FEAA3BA /* libc++.tbd */; };
 		ABE24AA78C277630B4A33051 /* GameController.framework */ = {isa = PBXBuildFile; fileRef = D95E415FA69D1B4BECEF2884 /* GameController.framework */; };
 		B06D4387B7E6B1F44B4584BF /* sdkbox.framework */ = {isa = PBXBuildFile; fileRef = 14E7496C84EBE8DEF3713902 /* sdkbox.framework */; };
 		B3054D28A4AA9A54CC1191C9 /* CoreMedia.framework */ = {isa = PBXBuildFile; fileRef = 29F142748F20AF4AEC7F6DDC /* CoreMedia.framework */; };
@@ -60,6 +66,7 @@
 		BF1C47F01293687400B63C5D /* QuartzCore.framework */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		C12048C69FCA99C8EF90201E /* PluginSdkboxAds.framework */ = {isa = PBXBuildFile; fileRef = A960440AB6CDA9BF1D804FA7 /* PluginSdkboxAds.framework */; };
 		C5BE4B9A80F957BA317AA528 /* AdColony.framework */ = {isa = PBXBuildFile; fileRef = CE894B2895886C257115ED33 /* AdColony.framework */; };
+		C6F74ABEA2535D5101140523 /* PluginLeadBolt.framework */ = {isa = PBXBuildFile; fileRef = 6E764D77A6FE5FD1B55EC29B /* PluginLeadBolt.framework */; };
 		C8F54E369357B80D62AF27D4 /* StoreKit.framework */ = {isa = PBXBuildFile; fileRef = C71847AEAF4AF89089F81BCA /* StoreKit.framework */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -75,6 +82,7 @@
 /* Begin PBXFileReference section */
 		035B4EC0A08DE75B71E93085 /* PluginVungle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginVungle.framework; path = PluginVungle.framework; sourceTree = SOURCE_ROOT; };
 		03614417A4B08A13C3812FE4 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VungleSDK.framework; path = VungleSDK.framework; sourceTree = SOURCE_ROOT; };
+		0B4F41678EBD6D04FE8BB4A9 /* PluginInMobi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginInMobi.framework; path = PluginInMobi.framework; sourceTree = SOURCE_ROOT; };
 		0D204FDE8506DB2223D86F99 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		14E7496C84EBE8DEF3713902 /* sdkbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = sdkbox.framework; path = sdkbox.framework; sourceTree = SOURCE_ROOT; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -82,6 +90,7 @@
 		1D6058910D05DD3D006BFB54 /* sdkboxads_cpp-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sdkboxads_cpp-mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		28D348078128D54B3CF4DCDC /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = GoogleMobileAds.framework; sourceTree = SOURCE_ROOT; };
 		29F142748F20AF4AEC7F6DDC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		2AFB44A9B61EF7DA16280871 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		324B41CEB78889FDC62D225D /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chartboost.framework; path = Chartboost.framework; sourceTree = SOURCE_ROOT; };
@@ -122,14 +131,19 @@
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		6A2040A5B3B22ED97B06FBE5 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
+		6E764D77A6FE5FD1B55EC29B /* PluginLeadBolt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginLeadBolt.framework; path = PluginLeadBolt.framework; sourceTree = SOURCE_ROOT; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		82C94547BF1CC0D113CF679C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/EventKit.framework; sourceTree = DEVELOPER_DIR; };
 		847C4737BB87694BD4544EE6 /* res */ = {isa = PBXFileReference; lastKnownFileType = "?"; name = res; path = ../Resources/res; sourceTree = "<group>"; };
+		85DF4AE9B08B150B3F30DE25 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SafariServices.framework; sourceTree = DEVELOPER_DIR; };
 		87DE49E09ACC71A43BB1AD95 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/EventKitUI.framework; sourceTree = DEVELOPER_DIR; };
+		9BB74010A7DCA073F2516569 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = file.tbd; name = libsqlite3.0.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.0.tbd; sourceTree = DEVELOPER_DIR; };
 		A8384A0C9D400804C75C0AB0 /* PluginFyber.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginFyber.framework; path = PluginFyber.framework; sourceTree = SOURCE_ROOT; };
 		A960440AB6CDA9BF1D804FA7 /* PluginSdkboxAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginSdkboxAds.framework; path = PluginSdkboxAds.framework; sourceTree = SOURCE_ROOT; };
+		AC2442DA89AEF4E293BBA2EC /* PluginAdMob.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginAdMob.framework; path = PluginAdMob.framework; sourceTree = SOURCE_ROOT; };
 		AD7443E1B7DBF342DF5124D4 /* PluginAdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginAdColony.framework; path = PluginAdColony.framework; sourceTree = SOURCE_ROOT; };
 		B2D34F36ABBA1B024EE3F679 /* PluginChartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginChartboost.framework; path = PluginChartboost.framework; sourceTree = SOURCE_ROOT; };
+		B48B490CB96E48E06FEAA3BA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = file.tbd; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -195,6 +209,13 @@
 				46494A8AB9A445DAE851363C /* Chartboost.framework */,
 				3146498DAB6297AFCB3F7992 /* PluginVungle.framework */,
 				E8E5442985A8515326F25BDA /* VungleSDK.framework */,
+				4B3249CF800A39DEEBA9A6F4 /* PluginAdMob.framework */,
+				865942DB930908BFA911A7FF /* GoogleMobileAds.framework */,
+				1DAF4BD080E714B52766F325 /* PluginInMobi.framework */,
+				40FC4CF783C9692E08289FE7 /* SafariServices.framework */,
+				481543D18837F128D23AD7D6 /* libsqlite3.0.tbd */,
+				A66F4BFEA7A0974783AE103F /* libc++.tbd */,
+				C6F74ABEA2535D5101140523 /* PluginLeadBolt.framework */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +305,13 @@
 				324B41CEB78889FDC62D225D /* Chartboost.framework */,
 				035B4EC0A08DE75B71E93085 /* PluginVungle.framework */,
 				03614417A4B08A13C3812FE4 /* VungleSDK.framework */,
+				AC2442DA89AEF4E293BBA2EC /* PluginAdMob.framework */,
+				28D348078128D54B3CF4DCDC /* GoogleMobileAds.framework */,
+				0B4F41678EBD6D04FE8BB4A9 /* PluginInMobi.framework */,
+				85DF4AE9B08B150B3F30DE25 /* SafariServices.framework */,
+				9BB74010A7DCA073F2516569 /* libsqlite3.0.tbd */,
+				B48B490CB96E48E06FEAA3BA /* libc++.tbd */,
+				6E764D77A6FE5FD1B55EC29B /* PluginLeadBolt.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -477,6 +505,10 @@
 					"\"Chartboost.framework\"",
 					"\"PluginVungle.framework\"",
 					"\"VungleSDK.framework\"",
+					"\"PluginAdMob.framework\"",
+					"\"GoogleMobileAds.framework\"",
+					"\"PluginInMobi.framework\"",
+					"\"PluginLeadBolt.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
@@ -531,6 +563,10 @@
 					"\"Chartboost.framework\"",
 					"\"PluginVungle.framework\"",
 					"\"VungleSDK.framework\"",
+					"\"PluginAdMob.framework\"",
+					"\"GoogleMobileAds.framework\"",
+					"\"PluginInMobi.framework\"",
+					"\"PluginLeadBolt.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,

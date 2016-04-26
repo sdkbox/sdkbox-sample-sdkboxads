@@ -60,7 +60,12 @@ void HelloWorld::createTestMenu()
     sdkbox::PluginSdkboxAds::setListener(this);
     
     auto menu = Menu::create();
-    
+
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("play default ad", "sans", 24), [](Ref*){
+        CCLOG("play default ad");
+        sdkbox::PluginSdkboxAds::playAd();
+    }));
+
     menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("play placement-1", "sans", 24), [](Ref*){
         CCLOG("play placement-1");
         std::string placement("placement-1");
@@ -72,7 +77,78 @@ void HelloWorld::createTestMenu()
         std::string placement("placement-2");
         sdkbox::PluginSdkboxAds::placement(placement);
     }));
+
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("-----", "sans", 24), [](Ref*){}));
     
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("AdColony Interstital", "sans", 24), [](Ref*){
+        CCLOG("AdColony Interstital");
+        sdkbox::PluginSdkboxAds::playAd("AdColony", "video");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("AdColony Reward", "sans", 24), [](Ref*){
+        CCLOG("AdColony Reward");
+        sdkbox::PluginSdkboxAds::playAd("AdColony", "v4vc");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Fyber Interstital", "sans", 24), [](Ref*){
+        CCLOG("Fyber Interstital");
+        sdkbox::PluginSdkboxAds::playAd("Fyber", "INTERSTITIAL");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Fyber Reward", "sans", 24), [](Ref*){
+        CCLOG("Fyber Reward");
+        sdkbox::PluginSdkboxAds::playAd("Fyber", "REWARDED");
+    }));
+    
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Chartboost Interstital", "sans", 24), [](Ref*){
+        CCLOG("Chartboost Interstital");
+        sdkbox::PluginSdkboxAds::playAd("Chartboost", "Default");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Chartboost Reward", "sans", 24), [](Ref*){
+        CCLOG("Chartboost Reward");
+        sdkbox::PluginSdkboxAds::playAd("Chartboost", "Level Complete");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Vungle Interstital", "sans", 24), [](Ref*){
+        CCLOG("Vungle Interstital");
+        sdkbox::PluginSdkboxAds::playAd("Vungle", "video");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Vungle Reward", "sans", 24), [](Ref*){
+        CCLOG("Vungle Reward");
+        sdkbox::PluginSdkboxAds::playAd("Vungle", "reward");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Bee7 Interstital", "sans", 24), [](Ref*){
+        CCLOG("Bee7 Interstital");
+        sdkbox::PluginSdkboxAds::playAd("Fyber", "any");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("AdMob Interstital", "sans", 24), [](Ref*){
+        CCLOG("AdMob Interstital");
+        sdkbox::PluginSdkboxAds::playAd("AdMob", "gameover");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("InMobi Interstital", "sans", 24), [](Ref*){
+        CCLOG("InMobi Interstital");
+        sdkbox::PluginSdkboxAds::playAd("InMobi", "INTERSTITIAL");
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Leadbolt Interstital load", "sans", 24), [](Ref*){
+        CCLOG("Leadbolt Interstital load");
+        std::map<std::string, std::string> opts;
+        opts.insert(std::pair<std::string, std::string>("name", "ad1"));
+        sdkbox::PluginSdkboxAds::cacheControl("LeadBolt", opts);
+    }));
+    
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Leadbolt Interstital", "sans", 24), [](Ref*){
+        CCLOG("Leadbolt Interstital");
+        sdkbox::PluginSdkboxAds::playAd("LeadBolt", "ad1");
+    }));
+    
+
     menu->alignItemsVerticallyWithPadding(10);
     addChild(menu);
 }

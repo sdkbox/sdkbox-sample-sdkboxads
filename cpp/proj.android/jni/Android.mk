@@ -24,7 +24,10 @@ sdkbox \
 PluginAdColony \
 PluginFyber \
 PluginChartboost \
-PluginVungle
+PluginVungle \
+PluginAdMob \
+PluginInMobi \
+PluginLeadBolt
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
@@ -45,6 +48,9 @@ $(call import-module, ./pluginadcolony)
 $(call import-module, ./pluginfyber)
 $(call import-module, ./pluginchartboost)
 $(call import-module, ./pluginvungle)
+$(call import-module, ./pluginadmob)
+$(call import-module, ./plugininmobi)
+$(call import-module, ./pluginleadbolt)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
