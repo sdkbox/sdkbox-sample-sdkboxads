@@ -23,6 +23,9 @@
             <intent-filter>
                 <action android:name="com.inmobi.share.id" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="com.inmobi.share.id" />
+            </intent-filter>
         </receiver>
         <service android:enabled="true" android:name="com.inmobi.signals.activityrecognition.ActivityRecognitionManager" />
         <activity android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:hardwareAccelerated="true" android:name="com.apptracker.android.module.AppModuleActivity" />
