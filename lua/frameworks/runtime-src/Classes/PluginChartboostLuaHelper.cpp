@@ -1,8 +1,6 @@
 
 #include "PluginChartboostLuaHelper.h"
 #include "PluginChartboost/PluginChartboost.h"
-#include "CCLuaEngine.h"
-#include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
 
 class ChartboostListenerLuaHelper : public sdkbox::ChartboostListener {

@@ -163,7 +163,7 @@ public:
     /*!
      * initialize the plugin instance.
      */
-    static void init();
+    static void init(const char* jsonconfig = 0);
 
     /*!
      * show ad by specifying ad name.
@@ -205,6 +205,8 @@ public:
     /*!
      * close any visible Chartboost impressions (interstitials, more apps, rewarded
      * video, etc..) and the loading view (if visible).
+     *
+     * deprecated >= 2.3.x
      */
     static void closeImpression();
 

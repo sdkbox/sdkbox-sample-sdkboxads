@@ -20,4 +20,27 @@ int register_all_PluginFyberLua(lua_State* tolua_S);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif // __PluginFyberLua_h__

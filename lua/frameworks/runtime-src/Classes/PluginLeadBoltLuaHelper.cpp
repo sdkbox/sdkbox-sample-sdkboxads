@@ -1,8 +1,6 @@
 
 #include "PluginLeadBoltLuaHelper.h"
 #include "PluginLeadBolt/PluginLeadBolt.h"
-#include "CCLuaEngine.h"
-#include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
 
 class LeadBoltListenerLua : public sdkbox::LeadBoltListener {

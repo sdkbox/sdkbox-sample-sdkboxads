@@ -1,8 +1,6 @@
 
 #include "PluginAdcolonyLuaHelper.h"
 #include "PluginAdColony/PluginAdColony.h"
-#include "CCLuaEngine.h"
-#include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
 
 class AdColonyListenerLua : public sdkbox::AdColonyListener {

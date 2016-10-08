@@ -15,4 +15,7 @@ int register_all_PluginSdkboxAdsLua(lua_State* tolua_S);
 
 
 
+
+
+
 #endif // __PluginSdkboxAdsLua_h__

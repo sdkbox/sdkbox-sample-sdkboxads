@@ -1,8 +1,6 @@
 
 #include "PluginFyberLuaHelper.h"
 #include "PluginFyber/PluginFyber.h"
-#include "CCLuaEngine.h"
-#include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
 
 class FyberListenerLua : public sdkbox::FyberListener {
@@ -182,6 +180,145 @@ tolua_lerror:
     return 0;
 }
 
+static int fyber_lua_createTable(lua_State* L, const std::map<std::string, int>& map) {
+    lua_newtable(L);
+
+    std::map<std::string, int>::const_iterator it = map.begin();
+    while (it != map.end()) {
+        lua_pushstring(L, it->first.c_str());
+        lua_pushinteger(L, it->second);
+        lua_settable(L, -3);
+        it++;
+    }
+
+    return 1;
+}
+static int fyber_lua_createTable(lua_State* L, const std::map<std::string, std::string>& map) {
+    lua_newtable(L);
+
+    std::map<std::string, std::string>::const_iterator it = map.begin();
+    while (it != map.end()) {
+        lua_pushstring(L, it->first.c_str());
+        lua_pushstring(L, it->second.c_str());
+        lua_settable(L, -3);
+        it++;
+    }
+
+    return 1;
+}
+
+static int fyber_lua_setTable(lua_State* L, int table, const std::string& name, const std::map<std::string, int>& map) {
+    if (table < 0) {
+        table = lua_gettop(L) + table + 1;
+    }
+    lua_pushstring(L, name.c_str());
+    fyber_lua_createTable(L, map);
+    lua_rawset(L, table);
+
+    return 0;
+}
+static int fyber_lua_setTable(lua_State* L, int table, const std::string& name, const std::map<std::string, std::string>& map) {
+    if (table < 0) {
+        table = lua_gettop(L) + table + 1;
+    }
+    lua_pushstring(L, name.c_str());
+    fyber_lua_createTable(L, map);
+    lua_rawset(L, table);
+
+    return 0;
+}
+
+int lua_PluginFyberLua_constants(lua_State* L) {
+    if (NULL == L) {
+        return 0;
+    }
+
+    lua_pushstring(L, "sdkbox.PluginFyber");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1)) {
+
+        //  The device of the user
+        {
+            std::map<std::string, std::string> enums;
+            enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserDeviceUndefined));
+            enums.insert(std::make_pair("IPhone", sdkbox::FYB_UserDeviceIPhone));
+            enums.insert(std::make_pair("IPad", sdkbox::FYB_UserDeviceIPad));
+            enums.insert(std::make_pair("IPod", sdkbox::FYB_UserDeviceIPod));
+            enums.insert(std::make_pair("Android", sdkbox::FYB_UserDeviceAndroid));
+            fyber_lua_setTable(L, -1, "UserDevice", enums);
+        }
+
+        std::map<std::string, int> enums;
+
+        // UserConnectionType
+        enums.clear();
+        enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserConnectionTypeUndefined));
+        enums.insert(std::make_pair("WiFi", sdkbox::FYB_UserConnectionTypeWiFi));
+        enums.insert(std::make_pair("3G", sdkbox::FYB_UserConnectionType3G));
+        enums.insert(std::make_pair("LTE", sdkbox::FYB_UserConnectionTypeLTE));
+        enums.insert(std::make_pair("Edge", sdkbox::FYB_UserConnectionTypeEdge));
+        fyber_lua_setTable(L, -1, "UserConnectionType", enums);
+
+        // UserEducation
+        enums.clear();
+        enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserEducationUndefined));
+        enums.insert(std::make_pair("Other", sdkbox::FYB_UserEducationOther));
+        enums.insert(std::make_pair("None", sdkbox::FYB_UserEducationNone));
+        enums.insert(std::make_pair("HighSchool", sdkbox::FYB_UserEducationHighSchool));
+        enums.insert(std::make_pair("InCollege", sdkbox::FYB_UserEducationInCollege));
+        enums.insert(std::make_pair("SomeCollege", sdkbox::FYB_UserEducationSomeCollege));
+        enums.insert(std::make_pair("Associates", sdkbox::FYB_UserEducationAssociates));
+        enums.insert(std::make_pair("Bachelors", sdkbox::FYB_UserEducationBachelors));
+        enums.insert(std::make_pair("Masters", sdkbox::FYB_UserEducationMasters));
+        enums.insert(std::make_pair("Doctorate", sdkbox::FYB_UserEducationDoctorate));
+        fyber_lua_setTable(L, -1, "UserEducation", enums);
+
+        // The marital status of the user
+        enums.clear();
+        enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserMaritalStatusUndefined));
+        enums.insert(std::make_pair("Single", sdkbox::FYB_UserMartialStatusSingle));
+        enums.insert(std::make_pair("Relationship", sdkbox::FYB_UserMartialStatusRelationship));
+        enums.insert(std::make_pair("Married", sdkbox::FYB_UserMartialStatusMarried));
+        enums.insert(std::make_pair("Divorced", sdkbox::FYB_UserMartialStatusDivorced));
+        enums.insert(std::make_pair("Engaged", sdkbox::FYB_UserMartialStatusEngaged));
+        fyber_lua_setTable(L, -1, "UserMartialStatus", enums);
+
+        // The ethnicity of the user
+        enums.clear();
+        enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserEthnicityUndefined));
+        enums.insert(std::make_pair("Asian", sdkbox::FYB_UserEthnicityAsian));
+        enums.insert(std::make_pair("Black", sdkbox::FYB_UserEthnicityBlack));
+        enums.insert(std::make_pair("Hispanic", sdkbox::FYB_UserEthnicityHispanic));
+        enums.insert(std::make_pair("Indian", sdkbox::FYB_UserEthnicityIndian));
+        enums.insert(std::make_pair("MiddleEastern", sdkbox::FYB_UserEthnicityMiddleEastern));
+        enums.insert(std::make_pair("NativeAmerican", sdkbox::FYB_UserEthnicityNativeAmerican));
+        enums.insert(std::make_pair("PacificIslander", sdkbox::FYB_UserEthnicityPacificIslander));
+        enums.insert(std::make_pair("White", sdkbox::FYB_UserEthnicityWhite));
+        enums.insert(std::make_pair("Other", sdkbox::FYB_UserEthnicityOther));
+        fyber_lua_setTable(L, -1, "UserEthnicity", enums);
+
+        // The gender of the user
+        enums.clear();
+        enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserGenderUndefined));
+        enums.insert(std::make_pair("Male", sdkbox::FYB_UserGenderMale));
+        enums.insert(std::make_pair("Female", sdkbox::FYB_UserGenderFemale));
+        enums.insert(std::make_pair("Other", sdkbox::FYB_UserGenderOther));
+        fyber_lua_setTable(L, -1, "UserGender", enums);
+
+        // The sexual orientation of the user
+        enums.clear();
+        enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserSexualOrientationUndefined));
+        enums.insert(std::make_pair("Straight", sdkbox::FYB_UserSexualOrientationStraight));
+        enums.insert(std::make_pair("Bisexual", sdkbox::FYB_UserSexualOrientationBisexual));
+        enums.insert(std::make_pair("Gay", sdkbox::FYB_UserSexualOrientationGay));
+        enums.insert(std::make_pair("Unknown", sdkbox::FYB_UserSexualOrientationUnknown));
+        fyber_lua_setTable(L, -1, "UserSexualOrientation", enums);
+    }
+    lua_pop(L, 1);
+
+    return 1;
+}
+
 int extern_PluginFyber(lua_State* L) {
     if (nullptr == L) {
         return 0;
@@ -194,6 +331,8 @@ int extern_PluginFyber(lua_State* L) {
         tolua_function(L,"setListener", lua_PluginFyberLua_PluginFyber_setListener);
     }
     lua_pop(L, 1);
+
+    lua_PluginFyberLua_constants(L);
 
     return 1;
 }

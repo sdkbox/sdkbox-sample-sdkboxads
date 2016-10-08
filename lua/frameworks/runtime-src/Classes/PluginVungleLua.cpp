@@ -1,6 +1,5 @@
 #include "PluginVungleLua.hpp"
 #include "PluginVungle/PluginVungle.h"
-#include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
 #include "sdkbox/Sdkbox.h"
 

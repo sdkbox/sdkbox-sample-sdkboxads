@@ -1,8 +1,6 @@
 
 #include "PluginVungleLuaHelper.h"
 #include "PluginVungle/PluginVungle.h"
-#include "CCLuaEngine.h"
-#include "tolua_fix.h"
 #include "SDKBoxLuaHelper.h"
 
 class VungleListenerLua : public sdkbox::VungleListener {
