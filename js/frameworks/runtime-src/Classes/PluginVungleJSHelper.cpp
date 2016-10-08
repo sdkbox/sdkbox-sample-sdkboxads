@@ -1,23 +1,15 @@
 
 #include "PluginVungleJSHelper.h"
-#include "cocos2d_specifics.hpp"
 #include "PluginVungle/PluginVungle.h"
 #include "SDKBoxJSHelper.h"
 
 
 static JSContext* s_cx = nullptr;
 
-class VungleListenerJsHelper : public sdkbox::VungleListener {
-
+class VungleListenerJsHelper : public sdkbox::VungleListener, public sdkbox::JSListenerBase
+{
 public:
-    void setJSDelegate(JSObject* delegate)
-    {
-        mJsDelegate = delegate;
-    }
-
-    JSObject* getJSDelegate()
-    {
-        return mJsDelegate;
+    VungleListenerJsHelper():sdkbox::JSListenerBase() {
     }
 
     void onVungleCacheAvailable() {
@@ -58,7 +50,7 @@ private:
         JSContext* cx = s_cx;
         const char* func_name = fName.c_str();
 
-        JS::RootedObject obj(cx, mJsDelegate);
+        JS::RootedObject obj(cx, getJSDelegate());
         JSAutoCompartment ac(cx, obj);
 
 #if defined(MOZJS_MAJOR_VERSION)
@@ -110,10 +102,6 @@ private:
         }
         // });
     }
-
-private:
-    JSObject* mJsDelegate;
-
 };
 
 
@@ -133,11 +121,10 @@ JSBool js_PluginVungleJS_PluginVungle_setListener(JSContext *cx, unsigned argc, 
         {
             ok = false;
         }
-        JSObject *tmpObj = args.get(0).toObjectOrNull();
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginVungleJS_PluginVungle_setListener : Error processing arguments");
         VungleListenerJsHelper* lis = new VungleListenerJsHelper();
-        lis->setJSDelegate(tmpObj);
+        lis->setJSDelegate(args.get(0));
         sdkbox::PluginVungle::setListener(lis);
 
         args.rval().setUndefined();

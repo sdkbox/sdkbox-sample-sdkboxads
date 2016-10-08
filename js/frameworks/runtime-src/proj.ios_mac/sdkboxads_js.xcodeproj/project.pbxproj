@@ -13,10 +13,12 @@
 		0AF44E4B9719846D6EF7B171 /* PluginSdkboxAdsJSHelper.cpp */ = {isa = PBXBuildFile; fileRef = CEC441F2BDA00A7E377E1CBD /* PluginSdkboxAdsJSHelper.cpp */; };
 		0C6D454FB9E1562E3857ACCA /* PluginAdColony.framework */ = {isa = PBXBuildFile; fileRef = B61C425AB041BC64E449D630 /* PluginAdColony.framework */; };
 		1045422D9040BBC616861EEB /* SafariServices.framework */ = {isa = PBXBuildFile; fileRef = ABB34E588FA1419C566CE67C /* SafariServices.framework */; };
+		106141B0BB3DCA633408EB6E /* CoreVideo.framework */ = {isa = PBXBuildFile; fileRef = 647C4CB28882672DD5904943 /* CoreVideo.framework */; };
 		16664CF784096591D89027EC /* PluginInMobiJSHelper.cpp */ = {isa = PBXBuildFile; fileRef = FB004179BB68633759E8EAC4 /* PluginInMobiJSHelper.cpp */; };
 		1A82F5FB169AC92500C4B13A /* libsqlite3.dylib */ = {isa = PBXBuildFile; fileRef = 1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */; };
 		1AD7E0A818C9DB93004817A6 /* main.js */ = {isa = PBXBuildFile; fileRef = 1A6BF21418C9DB5900FB0E1C /* main.js */; };
 		1AE159EC18C9DF3600FCA372 /* project.json */ = {isa = PBXBuildFile; fileRef = 1A1A081B18C9DF05005C6854 /* project.json */; };
+		1D224FE1904B22AB7F34A247 /* GLKit.framework */ = {isa = PBXBuildFile; fileRef = 87A24656A7FD9425EABDD71D /* GLKit.framework */; };
 		25C04B4BB56018015DFDDA4A /* PluginChartboostJS.cpp */ = {isa = PBXBuildFile; fileRef = F28E4525A3C84E9E66F3EC19 /* PluginChartboostJS.cpp */; };
 		28614A5582EFCDE41E6DCD96 /* libjscocos2d iOS.a */ = {isa = PBXBuildFile; fileRef = 25314D7F96A5964397743D54 /* libjscocos2d iOS.a */; };
 		2ADB4F9DBD6FEDFCF30DAAB1 /* PluginAdMob.framework */ = {isa = PBXBuildFile; fileRef = 218B4B68B3F7FDDA158E866F /* PluginAdMob.framework */; };
@@ -56,6 +58,8 @@
 		6BF74DB6A993926A55739BA9 /* PluginChartboostJSHelper.cpp */ = {isa = PBXBuildFile; fileRef = F7934C779C0D60857FDB53CC /* PluginChartboostJSHelper.cpp */; };
 		6DE5457A928F439A23671802 /* PluginLeadBoltJSHelper.cpp */ = {isa = PBXBuildFile; fileRef = C3F046FBB7F7BFE67A69CF57 /* PluginLeadBoltJSHelper.cpp */; };
 		6E144EF4830450EE49A515AF /* libcocos2d iOS.a */ = {isa = PBXBuildFile; fileRef = 526041819F61614826BB19BD /* libcocos2d iOS.a */; };
+		6FEA4E79B650C3B3F6294936 /* MobileCoreServices.framework */ = {isa = PBXBuildFile; fileRef = 3CD5423BBFCBA01E00042B28 /* MobileCoreServices.framework */; };
+		725841F8A437CBB0B70F5F78 /* CoreBluetooth.framework */ = {isa = PBXBuildFile; fileRef = A8FE427EA8406CB5DE8AABCF /* CoreBluetooth.framework */; };
 		81B54C529F6C6828F196902C /* PluginLeadBolt.framework */ = {isa = PBXBuildFile; fileRef = 91594FE8A71068B4219BD8CA /* PluginLeadBolt.framework */; };
 		84B1459AB50EFF801BE2A6D6 /* Chartboost.framework */ = {isa = PBXBuildFile; fileRef = 2F9E4AB79D0B218867564193 /* Chartboost.framework */; };
 		877443DA9F4286031EA261D3 /* PluginVungleJSHelper.cpp */ = {isa = PBXBuildFile; fileRef = 6C214B668A89C69CAB4CDEED /* PluginVungleJSHelper.cpp */; };
@@ -121,6 +125,7 @@
 		2C1B43DFA8644A548BE2487C /* PluginFyberJSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginFyberJSHelper.h; path = ../Classes/PluginFyberJSHelper.h; sourceTree = SOURCE_ROOT; };
 		2F9E4AB79D0B218867564193 /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chartboost.framework; path = Chartboost.framework; sourceTree = SOURCE_ROOT; };
 		3A4A47F49AB5C0B145C78DB4 /* PluginLeadBoltJS.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginLeadBoltJS.cpp; path = ../Classes/PluginLeadBoltJS.cpp; sourceTree = SOURCE_ROOT; };
+		3CD5423BBFCBA01E00042B28 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		40424C5196F6FE77F0CADC5C /* PluginChartboostJSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginChartboostJSHelper.h; path = ../Classes/PluginChartboostJSHelper.h; sourceTree = SOURCE_ROOT; };
 		48B3440FA11E34FA7D97F29B /* PluginAdColonyJS.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginAdColonyJS.cpp; path = ../Classes/PluginAdColonyJS.cpp; sourceTree = SOURCE_ROOT; };
 		4DFF49248C99AD8A25F551BD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
@@ -155,6 +160,7 @@
 		57A64C85B2DE6AE9BD8F3D03 /* PluginChartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginChartboost.framework; path = PluginChartboost.framework; sourceTree = SOURCE_ROOT; };
 		59D14A8A8715293797B11090 /* PluginInMobiJS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginInMobiJS.hpp; path = ../Classes/PluginInMobiJS.hpp; sourceTree = SOURCE_ROOT; };
 		5FFC4409B3B0061A0100FE90 /* PluginInMobi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginInMobi.framework; path = PluginInMobi.framework; sourceTree = SOURCE_ROOT; };
+		647C4CB28882672DD5904943 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
 		671A491884E0C7533ED0085C /* script */ = {isa = PBXFileReference; lastKnownFileType = "?"; name = script; path = ../../../script; sourceTree = "<group>"; };
 		68484CC1AA9F9F3E1299D72C /* PluginFyberJS.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginFyberJS.cpp; path = ../Classes/PluginFyberJS.cpp; sourceTree = SOURCE_ROOT; };
 		6AF3405F8647595410C21071 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/EventKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -166,6 +172,7 @@
 		80BF488FBD76BCFE165FECA2 /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdColony.framework; path = AdColony.framework; sourceTree = SOURCE_ROOT; };
 		80D04202B9914A23AA2E9819 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/EventKitUI.framework; sourceTree = DEVELOPER_DIR; };
 		83DF4552AAAD47C570FD024E /* PluginInMobiJSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginInMobiJSHelper.h; path = ../Classes/PluginInMobiJSHelper.h; sourceTree = SOURCE_ROOT; };
+		87A24656A7FD9425EABDD71D /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
 		87D4C4441AB2187000F68C44 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8C754817B21721A8340DD490 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = file.tbd; name = "libc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		8F9B4077A43A487F2ECCC106 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -184,6 +191,7 @@
 		A17D4B2CBB22738408246435 /* PluginChartboostJS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginChartboostJS.hpp; path = ../Classes/PluginChartboostJS.hpp; sourceTree = SOURCE_ROOT; };
 		A4124691A4E5FB0ED978EE33 /* PluginSdkboxAdsJS.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginSdkboxAdsJS.cpp; path = ../Classes/PluginSdkboxAdsJS.cpp; sourceTree = SOURCE_ROOT; };
 		A4334810975F1A1000DB77DC /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VungleSDK.framework; path = VungleSDK.framework; sourceTree = SOURCE_ROOT; };
+		A8FE427EA8406CB5DE8AABCF /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreBluetooth.framework; sourceTree = DEVELOPER_DIR; };
 		A922753D1517C094001B78AA /* sdkboxads_js-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sdkboxads_js-mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -283,6 +291,10 @@
 				1045422D9040BBC616861EEB /* SafariServices.framework */,
 				9018416CAB410199D8EF294F /* libsqlite3.0.tbd */,
 				48044F74809312489088258F /* libc++.tbd */,
+				725841F8A437CBB0B70F5F78 /* CoreBluetooth.framework */,
+				1D224FE1904B22AB7F34A247 /* GLKit.framework */,
+				106141B0BB3DCA633408EB6E /* CoreVideo.framework */,
+				6FEA4E79B650C3B3F6294936 /* MobileCoreServices.framework */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +420,10 @@
 				ABB34E588FA1419C566CE67C /* SafariServices.framework */,
 				C4E445A98CD5AC4E33B91910 /* libsqlite3.0.tbd */,
 				8C754817B21721A8340DD490 /* libc++.tbd */,
+				A8FE427EA8406CB5DE8AABCF /* CoreBluetooth.framework */,
+				87A24656A7FD9425EABDD71D /* GLKit.framework */,
+				647C4CB28882672DD5904943 /* CoreVideo.framework */,
+				3CD5423BBFCBA01E00042B28 /* MobileCoreServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

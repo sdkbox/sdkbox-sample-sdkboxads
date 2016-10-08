@@ -1,23 +1,14 @@
 
 #include "PluginFyberJSHelper.h"
-#include "cocos2d_specifics.hpp"
 #include "SDKBoxJSHelper.h"
 #include "PluginFyber/PluginFyber.h"
 
 static JSContext* s_cx = nullptr;
 
-class FyberListenerJsHelper : public sdkbox::FyberListener
+class FyberListenerJsHelper : public sdkbox::FyberListener, public sdkbox::JSListenerBase
 {
-
 public:
-    void setJSDelegate(JSObject* delegate)
-    {
-        mJsDelegate = delegate;
-    }
-
-    JSObject* getJSDelegate()
-    {
-        return mJsDelegate;
+    FyberListenerJsHelper():sdkbox::JSListenerBase() {
     }
 
     void onVirtualCurrencyConnectorFailed(int error,
@@ -104,7 +95,7 @@ private:
         JSContext* cx = s_cx;
         const char* func_name = fName.c_str();
 
-        JS::RootedObject obj(cx, mJsDelegate);
+        JS::RootedObject obj(cx, getJSDelegate());
         JSAutoCompartment ac(cx, obj);
 
 #if MOZJS_MAJOR_VERSION >= 31
@@ -144,10 +135,6 @@ private:
 #endif
         }
     }
-
-private:
-    JSObject* mJsDelegate;
-
 };
 
 #if MOZJS_MAJOR_VERSION >= 28
@@ -166,11 +153,10 @@ JSBool js_PluginFyberJS_PluginFyber_setListener(JSContext *cx, unsigned argc, JS
         {
             ok = false;
         }
-        JSObject *tmpObj = args.get(0).toObjectOrNull();
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginFyberJS_PluginFyber_setListener : Error processing arguments");
         FyberListenerJsHelper* lis = new FyberListenerJsHelper();
-        lis->setJSDelegate(tmpObj);
+        lis->setJSDelegate(args.get(0));
         sdkbox::PluginFyber::setListener(lis);
 
         args.rval().setUndefined();
@@ -180,8 +166,126 @@ JSBool js_PluginFyberJS_PluginFyber_setListener(JSContext *cx, unsigned argc, JS
     return false;
 }
 
+#if defined(MOZJS_MAJOR_VERSION) and MOZJS_MAJOR_VERSION >= 26
+void fyber_set_constants(JSContext* cx, const JS::RootedObject& obj, const std::string& name, const std::map<std::string, int>& params)
+#else
+void fyber_set_constants(JSContext* cx, JSObject* obj, const std::string& name, const std::map<std::string, int>& params)
+#endif
+{
+    jsval val = sdkbox::std_map_string_int_to_jsval(cx, params);
+
+    JS::RootedValue rv(cx);
+    rv = val;
+#if defined(MOZJS_MAJOR_VERSION) and MOZJS_MAJOR_VERSION >= 26
+    JS_SetProperty(cx, obj, name.c_str(), rv);
+#else
+    JS_SetProperty(cx, obj, name.c_str(), rv.address());
+#endif
+}
+#if defined(MOZJS_MAJOR_VERSION) and MOZJS_MAJOR_VERSION >= 26
+void fyber_set_constants(JSContext* cx, const JS::RootedObject& obj, const std::string& name, const std::map<std::string, std::string>& params)
+#else
+void fyber_set_constants(JSContext* cx, JSObject* obj, const std::string& name, const std::map<std::string, std::string>& params)
+#endif
+{
+    jsval val = sdkbox::std_map_string_string_to_jsval(cx, params);
+
+    JS::RootedValue rv(cx);
+    rv = val;
+#if defined(MOZJS_MAJOR_VERSION) and MOZJS_MAJOR_VERSION >= 26
+    JS_SetProperty(cx, obj, name.c_str(), rv);
+#else
+    JS_SetProperty(cx, obj, name.c_str(), rv.address());
+#endif
+}
+
+#if defined(MOZJS_MAJOR_VERSION) and MOZJS_MAJOR_VERSION >= 26
+void fyber_register_constants(JSContext* cx, const JS::RootedObject& obj)
+#else
+void fyber_register_constants(JSContext* cx, JSObject* obj)
+#endif
+{
+    //  The device of the user
+    {
+        std::map<std::string, std::string> enums;
+        enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserDeviceUndefined));
+        enums.insert(std::make_pair("IPhone", sdkbox::FYB_UserDeviceIPhone));
+        enums.insert(std::make_pair("IPad", sdkbox::FYB_UserDeviceIPad));
+        enums.insert(std::make_pair("IPod", sdkbox::FYB_UserDeviceIPod));
+        enums.insert(std::make_pair("Android", sdkbox::FYB_UserDeviceAndroid));
+        fyber_set_constants(cx, obj, "UserDevice", enums);
+    }
+
+    std::map<std::string, int> enums;
+
+    // UserConnectionType
+    enums.clear();
+    enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserConnectionTypeUndefined));
+    enums.insert(std::make_pair("WiFi", sdkbox::FYB_UserConnectionTypeWiFi));
+    enums.insert(std::make_pair("3G", sdkbox::FYB_UserConnectionType3G));
+    enums.insert(std::make_pair("LTE", sdkbox::FYB_UserConnectionTypeLTE));
+    enums.insert(std::make_pair("Edge", sdkbox::FYB_UserConnectionTypeEdge));
+    fyber_set_constants(cx, obj, "UserConnectionType", enums);
+
+    // UserEducation
+    enums.clear();
+    enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserEducationUndefined));
+    enums.insert(std::make_pair("Other", sdkbox::FYB_UserEducationOther));
+    enums.insert(std::make_pair("None", sdkbox::FYB_UserEducationNone));
+    enums.insert(std::make_pair("HighSchool", sdkbox::FYB_UserEducationHighSchool));
+    enums.insert(std::make_pair("InCollege", sdkbox::FYB_UserEducationInCollege));
+    enums.insert(std::make_pair("SomeCollege", sdkbox::FYB_UserEducationSomeCollege));
+    enums.insert(std::make_pair("Associates", sdkbox::FYB_UserEducationAssociates));
+    enums.insert(std::make_pair("Bachelors", sdkbox::FYB_UserEducationBachelors));
+    enums.insert(std::make_pair("Masters", sdkbox::FYB_UserEducationMasters));
+    enums.insert(std::make_pair("Doctorate", sdkbox::FYB_UserEducationDoctorate));
+    fyber_set_constants(cx, obj, "UserEducation", enums);
+
+    // The marital status of the user
+    enums.clear();
+    enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserMaritalStatusUndefined));
+    enums.insert(std::make_pair("Single", sdkbox::FYB_UserMartialStatusSingle));
+    enums.insert(std::make_pair("Relationship", sdkbox::FYB_UserMartialStatusRelationship));
+    enums.insert(std::make_pair("Married", sdkbox::FYB_UserMartialStatusMarried));
+    enums.insert(std::make_pair("Divorced", sdkbox::FYB_UserMartialStatusDivorced));
+    enums.insert(std::make_pair("Engaged", sdkbox::FYB_UserMartialStatusEngaged));
+    fyber_set_constants(cx, obj, "UserMartialStatus", enums);
+
+    // The ethnicity of the user
+    enums.clear();
+    enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserEthnicityUndefined));
+    enums.insert(std::make_pair("Asian", sdkbox::FYB_UserEthnicityAsian));
+    enums.insert(std::make_pair("Black", sdkbox::FYB_UserEthnicityBlack));
+    enums.insert(std::make_pair("Hispanic", sdkbox::FYB_UserEthnicityHispanic));
+    enums.insert(std::make_pair("Indian", sdkbox::FYB_UserEthnicityIndian));
+    enums.insert(std::make_pair("MiddleEastern", sdkbox::FYB_UserEthnicityMiddleEastern));
+    enums.insert(std::make_pair("NativeAmerican", sdkbox::FYB_UserEthnicityNativeAmerican));
+    enums.insert(std::make_pair("PacificIslander", sdkbox::FYB_UserEthnicityPacificIslander));
+    enums.insert(std::make_pair("White", sdkbox::FYB_UserEthnicityWhite));
+    enums.insert(std::make_pair("Other", sdkbox::FYB_UserEthnicityOther));
+    fyber_set_constants(cx, obj, "UserEthnicity", enums);
+
+    // The gender of the user
+    enums.clear();
+    enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserGenderUndefined));
+    enums.insert(std::make_pair("Male", sdkbox::FYB_UserGenderMale));
+    enums.insert(std::make_pair("Female", sdkbox::FYB_UserGenderFemale));
+    enums.insert(std::make_pair("Other", sdkbox::FYB_UserGenderOther));
+    fyber_set_constants(cx, obj, "UserGender", enums);
+
+    // The sexual orientation of the user
+    enums.clear();
+    enums.insert(std::make_pair("Undefined", sdkbox::FYB_UserSexualOrientationUndefined));
+    enums.insert(std::make_pair("Straight", sdkbox::FYB_UserSexualOrientationStraight));
+    enums.insert(std::make_pair("Bisexual", sdkbox::FYB_UserSexualOrientationBisexual));
+    enums.insert(std::make_pair("Gay", sdkbox::FYB_UserSexualOrientationGay));
+    enums.insert(std::make_pair("Unknown", sdkbox::FYB_UserSexualOrientationUnknown));
+    fyber_set_constants(cx, obj, "UserSexualOrientation", enums);
+}
+
 #define REGISTE_FYBER_FUNCTIONS \
-JS_DefineFunction(cx, pluginObj, "setListener", js_PluginFyberJS_PluginFyber_setListener, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+JS_DefineFunction(cx, pluginObj, "setListener", js_PluginFyberJS_PluginFyber_setListener, 1, JSPROP_READONLY | JSPROP_PERMANENT); \
+fyber_register_constants(cx, pluginObj);
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33

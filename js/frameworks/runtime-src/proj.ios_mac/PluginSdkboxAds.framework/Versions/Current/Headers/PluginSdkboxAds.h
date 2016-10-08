@@ -190,6 +190,17 @@ namespace sdkbox {
          *  </code>
          */
         static void cacheControl( const std::string& ad_unit, const std::map<std::string, std::string>& cacheOpts );
+        
+        /**
+         * check if placement available
+         */
+        static bool isAvailable( const std::string& placement );
+
+        /**
+         * hide placement
+         */
+        static void hide(const std::string& placement);
+        static void hideAd(const std::string& ad_unit, const std::string& zone_place_location );
 
     };
 

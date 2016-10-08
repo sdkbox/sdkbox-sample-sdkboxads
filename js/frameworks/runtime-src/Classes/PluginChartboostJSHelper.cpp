@@ -1,22 +1,14 @@
 
 #include "PluginChartboostJSHelper.h"
-#include "cocos2d_specifics.hpp"
 #include "PluginChartboost/PluginChartboost.h"
 #include "SDKBoxJSHelper.h"
 
 static JSContext* s_cx = nullptr;
 
-class ChartboostListenerJsHelper : public sdkbox::ChartboostListener {
-
+class ChartboostListenerJsHelper : public sdkbox::ChartboostListener, public sdkbox::JSListenerBase
+{
 public:
-    void setJSDelegate(JSObject* delegate)
-    {
-        mJsDelegate = delegate;
-    }
-
-    JSObject* getJSDelegate()
-    {
-        return mJsDelegate;
+    ChartboostListenerJsHelper():sdkbox::JSListenerBase() {
     }
 
     //Ad callbacks
@@ -67,7 +59,7 @@ private:
         JSContext* cx = s_cx;
         const char* func_name = fName;
 
-        JS::RootedObject obj(cx, mJsDelegate);
+        JS::RootedObject obj(cx, getJSDelegate());
         JSAutoCompartment ac(cx, obj);
 
 #if defined(MOZJS_MAJOR_VERSION)
@@ -118,10 +110,6 @@ private:
         }
         //});
     }
-
-private:
-    JSObject* mJsDelegate;
-
 };
 
 #if defined(MOZJS_MAJOR_VERSION)
@@ -144,11 +132,10 @@ JSBool js_PluginChartboostJS_PluginChartboost_setListener(JSContext *cx, unsigne
         {
             ok = false;
         }
-        JSObject *tmpObj = args.get(0).toObjectOrNull();
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_setListener : Error processing arguments");
         ChartboostListenerJsHelper* lis = new ChartboostListenerJsHelper();
-        lis->setJSDelegate(tmpObj);
+        lis->setJSDelegate(args.get(0));
         sdkbox::PluginChartboost::setListener(lis);
 
         args.rval().setUndefined();

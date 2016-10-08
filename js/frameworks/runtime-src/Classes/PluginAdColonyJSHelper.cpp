@@ -1,8 +1,6 @@
 #include "PluginAdColonyJSHelper.h"
-#include "cocos2d_specifics.hpp"
 #include "PluginAdColony/PluginAdColony.h"
 #include "SDKBoxJSHelper.h"
-#include "cocos2d.h"
 
 extern JSObject* jsb_sdkbox_PluginAdColony_prototype;
 
@@ -119,19 +117,10 @@ JSObject* adinfo_to_obj(JSContext* cx, const sdkbox::AdColonyAdInfo& info)
     return jsobj;
 }
 
-class AdColonyListenerWrapper : public sdkbox::AdColonyListener
+class AdColonyListenerWrapper : public sdkbox::AdColonyListener, public sdkbox::JSListenerBase
 {
-private:
-    JSObject* _JSDelegate;
 public:
-    void setJSDelegate(JSObject* delegate)
-    {
-        _JSDelegate = delegate;
-    }
-
-    JSObject* getJSDelegate()
-    {
-        return _JSDelegate;
+    AdColonyListenerWrapper():sdkbox::JSListenerBase() {
     }
 
     void onAdColonyChange(const sdkbox::AdColonyAdInfo& info, bool available)
@@ -146,7 +135,7 @@ public:
         JSContext* cx = s_cx;
         const char* func_name = "onAdColonyChange";
 
-        JS::RootedObject obj(cx, _JSDelegate);
+        JS::RootedObject obj(cx, getJSDelegate());
         JSAutoCompartment ac(cx, obj);
 
 #if defined(MOZJS_MAJOR_VERSION)
@@ -203,7 +192,7 @@ public:
         JSContext* cx = s_cx;
         const char* func_name = "onAdColonyReward";
 
-        JS::RootedObject obj(cx, _JSDelegate);
+        JS::RootedObject obj(cx, getJSDelegate());
         JSAutoCompartment ac(cx, obj);
 
 #if defined(MOZJS_MAJOR_VERSION)
@@ -259,7 +248,7 @@ public:
         JSContext* cx = s_cx;
         const char* func_name = "onAdColonyStarted";
 
-        JS::RootedObject obj(cx, _JSDelegate);
+        JS::RootedObject obj(cx, getJSDelegate());
         JSAutoCompartment ac(cx, obj);
 
 #if defined(MOZJS_MAJOR_VERSION)
@@ -314,7 +303,7 @@ public:
         JSContext* cx = s_cx;
         const char* func_name = "onAdColonyFinished";
 
-        JS::RootedObject obj(cx, _JSDelegate);
+        JS::RootedObject obj(cx, getJSDelegate());
         JSAutoCompartment ac(cx, obj);
 
 #if defined(MOZJS_MAJOR_VERSION)
@@ -379,11 +368,10 @@ JSBool js_PluginAdColonyJS_PluginAdColony_setListener(JSContext *cx, uint32_t ar
         {
             ok = false;
         }
-        JSObject *tmpObj = args.get(0).toObjectOrNull();
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginAdColonyJS_PluginAdColony_setIAPListener : Error processing arguments");
         AdColonyListenerWrapper* wrapper = new AdColonyListenerWrapper();
-        wrapper->setJSDelegate(tmpObj);
+        wrapper->setJSDelegate(args.get(0));
         sdkbox::PluginAdColony::setListener(wrapper);
 
         args.rval().setUndefined();

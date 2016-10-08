@@ -19,6 +19,16 @@ void register_all_PluginSdkboxAdsJS(JSContext* cx, JSObject* obj);
 bool js_PluginSdkboxAdsJS_PluginSdkboxAds_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_PluginSdkboxAdsJS_PluginSdkboxAds_finalize(JSContext *cx, JSObject *obj);
 #if defined(MOZJS_MAJOR_VERSION)
+bool js_PluginSdkboxAdsJS_PluginSdkboxAds_hideAd(JSContext *cx, uint32_t argc, jsval *vp);
+#elif defined(JS_VERSION)
+JSBool js_PluginSdkboxAdsJS_PluginSdkboxAds_hideAd(JSContext *cx, uint32_t argc, jsval *vp);
+#endif
+#if defined(MOZJS_MAJOR_VERSION)
+bool js_PluginSdkboxAdsJS_PluginSdkboxAds_hide(JSContext *cx, uint32_t argc, jsval *vp);
+#elif defined(JS_VERSION)
+JSBool js_PluginSdkboxAdsJS_PluginSdkboxAds_hide(JSContext *cx, uint32_t argc, jsval *vp);
+#endif
+#if defined(MOZJS_MAJOR_VERSION)
 bool js_PluginSdkboxAdsJS_PluginSdkboxAds_placement(JSContext *cx, uint32_t argc, jsval *vp);
 #elif defined(JS_VERSION)
 JSBool js_PluginSdkboxAdsJS_PluginSdkboxAds_placement(JSContext *cx, uint32_t argc, jsval *vp);
@@ -27,6 +37,11 @@ JSBool js_PluginSdkboxAdsJS_PluginSdkboxAds_placement(JSContext *cx, uint32_t ar
 bool js_PluginSdkboxAdsJS_PluginSdkboxAds_init(JSContext *cx, uint32_t argc, jsval *vp);
 #elif defined(JS_VERSION)
 JSBool js_PluginSdkboxAdsJS_PluginSdkboxAds_init(JSContext *cx, uint32_t argc, jsval *vp);
+#endif
+#if defined(MOZJS_MAJOR_VERSION)
+bool js_PluginSdkboxAdsJS_PluginSdkboxAds_isAvailable(JSContext *cx, uint32_t argc, jsval *vp);
+#elif defined(JS_VERSION)
+JSBool js_PluginSdkboxAdsJS_PluginSdkboxAds_isAvailable(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 #endif
 

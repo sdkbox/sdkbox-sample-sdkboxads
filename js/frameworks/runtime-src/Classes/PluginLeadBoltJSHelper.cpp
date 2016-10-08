@@ -1,14 +1,18 @@
 #include "PluginLeadBoltJSHelper.h"
-#include "cocos2d_specifics.hpp"
 #include "PluginLeadBolt/PluginLeadBolt.h"
 #include "SDKBoxJSHelper.h"
-
-#include "js_manual_conversions.h"
 
 extern JSObject* jsb_sdkbox_PluginLeadBolt_prototype;
 static JSContext* s_cx = nullptr;
 
-class LBCallbackJS: public cocos2d::CCObject {
+#if (COCOS2D_VERSION < 0x00030000)
+#define Ref CCObject
+#define Director CCDirector
+#define getInstance sharedDirector
+#define schedule scheduleSelector
+#endif
+
+class LBCallbackJS: public cocos2d::Ref {
 public:
     LBCallbackJS();
     void schedule();
@@ -25,16 +29,10 @@ public:
     bool _bool;
 };
 
-class LeadBoltListenerJS : public sdkbox::LeadBoltListener {
-private:
-    JSObject* _JSDelegate;
+class LeadBoltListenerJS : public sdkbox::LeadBoltListener, public sdkbox::JSListenerBase
+{
 public:
-    void setJSDelegate(JSObject* delegate) {
-        _JSDelegate = delegate;
-    }
-
-    JSObject* getJSDelegate() {
-        return _JSDelegate;
+    LeadBoltListenerJS():sdkbox::JSListenerBase() {
     }
 
     virtual void onModuleLoaded(const std::string& placement) {
@@ -87,7 +85,7 @@ public:
         }
         JSContext* cx = s_cx;
         const char* func_name = func;
-        JS::RootedObject obj(cx, _JSDelegate);
+        JS::RootedObject obj(cx, getJSDelegate());
         JSAutoCompartment ac(cx, obj);
 
 #if defined(MOZJS_MAJOR_VERSION)
@@ -142,7 +140,7 @@ _paramLen(0) {
 
 void LBCallbackJS::schedule() {
     retain();
-    cocos2d::CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(LBCallbackJS::notityJs), this, 0.1, false);
+    cocos2d::Director::getInstance()->getScheduler()->schedule(schedule_selector(LBCallbackJS::notityJs), this, 0.1, 0, 0.0f, false);
     autorelease();
 }
 
@@ -152,7 +150,6 @@ void LBCallbackJS::notityJs(float dt) {
     if (l) {
         l->invokeJS(_name.c_str(), this);
     }
-    cocos2d::CCDirector::sharedDirector()->getScheduler()->unscheduleAllForTarget(this);
     release();
 }
 
@@ -196,11 +193,10 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_setListener(JSContext *cx, uint32_t ar
         {
             ok = false;
         }
-        JSObject *tmpObj = args.get(0).toObjectOrNull();
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginLeadBoltJS_PluginLeadBolt_setIAPListener : Error processing arguments");
         LeadBoltListenerJS* wrapper = new LeadBoltListenerJS();
-        wrapper->setJSDelegate(tmpObj);
+        wrapper->setJSDelegate(args.get(0));
         sdkbox::PluginLeadBolt::setListener(wrapper);
 
         args.rval().setUndefined();
