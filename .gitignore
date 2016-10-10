@@ -4,15 +4,20 @@ backup-*/
 contents.xcworkspacedata
 xcuserdata/
 
-cpp/bin/
+local.properties
+
+bin/
+gen/
 cpp/proj.ios_mac/build/
+
 
 cpp/proj.android/local.properties
 cpp/proj.android/assets/
 cpp/proj.android/obj/
 cpp/proj.android/bin/
 cpp/proj.android/gen/
-cpp/proj.android/libs/
+cpp/proj.android/libs/armeabi/
+cpp/proj.android/libs/*.jar
 cpp/proj.android/libs/sdkboxads_lib/local.properties
 cpp/proj.android/libs/sdkboxads_lib/proguard-project.txt
 cpp/proj.android/libs/sdkboxads_lib/bin/
@@ -24,7 +29,8 @@ lua/frameworks/runtime-src/proj.android/assets/
 lua/frameworks/runtime-src/proj.android/obj/
 lua/frameworks/runtime-src/proj.android/bin/
 lua/frameworks/runtime-src/proj.android/gen/
-lua/frameworks/runtime-src/proj.android/libs/
+lua/frameworks/runtime-src/proj.android/libs/armeabi/
+lua/frameworks/runtime-src/proj.android/libs/*.jar
 lua/simulator
 lua/frameworks/runtime-src/proj.android/libs/sdkboxads_lib/bin/
 lua/frameworks/runtime-src/proj.android/libs/sdkboxads_lib/gen/
@@ -38,7 +44,8 @@ js/frameworks/runtime-src/proj.android/assets/
 js/frameworks/runtime-src/proj.android/obj/
 js/frameworks/runtime-src/proj.android/bin/
 js/frameworks/runtime-src/proj.android/gen/
-js/frameworks/runtime-src/proj.android/libs/
+js/frameworks/runtime-src/proj.android/libs/armeabi/
+js/frameworks/runtime-src/proj.android/libs/*.jar
 js/simulator
 js/frameworks/runtime-src/proj.android/libs/sdkboxads_lib/bin/
 js/frameworks/runtime-src/proj.android/libs/sdkboxads_lib/gen/
