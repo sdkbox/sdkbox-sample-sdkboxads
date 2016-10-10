@@ -5,7 +5,6 @@ contents.xcworkspacedata
 xcuserdata/
 
 local.properties
-
 bin/
 gen/
 cpp/proj.ios_mac/build/
