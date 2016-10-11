@@ -119,6 +119,34 @@ function MainScene:setupTestMenu()
         sdkbox.PluginSdkboxAds:playAd("LeadBolt", "ad1")
     end))
 
+
+
+    menu:setPosition(display.width * 1 / 4, display.height / 2)
+    menu:alignItemsVerticallyWithPadding(24)
+    self:addChild(menu)
+
+    -- menu 2
+
+    menu = cc.Menu:create()
+
+    -- show and hide placement
+    menu:addChild(cc.MenuItemLabel:create(cc.Label:createWithSystemFont("Play banners", "sans", 24)):onClicked(function()
+        sdkbox.PluginSdkboxAds:placement("banners")
+    end))
+    menu:addChild(cc.MenuItemLabel:create(cc.Label:createWithSystemFont("Hide banners", "sans", 24)):onClicked(function()
+        sdkbox.PluginSdkboxAds:hide("banners")
+    end))
+
+    -- show and hide Admob banner
+    menu:addChild(cc.MenuItemLabel:create(cc.Label:createWithSystemFont("play AdMob home", "sans", 24)):onClicked(function()
+        sdkbox.PluginSdkboxAds:playAd("AdMob", "home")
+    end))
+    menu:addChild(cc.MenuItemLabel:create(cc.Label:createWithSystemFont("Hide InMobi/AdMob banner", "sans", 24)):onClicked(function()
+        sdkbox.PluginSdkboxAds:hideAd("AdMob", "home")
+        sdkbox.PluginSdkboxAds:hideAd("InMobi", "ad1")
+    end))
+
+    menu:setPosition(display.width * 3 / 4, display.height / 2)
     menu:alignItemsVerticallyWithPadding(24)
     self:addChild(menu)
 end

@@ -153,7 +153,6 @@ var HelloWorldLayer = cc.Layer.extend({
             sdkbox.PluginSdkboxAds.hideAd("InMobi", "ad1");
         }));
 
-        var winsize = cc.winSize;
         menu.x = winsize.width * 3 / 4;
         menu.y = winsize.height / 2;
         menu.alignItemsVerticallyWithPadding(20);
