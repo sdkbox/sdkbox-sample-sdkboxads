@@ -147,7 +147,23 @@ void HelloWorld::createTestMenu()
         CCLOG("Leadbolt Interstital");
         sdkbox::PluginSdkboxAds::playAd("LeadBolt", "ad1");
     }));
-    
+
+    // show and hide placement
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Play banners", "sans", 24), [](Ref*){
+        sdkbox::PluginSdkboxAds::placement("banners");
+    }));
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Hide banners", "sans", 24), [](Ref*){
+        sdkbox::PluginSdkboxAds::hide("banners");
+    }));
+
+    // show and hide Admob banner
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("play AdMob home", "sans", 24), [](Ref*){
+        sdkbox::PluginSdkboxAds::playAd("AdMob", "home");
+    }));
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Hide InMobi/AdMob banner", "sans", 24), [](Ref*){
+        sdkbox::PluginSdkboxAds::hideAd("AdMob", "home");
+        sdkbox::PluginSdkboxAds::hideAd("InMobi", "ad1");
+    }));
 
     menu->alignItemsVerticallyWithPadding(10);
     addChild(menu);

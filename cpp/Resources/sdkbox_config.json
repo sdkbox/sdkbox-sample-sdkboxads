@@ -134,7 +134,8 @@
             "testdevice": "FE20924C46522E2E204587EB339897C6,kGADSimulatorID", 
             "test": true, 
             "cache": {
-                "gameover": true
+                "gameover": true,
+                "home":true
             }, 
             "ads": {
                 "gameover": {
@@ -279,7 +280,17 @@
                     ], 
                     "id": "placement-2", 
                     "strategy": "round-robin"
-                }
+                },
+                           {
+                           "id":"banners",
+                           "strategy":"round-robin",
+                           "units": [
+                           {
+                            "name":"home",
+                            "unit":"AdMob"
+                           }
+                           ]
+                           }
             ]
         }, 
         "Appnext": {
@@ -293,10 +304,10 @@
             }
         }, 
         "AdMob": {
-            "testdevice": "kGADSimulatorID", 
-            "test": true, 
+            "test": false,
             "cache": {
-                "gameover": true
+                "gameover": true,
+                "home": true
             }, 
             "ads": {
                 "gameover": {
