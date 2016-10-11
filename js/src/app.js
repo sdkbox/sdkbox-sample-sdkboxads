@@ -128,7 +128,33 @@ var HelloWorldLayer = cc.Layer.extend({
         }));
 
         var winsize = cc.winSize;
-        menu.x = winsize.width / 2;
+        menu.x = winsize.width / 4;
+        menu.y = winsize.height / 2;
+        menu.alignItemsVerticallyWithPadding(20);
+        this.addChild(menu);
+
+        // menu 2
+
+        menu = new cc.Menu();
+        // show and hide placement
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Play banners", "sans", 24), function() {
+            sdkbox.PluginSdkboxAds.placement("banners");
+        }));
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Hide banners", "sans", 24), function() {
+            sdkbox.PluginSdkboxAds.hide("banners");
+        }));
+
+        // show and hide Admob banner
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("play AdMob home", "sans", 24), function() {
+            sdkbox.PluginSdkboxAds.playAd("AdMob", "home");
+        }));
+        menu.addChild(new cc.MenuItemLabel(new cc.LabelTTF("Hide InMobi/AdMob banner", "sans", 24), function() {
+            sdkbox.PluginSdkboxAds.hideAd("AdMob", "home");
+            sdkbox.PluginSdkboxAds.hideAd("InMobi", "ad1");
+        }));
+
+        var winsize = cc.winSize;
+        menu.x = winsize.width * 3 / 4;
         menu.y = winsize.height / 2;
         menu.alignItemsVerticallyWithPadding(20);
         this.addChild(menu);
