@@ -99,6 +99,7 @@
 		D6B061241803AB9F0077942B /* CoreMotion.framework */ = {isa = PBXBuildFile; fileRef = D6B061231803AB9F0077942B /* CoreMotion.framework */; };
 		DA694C39B4F780D474E73E08 /* libz.1.2.5.dylib */ = {isa = PBXBuildFile; fileRef = 0ABE473FBD06F02790A0355F /* libz.1.2.5.dylib */; };
 		DE544067AE016B0C90D2A6EC /* VungleSDK.framework */ = {isa = PBXBuildFile; fileRef = A4334810975F1A1000DB77DC /* VungleSDK.framework */; };
+		E2EF434EB3B6F7AC90EB5098 /* AppTracker.framework */ = {isa = PBXBuildFile; fileRef = CBF64BCD9FA26CD5DC15A4CB /* AppTracker.framework */; };
 		ED545A901B68A25E00C3958E /* libiconv.dylib */ = {isa = PBXBuildFile; fileRef = ED545A8F1B68A25E00C3958E /* libiconv.dylib */; };
 		EE8C4E1E97C164BE8C6A7443 /* sdkbox.framework */ = {isa = PBXBuildFile; fileRef = 718C485A9D74784F9F0911B9 /* sdkbox.framework */; };
 		F3C54F33AB8C3031FDC7B0E6 /* PluginFyberJSHelper.cpp */ = {isa = PBXBuildFile; fileRef = CED34C22AA28AB22D14D46BB /* PluginFyberJSHelper.cpp */; };
@@ -215,6 +216,7 @@
 		C0799CB518BAE62000E9C828 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../../res; sourceTree = "<group>"; };
 		C3F046FBB7F7BFE67A69CF57 /* PluginLeadBoltJSHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginLeadBoltJSHelper.cpp; path = ../Classes/PluginLeadBoltJSHelper.cpp; sourceTree = SOURCE_ROOT; };
 		C4E445A98CD5AC4E33B91910 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = file.tbd; name = libsqlite3.0.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.0.tbd; sourceTree = DEVELOPER_DIR; };
+		CBF64BCD9FA26CD5DC15A4CB /* AppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTracker.framework; path = AppTracker.framework; sourceTree = SOURCE_ROOT; };
 		CCFC48CC9F14620B218AC6EE /* PluginAdColonyJSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginAdColonyJSHelper.h; path = ../Classes/PluginAdColonyJSHelper.h; sourceTree = SOURCE_ROOT; };
 		CE8A4915BB63E5CF9D554E47 /* PluginAdMobJSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginAdMobJSHelper.h; path = ../Classes/PluginAdMobJSHelper.h; sourceTree = SOURCE_ROOT; };
 		CEC441F2BDA00A7E377E1CBD /* PluginSdkboxAdsJSHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginSdkboxAdsJSHelper.cpp; path = ../Classes/PluginSdkboxAdsJSHelper.cpp; sourceTree = SOURCE_ROOT; };
@@ -295,6 +297,7 @@
 				1D224FE1904B22AB7F34A247 /* GLKit.framework */,
 				106141B0BB3DCA633408EB6E /* CoreVideo.framework */,
 				6FEA4E79B650C3B3F6294936 /* MobileCoreServices.framework */,
+				E2EF434EB3B6F7AC90EB5098 /* AppTracker.framework */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +427,7 @@
 				87A24656A7FD9425EABDD71D /* GLKit.framework */,
 				647C4CB28882672DD5904943 /* CoreVideo.framework */,
 				3CD5423BBFCBA01E00042B28 /* MobileCoreServices.framework */,
+				CBF64BCD9FA26CD5DC15A4CB /* AppTracker.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -732,6 +736,7 @@
 					"\"PluginAdMob.framework\"",
 					"\"GoogleMobileAds.framework\"",
 					"\"PluginInMobi.framework\"",
+					"\"AppTracker.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
@@ -788,6 +793,7 @@
 					"\"PluginAdMob.framework\"",
 					"\"GoogleMobileAds.framework\"",
 					"\"PluginInMobi.framework\"",
+					"\"AppTracker.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
