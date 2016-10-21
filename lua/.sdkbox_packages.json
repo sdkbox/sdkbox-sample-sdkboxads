@@ -16,7 +16,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -25,16 +25,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "android_lua_sources": [
                 "../../Classes/PluginSdkboxAdsLua.hpp", 
@@ -48,7 +48,7 @@
             "SDKBOX_PLUGIN_NAME": "SdkboxAds", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -65,8 +65,8 @@
                 "SDKBoxLuaHelper.h", 
                 "SDKBoxLuaHelper.cpp"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
@@ -102,7 +102,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -111,16 +111,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "google_play_services": "frameworks/runtime-src/proj.android/libs/gps/", 
             "android_lua_sources": [
@@ -135,7 +135,7 @@
             "SDKBOX_PLUGIN_NAME": "LeadBolt", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -149,8 +149,8 @@
                 "../../Classes/PluginLeadBoltLuaHelper.cpp", 
                 "../../Classes/SDKBoxLuaHelper.cpp"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
@@ -186,7 +186,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -195,16 +195,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "google_play_services": "frameworks/runtime-src/proj.android/libs/gps/", 
             "android_lua_sources": [
@@ -219,7 +219,7 @@
             "SDKBOX_PLUGIN_NAME": "AdMob", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -233,8 +233,8 @@
                 "../../Classes/PluginAdMobLuaHelper.cpp", 
                 "../../Classes/SDKBoxLuaHelper.cpp"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
@@ -270,7 +270,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -279,16 +279,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "google_play_services": "frameworks/runtime-src/proj.android/libs/gps/", 
             "android_lua_sources": [
@@ -303,7 +303,7 @@
             "SDKBOX_PLUGIN_NAME": "Fyber", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -320,8 +320,8 @@
                 "SDKBoxLuaHelper.h", 
                 "SDKBoxLuaHelper.cpp"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
@@ -357,7 +357,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -366,16 +366,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "google_play_services": "frameworks/runtime-src/proj.android/libs/gps/", 
             "android_lua_sources": [
@@ -390,7 +390,7 @@
             "SDKBOX_PLUGIN_NAME": "InMobi", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -404,8 +404,8 @@
                 "../../Classes/PluginInMobiLuaHelper.cpp", 
                 "../../Classes/SDKBoxLuaHelper.cpp"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
@@ -441,7 +441,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -450,16 +450,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "google_play_services": "frameworks/runtime-src/proj.android/libs/gps/", 
             "android_lua_sources": [
@@ -474,7 +474,7 @@
             "SDKBOX_PLUGIN_NAME": "LeadBolt", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -488,8 +488,8 @@
                 "../../Classes/PluginLeadBoltLuaHelper.cpp", 
                 "../../Classes/SDKBoxLuaHelper.cpp"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
@@ -525,7 +525,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -534,16 +534,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "google_play_services": "frameworks/runtime-src/proj.android/libs/gps/", 
             "android_lua_sources": [
@@ -558,7 +558,7 @@
             "SDKBOX_PLUGIN_NAME": "Vungle", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -575,8 +575,8 @@
                 "SDKBoxLuaHelper.h", 
                 "SDKBoxLuaHelper.cpp"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
@@ -612,7 +612,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -621,16 +621,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "google_play_services": "frameworks/runtime-src/proj.android/libs/gps/", 
             "android_lua_sources": [
@@ -645,7 +645,7 @@
             "SDKBOX_PLUGIN_NAME": "Chartboost", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -662,8 +662,8 @@
                 "../../Classes/SDKBoxLuaHelper.cpp", 
                 "../../Classes/SDKBoxLuaHelper.h"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
@@ -699,7 +699,7 @@
             "project": "./", 
             "command": "update", 
             "alwaysupdate": 0, 
-            "installer": "/Users/xqc/.sdkbox/bin/sdkbox.pyc", 
+            "installer": "/Users/hugo/.sdkbox/bin/sdkbox.pyc", 
             "nopatchingcpp": 0, 
             "local": 0, 
             "nopatching": 1, 
@@ -708,16 +708,16 @@
         "version": [
             2, 
             3, 
-            2, 
-            0
+            3, 
+            4
         ], 
         "result": "ok", 
         "message": "success", 
         "constants": {
             "ANDROID_STUDIO_JNI_DIR": "n/a", 
-            "COCOS_BACKUP_DIR": "backup-2016-10-09/", 
+            "COCOS_BACKUP_DIR": "backup-2016-10-21/", 
             "COCOS_PROJECT_DIR": "./", 
-            "COCOS_2DX_INSTALLATION_VERSION": "3.13.1", 
+            "COCOS_2DX_INSTALLATION_VERSION": "3.8.0", 
             "ANDROID_COCOS_PACKAGE_ROOT": "frameworks/runtime-src/proj.android/", 
             "google_play_services": "frameworks/runtime-src/proj.android/libs/gps/", 
             "android_lua_sources": [
@@ -732,7 +732,7 @@
             "SDKBOX_PLUGIN_NAME": "AdColony", 
             "ANDROID_STUDIO_PROJECT_DIR": "n/a", 
             "COCOS_PROJECT_HINT": "frameworks/runtime-src/", 
-            "SDKBOX_DIR": "/Users/xqc/.sdkbox/", 
+            "SDKBOX_DIR": "/Users/hugo/.sdkbox/", 
             "ANDROID_STUDIO_PROPERTIES": "n/a", 
             "IOS_PROJECT_DIR": "frameworks/runtime-src/proj.ios_mac/", 
             "ANDROID_PROJECT_DIR": "frameworks/runtime-src/proj.android/", 
@@ -746,8 +746,8 @@
                 "../../Classes/PluginAdcolonyLuaHelper.cpp", 
                 "../../Classes/SDKBoxLuaHelper.cpp"
             ], 
-            "ANDROID_SDK_DIR": "/Users/xqc/Android/android-sdk/", 
-            "COCOS_2DX_ROOT": "/Users/xqc/Documents/cocos2d-x-3.13.1/", 
+            "ANDROID_SDK_DIR": "/Users/hugo/Library/Android/sdk/", 
+            "COCOS_2DX_ROOT": "/Applications/Cocos/frameworks/cocos2d-x-3.8.1/", 
             "ANDROID_MANIFEST": "frameworks/runtime-src/proj.android/AndroidManifest.xml", 
             "ANDROID_STUDIO_MANIFEST": "n/a", 
             "ANDROID_JNI_DIR": "frameworks/runtime-src/proj.android/jni/", 
