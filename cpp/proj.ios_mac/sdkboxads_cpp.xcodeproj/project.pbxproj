@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		04654B0EA6AA5FDE4893C6BA /* MessageUI.framework */ = {isa = PBXBuildFile; fileRef = 3A604213AD8BF06DA55BF8B4 /* MessageUI.framework */; };
 		11E94508A2963B2E50541227 /* res */ = {isa = PBXBuildFile; fileRef = 847C4737BB87694BD4544EE6 /* res */; };
+		145F416DA894A96EE0DE5F90 /* AppTracker.framework */ = {isa = PBXBuildFile; fileRef = 630A4969B8FF00DC6035B4C7 /* AppTracker.framework */; };
 		19454ED8AF19B9FF1C0AF853 /* GLKit.framework */ = {isa = PBXBuildFile; fileRef = 2CA844B7914E093B46B618A9 /* GLKit.framework */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DAF4BD080E714B52766F325 /* PluginInMobi.framework */ = {isa = PBXBuildFile; fileRef = 0B4F41678EBD6D04FE8BB4A9 /* PluginInMobi.framework */; };
@@ -135,6 +136,7 @@
 		521A8E6219F0C34300D177D7 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		630A4969B8FF00DC6035B4C7 /* AppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTracker.framework; path = AppTracker.framework; sourceTree = SOURCE_ROOT; };
 		6A2040A5B3B22ED97B06FBE5 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		6E764D77A6FE5FD1B55EC29B /* PluginLeadBolt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginLeadBolt.framework; path = PluginLeadBolt.framework; sourceTree = SOURCE_ROOT; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -228,6 +230,7 @@
 				19454ED8AF19B9FF1C0AF853 /* GLKit.framework */,
 				E3484C498C7F5F1E2393BF3F /* CoreVideo.framework */,
 				8FE64579B71EC8FE66252C34 /* MobileCoreServices.framework */,
+				145F416DA894A96EE0DE5F90 /* AppTracker.framework */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +331,7 @@
 				2CA844B7914E093B46B618A9 /* GLKit.framework */,
 				998148AB9CA175AF24FD51F4 /* CoreVideo.framework */,
 				8A094DD285D22ECAA8BF6991 /* MobileCoreServices.framework */,
+				630A4969B8FF00DC6035B4C7 /* AppTracker.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -525,6 +529,7 @@
 					"\"GoogleMobileAds.framework\"",
 					"\"PluginInMobi.framework\"",
 					"\"PluginLeadBolt.framework\"",
+					"\"AppTracker.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
@@ -583,6 +588,7 @@
 					"\"GoogleMobileAds.framework\"",
 					"\"PluginInMobi.framework\"",
 					"\"PluginLeadBolt.framework\"",
+					"\"AppTracker.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
