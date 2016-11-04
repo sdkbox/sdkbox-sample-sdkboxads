@@ -28,6 +28,7 @@
 		3BBA40C1AB7CBCD49F620E62 /* EventKit.framework */ = {isa = PBXBuildFile; fileRef = 6AF3405F8647595410C21071 /* EventKit.framework */; };
 		3DFC47078704E66351A5CA95 /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = BB244FA78F5BC372FD5ADC3B /* WebKit.framework */; };
 		3F2741E287B43BCEB8D2CCE4 /* AdSupport.framework */ = {isa = PBXBuildFile; fileRef = 7471429EA7DB262E5DAE6422 /* AdSupport.framework */; };
+		402643CD8C33A1CAFB9B1CE3 /* InMobiSDK.framework */ = {isa = PBXBuildFile; fileRef = 04214DBBA5D2CF71063B1656 /* InMobiSDK.framework */; };
 		47934BC4A6A8DCAF7334FEEE /* CoreTelephony.framework */ = {isa = PBXBuildFile; fileRef = BA204E05AB50463245ED617B /* CoreTelephony.framework */; };
 		48044F74809312489088258F /* libc++.tbd */ = {isa = PBXBuildFile; fileRef = 8C754817B21721A8340DD490 /* libc++.tbd */; };
 		498B452C9E98B6E14A9B86D2 /* script */ = {isa = PBXBuildFile; fileRef = 671A491884E0C7533ED0085C /* script */; };
@@ -92,6 +93,7 @@
 		C03780EB18BEE0E400FE4F13 /* src */ = {isa = PBXBuildFile; fileRef = C03780EA18BEE0E400FE4F13 /* src */; };
 		C05D1C171923467600B808A4 /* config.json */ = {isa = PBXBuildFile; fileRef = C05D1C161923467600B808A4 /* config.json */; };
 		C0799CB918BAE62000E9C828 /* res */ = {isa = PBXBuildFile; fileRef = C0799CB518BAE62000E9C828 /* res */; };
+		C82D452D8030A031462E771B /* libz.tbd */ = {isa = PBXBuildFile; fileRef = 248E48A190CAA78904267607 /* libz.tbd */; };
 		CA734B6C864C29B5030AF4BA /* PluginSdkboxAdsJS.cpp */ = {isa = PBXBuildFile; fileRef = A4124691A4E5FB0ED978EE33 /* PluginSdkboxAdsJS.cpp */; };
 		D1EC4F698B1BA4611508661C /* MessageUI.framework */ = {isa = PBXBuildFile; fileRef = 8F9B4077A43A487F2ECCC106 /* MessageUI.framework */; };
 		D454520C156E22BD00887EB5 /* libz.dylib */ = {isa = PBXBuildFile; fileRef = D454520B156E22BD00887EB5 /* libz.dylib */; };
@@ -107,6 +109,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04214DBBA5D2CF71063B1656 /* InMobiSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InMobiSDK.framework; path = InMobiSDK.framework; sourceTree = SOURCE_ROOT; };
 		06994611BA4865493CB6AEC8 /* SDKBoxJSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SDKBoxJSHelper.h; path = ../Classes/SDKBoxJSHelper.h; sourceTree = SOURCE_ROOT; };
 		06D0462FB006506FA8F5892D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		074D4A5AAC57C025125C5215 /* PluginFyber.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginFyber.framework; path = PluginFyber.framework; sourceTree = SOURCE_ROOT; };
@@ -121,6 +124,7 @@
 		1A96A4F2174A3432008653A9 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "$(SRCROOT)/../../../../../sdkbox-cocos2d-x-binary/cocos2dx/platform/third_party/ios/libraries/libcurl.a"; sourceTree = "<group>"; };
 		1F6A47FE85FFAC897EE893D7 /* PluginVungleJS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginVungleJS.hpp; path = ../Classes/PluginVungleJS.hpp; sourceTree = SOURCE_ROOT; };
 		218B4B68B3F7FDDA158E866F /* PluginAdMob.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginAdMob.framework; path = PluginAdMob.framework; sourceTree = SOURCE_ROOT; };
+		248E48A190CAA78904267607 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = file.tbd; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		25314D7F96A5964397743D54 /* libjscocos2d iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libjscocos2d iOS.a"; path = "$(SRCROOT)/../../../../../sdkbox-cocos2d-x-binary/prebuilt/ios/libjscocos2d iOS.a"; sourceTree = "<absolute>"; };
 		295345728E028F963A83E6FD /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Social.framework; sourceTree = DEVELOPER_DIR; };
 		2C1B43DFA8644A548BE2487C /* PluginFyberJSHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginFyberJSHelper.h; path = ../Classes/PluginFyberJSHelper.h; sourceTree = SOURCE_ROOT; };
@@ -298,6 +302,8 @@
 				106141B0BB3DCA633408EB6E /* CoreVideo.framework */,
 				6FEA4E79B650C3B3F6294936 /* MobileCoreServices.framework */,
 				E2EF434EB3B6F7AC90EB5098 /* AppTracker.framework */,
+				402643CD8C33A1CAFB9B1CE3 /* InMobiSDK.framework */,
+				C82D452D8030A031462E771B /* libz.tbd */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +434,8 @@
 				647C4CB28882672DD5904943 /* CoreVideo.framework */,
 				3CD5423BBFCBA01E00042B28 /* MobileCoreServices.framework */,
 				CBF64BCD9FA26CD5DC15A4CB /* AppTracker.framework */,
+				04214DBBA5D2CF71063B1656 /* InMobiSDK.framework */,
+				248E48A190CAA78904267607 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -737,6 +745,7 @@
 					"\"GoogleMobileAds.framework\"",
 					"\"PluginInMobi.framework\"",
 					"\"AppTracker.framework\"",
+					"\"InMobiSDK.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
@@ -794,6 +803,7 @@
 					"\"GoogleMobileAds.framework\"",
 					"\"PluginInMobi.framework\"",
 					"\"AppTracker.framework\"",
+					"\"InMobiSDK.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
