@@ -72,6 +72,7 @@
 		9FC760451A677A4A00D1E6E7 /* SimpleConfigParser.cpp */ = {isa = PBXBuildFile; fileRef = 9FC760411A67791200D1E6E7 /* SimpleConfigParser.cpp */; };
 		9FFE009F1ACCF59E00D6E35A /* lua_debugger.c */ = {isa = PBXBuildFile; fileRef = 9FFE009B1ACCF59E00D6E35A /* lua_debugger.c */; };
 		9FFE00A11ACCF59E00D6E35A /* RuntimeLuaImpl.cpp */ = {isa = PBXBuildFile; fileRef = 9FFE009D1ACCF59E00D6E35A /* RuntimeLuaImpl.cpp */; };
+		A1AC407F8215A837D049F643 /* libz.tbd */ = {isa = PBXBuildFile; fileRef = 0F5E43478E34221CEDDB5DD3 /* libz.tbd */; };
 		A2764A088B70666646ADF492 /* PluginLeadBolt.framework */ = {isa = PBXBuildFile; fileRef = 9AF24C86BA9416ADB4487B80 /* PluginLeadBolt.framework */; };
 		A2F24A4EA305CF46EAF22E21 /* Chartboost.framework */ = {isa = PBXBuildFile; fileRef = C5F042D2839794451E469A5A /* Chartboost.framework */; };
 		A6644565B786BDEBFDEC56A2 /* SystemConfiguration.framework */ = {isa = PBXBuildFile; fileRef = AEA44E4FBB9611E03B8B5EC2 /* SystemConfiguration.framework */; };
@@ -103,6 +104,7 @@
 		F293B3D915EB7BE500256477 /* Foundation.framework */ = {isa = PBXBuildFile; fileRef = F293B3D815EB7BE500256477 /* Foundation.framework */; };
 		F293B3DB15EB7BE500256477 /* CoreGraphics.framework */ = {isa = PBXBuildFile; fileRef = F293B3DA15EB7BE500256477 /* CoreGraphics.framework */; };
 		F293BB9C15EB831F00256477 /* AppDelegate.cpp */ = {isa = PBXBuildFile; fileRef = F293BB7E15EB831F00256477 /* AppDelegate.cpp */; };
+		F5144F92913C01A9D92FC724 /* InMobiSDK.framework */ = {isa = PBXBuildFile; fileRef = 6B794F068F99BE00DFB2FFB3 /* InMobiSDK.framework */; };
 		FC6F41BCA908E5196AF3C271 /* PluginSdkboxAds.framework */ = {isa = PBXBuildFile; fileRef = F3D1407A937B89750868818A /* PluginSdkboxAds.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +115,7 @@
 		0D2D40D7B87EDD725C7ADDC8 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		0E2843CBB7B963EC09A0F11B /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/EventKitUI.framework; sourceTree = DEVELOPER_DIR; };
 		0E334551A2408C0C13C180D6 /* PluginFyberLua.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginFyberLua.hpp; path = ../Classes/PluginFyberLua.hpp; sourceTree = SOURCE_ROOT; };
+		0F5E43478E34221CEDDB5DD3 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = file.tbd; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
 		15427CE2198F237300DC375D /* lua_module_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_module_register.h; path = ../Classes/lua_module_register.h; sourceTree = "<group>"; };
 		15A8A4871834C90E00142BE0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = compiled.mach-o.dylib; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2d-x/cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -176,6 +179,7 @@
 		5CF54A188D6FC18E93BE0DF7 /* PluginChartboostLua.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginChartboostLua.cpp; path = ../Classes/PluginChartboostLua.cpp; sourceTree = SOURCE_ROOT; };
 		5FA54F01A21C5778D54E9059 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SafariServices.framework; sourceTree = DEVELOPER_DIR; };
 		661948408FD0BDF90280341B /* PluginInMobi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginInMobi.framework; path = PluginInMobi.framework; sourceTree = SOURCE_ROOT; };
+		6B794F068F99BE00DFB2FFB3 /* InMobiSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InMobiSDK.framework; path = InMobiSDK.framework; sourceTree = SOURCE_ROOT; };
 		6BD64678827B1F681CDE6F37 /* PluginFyber.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginFyber.framework; path = PluginFyber.framework; sourceTree = SOURCE_ROOT; };
 		732949BC87FAF976E7DBBE49 /* PluginAdMobLuaHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginAdMobLuaHelper.cpp; path = ../Classes/PluginAdMobLuaHelper.cpp; sourceTree = SOURCE_ROOT; };
 		74504302983F5C5C58C8380A /* libluacocos2d iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libluacocos2d iOS.a"; path = "$(SRCROOT)/../../../../../sdkbox-cocos2d-x-binary/prebuilt/ios/libluacocos2d iOS.a"; sourceTree = "<absolute>"; };
@@ -301,6 +305,8 @@
 				881B4933B46D472BCECBEF8C /* CoreVideo.framework */,
 				85F944E1A0A40C6558702ACC /* MobileCoreServices.framework */,
 				4E304314A4B5A400E73F6758 /* AppTracker.framework */,
+				F5144F92913C01A9D92FC724 /* InMobiSDK.framework */,
+				A1AC407F8215A837D049F643 /* libz.tbd */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +460,8 @@
 				C6CD42A792251FF379ABCF65 /* CoreVideo.framework */,
 				2C7443259753F04E7A1B9A55 /* MobileCoreServices.framework */,
 				BA0448F1BC256BE5E9736B5C /* AppTracker.framework */,
+				6B794F068F99BE00DFB2FFB3 /* InMobiSDK.framework */,
+				0F5E43478E34221CEDDB5DD3 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -736,6 +744,7 @@
 					"\"PluginAdColony.framework\"",
 					"\"AdColony.framework\"",
 					"\"AppTracker.framework\"",
+					"\"InMobiSDK.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
@@ -802,6 +811,7 @@
 					"\"PluginAdColony.framework\"",
 					"\"AdColony.framework\"",
 					"\"AppTracker.framework\"",
+					"\"InMobiSDK.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
