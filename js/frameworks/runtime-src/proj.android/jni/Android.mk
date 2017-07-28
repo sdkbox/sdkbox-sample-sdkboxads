@@ -27,10 +27,6 @@ hellojavascript/main.cpp \
 ../../Classes/PluginChartboostJS.hpp \
 ../../Classes/PluginChartboostJSHelper.cpp \
 ../../Classes/PluginChartboostJSHelper.h \
-../../Classes/PluginVungleJS.cpp \
-../../Classes/PluginVungleJS.hpp \
-../../Classes/PluginVungleJSHelper.cpp \
-../../Classes/PluginVungleJSHelper.h \
 ../../Classes/PluginAdColonyJS.cpp \
 ../../Classes/PluginAdColonyJSHelper.cpp \
 ../../Classes/PluginLeadBoltJS.cpp \
@@ -48,7 +44,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES := PluginSdkboxAds \
 sdkbox \
 PluginFyber \
 PluginChartboost \
-PluginVungle \
 PluginAdColony \
 PluginLeadBolt \
 PluginAdMob \
@@ -67,7 +62,6 @@ $(call import-module, ./sdkbox)
 $(call import-module, ./pluginsdkboxads)
 $(call import-module, ./pluginfyber)
 $(call import-module, ./pluginchartboost)
-$(call import-module, ./pluginvungle)
 $(call import-module, ./pluginadcolony)
 $(call import-module, ./pluginleadbolt)
 $(call import-module, ./pluginadmob)
