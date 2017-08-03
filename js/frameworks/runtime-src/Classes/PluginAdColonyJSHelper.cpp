@@ -10,50 +10,54 @@ JSObject* adinfo_to_obj(JSContext* cx, const sdkbox::AdColonyAdInfo& info)
 {
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
+#if MOZJS_MAJOR_VERSION >= 52
+    JS::RootedObject jsobj(cx, JS_NewObject(cx, NULL));
+#else
     JS::RootedObject jsobj(cx, JS_NewObject(cx, NULL, JS::NullPtr(), JS::NullPtr()));
+#endif
     JS::RootedValue name(cx);
-    name = std_string_to_jsval(cx, info.name);
+    name = SB_STR_TO_JSVAL(cx, info.name);
 
     JS_SetProperty(cx, jsobj, "name", name);
 
     JS::RootedValue zoneID(cx);
-    zoneID = std_string_to_jsval(cx, info.zoneID);
+    zoneID = SB_STR_TO_JSVAL(cx, info.zoneID);
 
     JS_SetProperty(cx, jsobj, "zoneID", zoneID);
 
     JS::RootedValue shown(cx);
-    shown = BOOLEAN_TO_JSVAL(info.shown);
+    shown = JS::BooleanValue(info.shown);
 
     JS_SetProperty(cx, jsobj, "shown", shown);
 
     JS::RootedValue iapEnabled(cx);
-    iapEnabled = BOOLEAN_TO_JSVAL(info.iapEnabled);
+    iapEnabled = JS::BooleanValue(info.iapEnabled);
 
     JS_SetProperty(cx, jsobj, "iapEnabled", iapEnabled);
 
     JS::RootedValue iapProductID(cx);
-    iapProductID = std_string_to_jsval(cx, info.iapProductID);
+    iapProductID = SB_STR_TO_JSVAL(cx, info.iapProductID);
 
     JS_SetProperty(cx, jsobj, "iapProductID", iapProductID);
 
     JS::RootedValue iapQuantity(cx);
-    iapQuantity = INT_TO_JSVAL(info.iapQuantity);
+    iapQuantity = JS::Int32Value(info.iapQuantity);
 
     JS_SetProperty(cx, jsobj, "iapQuantity", iapQuantity);
 
     JS::RootedValue iapEngagementType(cx);
-    iapEngagementType = INT_TO_JSVAL(info.iapEngagementType);
+    iapEngagementType = JS::Int32Value(info.iapEngagementType);
 
     JS_SetProperty(cx, jsobj, "iapEngagementType", iapEngagementType);
 #else
     JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
 
     JS::RootedValue name(cx);
-    name = std_string_to_jsval(cx, info.name);
+    name = SB_STR_TO_JSVAL(cx, info.name);
     JS_SetProperty(cx, jsobj, "name", name);
 
     JS::RootedValue zoneID(cx);
-    zoneID = std_string_to_jsval(cx, info.zoneID);
+    zoneID = SB_STR_TO_JSVAL(cx, info.zoneID);
     JS_SetProperty(cx, jsobj, "zoneID", zoneID);
 
     JS::RootedValue shown(cx);
@@ -65,7 +69,7 @@ JSObject* adinfo_to_obj(JSContext* cx, const sdkbox::AdColonyAdInfo& info)
     JS_SetProperty(cx, jsobj, "iapEnabled", iapEnabled);
 
     JS::RootedValue iapProductID(cx);
-    iapProductID = std_string_to_jsval(cx, info.iapProductID);
+    iapProductID = SB_STR_TO_JSVAL(cx, info.iapProductID);
     JS_SetProperty(cx, jsobj, "iapProductID", iapProductID);
 
     JS::RootedValue iapQuantity(cx);
@@ -79,12 +83,12 @@ JSObject* adinfo_to_obj(JSContext* cx, const sdkbox::AdColonyAdInfo& info)
 #elif defined(JS_VERSION)
     JSObject* jsobj = JS_NewObject(cx, NULL, NULL, NULL);
     jsval name;
-    name = std_string_to_jsval(cx, info.name);
+    name = SB_STR_TO_JSVAL(cx, info.name);
 
     JS_SetProperty(cx, jsobj, "name", &name);
 
     jsval zoneID;
-    zoneID = std_string_to_jsval(cx, info.zoneID);
+    zoneID = SB_STR_TO_JSVAL(cx, info.zoneID);
 
     JS_SetProperty(cx, jsobj, "zoneID", &zoneID);
 
@@ -99,7 +103,7 @@ JSObject* adinfo_to_obj(JSContext* cx, const sdkbox::AdColonyAdInfo& info)
     JS_SetProperty(cx, jsobj, "iapEnabled", &iapEnabled);
 
     jsval iapProductID;
-    iapProductID = std_string_to_jsval(cx, info.iapProductID);
+    iapProductID = SB_STR_TO_JSVAL(cx, info.iapProductID);
 
     JS_SetProperty(cx, jsobj, "iapProductID", &iapProductID);
 
@@ -154,18 +158,15 @@ public:
         jsval func_handle;
 #endif
 
-        jsval dataVal[2];
-
-        jsval value = OBJECT_TO_JSVAL(adinfo_to_obj(s_cx, info));
-
-        dataVal[0] = value;
-        dataVal[1] = BOOLEAN_TO_JSVAL(available);
+        JS::Value dataVal[2];
+        dataVal[0] = JS::ObjectValue(*adinfo_to_obj(s_cx, info));
+        dataVal[1] = JS::BooleanValue(available);
 
         if (JS_HasProperty(cx, obj, func_name, &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -210,18 +211,17 @@ public:
         jsval retval;
         jsval func_handle;
 #endif
-        jsval dataVal[4];
-        jsval value = OBJECT_TO_JSVAL(adinfo_to_obj(s_cx, info));
-        dataVal[0] = value;
-        dataVal[1] = std_string_to_jsval(cx, currencyName);
-        dataVal[2] = INT_TO_JSVAL(amount);
-        dataVal[3] = BOOLEAN_TO_JSVAL(success);
+        JS::Value dataVal[4];
+        dataVal[0] = JS::ObjectValue(*adinfo_to_obj(s_cx, info));
+        dataVal[1] = SB_STR_TO_JSVAL(s_cx, currencyName);
+        dataVal[2] = JS::Int32Value(amount);
+        dataVal[3] = JS::BooleanValue(success);
 
         if (JS_HasProperty(cx, obj, func_name, &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -266,17 +266,14 @@ public:
         jsval retval;
         jsval func_handle;
 #endif
-        jsval dataVal[1];
-
-        jsval value = OBJECT_TO_JSVAL(adinfo_to_obj(s_cx, info));
-
-        dataVal[0] = value;
+        JS::Value dataVal[1];
+        dataVal[0] = JS::ObjectValue(*adinfo_to_obj(s_cx, info));
 
         if (JS_HasProperty(cx, obj, func_name, &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -321,17 +318,14 @@ public:
         jsval retval;
         jsval func_handle;
 #endif
-        jsval dataVal[1];
-
-        jsval value = OBJECT_TO_JSVAL(adinfo_to_obj(s_cx, info));
-
-        dataVal[0] = value;
+        JS::Value dataVal[1];
+        dataVal[0] = JS::ObjectValue(*adinfo_to_obj(s_cx, info));
 
         if (JS_HasProperty(cx, obj, func_name, &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -350,7 +344,7 @@ public:
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
-bool js_PluginAdColonyJS_PluginAdColony_setListener(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_setListener(JSContext *cx, uint32_t argc, JS::Value *vp)
 #else
 bool js_PluginAdColonyJS_PluginAdColony_setListener(JSContext *cx, uint32_t argc, jsval *vp)
 #endif
@@ -371,13 +365,13 @@ JSBool js_PluginAdColonyJS_PluginAdColony_setListener(JSContext *cx, uint32_t ar
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginAdColonyJS_PluginAdColony_setIAPListener : Error processing arguments");
         AdColonyListenerWrapper* wrapper = new AdColonyListenerWrapper();
-        wrapper->setJSDelegate(args.get(0));
+        wrapper->setJSDelegate(cx, args.get(0));
         sdkbox::PluginAdColony::setListener(wrapper);
 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_setIAPListener : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_setIAPListener : wrong number of arguments");
     return false;
 }
 

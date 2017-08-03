@@ -16,10 +16,10 @@ public:
                                           const std::string& errorMsg)
     {
         std::string name("onVirtualCurrencyConnectorFailed");
-        jsval dataVal[4];
-        dataVal[0] = INT_TO_JSVAL(error);
-        dataVal[1] = c_string_to_jsval(s_cx, errorCode.c_str());
-        dataVal[2] = c_string_to_jsval(s_cx, errorMsg.c_str());
+        JS::Value dataVal[4];
+        dataVal[0] = JS::Int32Value(error);
+        dataVal[1] = SB_STR_TO_JSVAL(s_cx, errorCode);
+        dataVal[2] = SB_STR_TO_JSVAL(s_cx, errorMsg);
 
         invokeDelegate(name, dataVal, 3);
     }
@@ -29,66 +29,66 @@ public:
                                            const std::string& transactionId)
     {
         std::string name("onVirtualCurrencyConnectorSuccess");
-        jsval dataVal[4];
-        dataVal[0] = DOUBLE_TO_JSVAL(deltaOfCoins);
-        dataVal[1] = c_string_to_jsval(s_cx, currencyId.c_str());
-        dataVal[2] = c_string_to_jsval(s_cx, currencyName.c_str());
-        dataVal[3] = c_string_to_jsval(s_cx, transactionId.c_str());
+        JS::Value dataVal[4];
+        dataVal[0] = JS::DoubleValue(deltaOfCoins);
+        dataVal[1] = SB_STR_TO_JSVAL(s_cx, currencyId);
+        dataVal[2] = SB_STR_TO_JSVAL(s_cx, currencyName);
+        dataVal[3] = SB_STR_TO_JSVAL(s_cx, transactionId);
 
         invokeDelegate(name, dataVal, 4);
     }
     void onCanShowInterstitial(bool canShowInterstitial)
     {
         std::string name("onCanShowInterstitial");
-        jsval dataVal[1];
-        dataVal[0] = BOOLEAN_TO_JSVAL(canShowInterstitial);
+        JS::Value dataVal[1];
+        dataVal[0] = JS::BooleanValue(canShowInterstitial);
         invokeDelegate(name, dataVal, 1);
     }
     void onInterstitialDidShow()
     {
         std::string name("onInterstitialDidShow");
-        jsval dataVal[0];
+        JS::Value dataVal[0];
         invokeDelegate(name, dataVal, 0);
     }
     void onInterstitialDismiss(const std::string& reason)
     {
         std::string name("onInterstitialDismiss");
-        jsval dataVal[1];
-        dataVal[0] = c_string_to_jsval(s_cx, reason.c_str());
+        JS::Value dataVal[1];
+        dataVal[0] = SB_STR_TO_JSVAL(s_cx, reason);
         invokeDelegate(name, dataVal, 1);
     }
     void onInterstitialFailed()
     {
         std::string name("onInterstitialFailed");
-        jsval dataVal[0];
+        JS::Value dataVal[0];
         invokeDelegate(name, dataVal, 0);
     }
 
     void onBrandEngageClientReceiveOffers(bool areOffersAvailable)
     {
         std::string name("onBrandEngageClientReceiveOffers");
-        jsval dataVal[1];
-        dataVal[0] = BOOLEAN_TO_JSVAL(areOffersAvailable);
+        JS::Value dataVal[1];
+        dataVal[0] = JS::BooleanValue(areOffersAvailable);
         invokeDelegate(name, dataVal, 1);
     }
     void onBrandEngageClientChangeStatus(int status, const std::string& msg)
     {
         std::string name("onBrandEngageClientChangeStatus");
-        jsval dataVal[2];
-        dataVal[0] = INT_TO_JSVAL(status);
-        dataVal[1] = c_string_to_jsval(s_cx, msg.c_str());
+        JS::Value dataVal[2];
+        dataVal[0] = JS::Int32Value(status);
+        dataVal[1] = SB_STR_TO_JSVAL(s_cx, msg);
         invokeDelegate(name, dataVal, 2);
     }
 
     void onOfferWallFinish(int status)
     {
         std::string name("onOfferWallFinish");
-        jsval dataVal[1];
-        dataVal[0] = INT_TO_JSVAL(status);
+        JS::Value dataVal[1];
+        dataVal[0] = JS::Int32Value(status);
         invokeDelegate(name, dataVal, 1);
     }
 private:
-    void invokeDelegate(std::string& fName, jsval dataVal[], int argc) {
+    void invokeDelegate(std::string& fName, JS::Value dataVal[], int argc) {
         if (!s_cx) {
             return;
         }
@@ -116,7 +116,7 @@ private:
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -138,7 +138,7 @@ private:
 };
 
 #if MOZJS_MAJOR_VERSION >= 28
-bool js_PluginFyberJS_PluginFyber_setListener(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setListener(JSContext *cx, uint32_t argc, JS::Value *vp)
 #else
 JSBool js_PluginFyberJS_PluginFyber_setListener(JSContext *cx, unsigned argc, JS::Value *vp)
 #endif
@@ -156,13 +156,13 @@ JSBool js_PluginFyberJS_PluginFyber_setListener(JSContext *cx, unsigned argc, JS
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginFyberJS_PluginFyber_setListener : Error processing arguments");
         FyberListenerJsHelper* lis = new FyberListenerJsHelper();
-        lis->setJSDelegate(args.get(0));
+        lis->setJSDelegate(cx, args.get(0));
         sdkbox::PluginFyber::setListener(lis);
 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setListener : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setListener : wrong number of arguments");
     return false;
 }
 
@@ -172,7 +172,8 @@ void fyber_set_constants(JSContext* cx, const JS::RootedObject& obj, const std::
 void fyber_set_constants(JSContext* cx, JSObject* obj, const std::string& name, const std::map<std::string, int>& params)
 #endif
 {
-    jsval val = sdkbox::std_map_string_int_to_jsval(cx, params);
+    JS::RootedValue val(cx);
+    sdkbox::std_map_string_int_to_jsval(cx, params, &val);
 
     JS::RootedValue rv(cx);
     rv = val;
@@ -188,7 +189,8 @@ void fyber_set_constants(JSContext* cx, const JS::RootedObject& obj, const std::
 void fyber_set_constants(JSContext* cx, JSObject* obj, const std::string& name, const std::map<std::string, std::string>& params)
 #endif
 {
-    jsval val = sdkbox::std_map_string_string_to_jsval(cx, params);
+    JS::RootedValue val(cx);
+    sdkbox::std_map_string_string_to_jsval(cx, params, &val);
 
     JS::RootedValue rv(cx);
     rv = val;
@@ -312,7 +314,7 @@ void register_all_PluginFyberJS_helper(JSContext* cx, JSObject* obj) {
         subChar = sub.c_str();
 
         JS_GetProperty(cx, obj, subChar, &nsval);
-        if (nsval == JSVAL_VOID) {
+        if (nsval == JS::NullValue()) {
             pluginObj = JS_NewObject(cx, NULL, NULL, NULL);
             nsval = OBJECT_TO_JSVAL(pluginObj);
             JS_SetProperty(cx, obj, subChar, nsval);

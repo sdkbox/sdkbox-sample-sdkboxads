@@ -5,47 +5,15 @@
 
 
 #if defined(MOZJS_MAJOR_VERSION)
-#if MOZJS_MAJOR_VERSION >= 33
+#if MOZJS_MAJOR_VERSION >= 52
+#elif MOZJS_MAJOR_VERSION >= 33
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedValue initializing(cx);
-    bool isNewValid = true;
-    if (isNewValid)
-    {
-        TypeTest<T> t;
-        js_type_class_t *typeClass = nullptr;
-        std::string typeName = t.s_name();
-        auto typeMapIter = _js_global_type_map.find(typeName);
-        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-        typeClass = typeMapIter->second;
-        CCASSERT(typeClass, "The value is null.");
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-        JS::RootedObject proto(cx, typeClass->proto.ref());
-        JS::RootedObject parent(cx, typeClass->parentProto.ref());
-#else
-        JS::RootedObject proto(cx, typeClass->proto.get());
-        JS::RootedObject parent(cx, typeClass->parentProto.get());
-#endif
-        JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-
-        T* cobj = new T();
-        js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-        AddObjectRoot(cx, &pp->obj);
-        args.rval().set(OBJECT_TO_JSVAL(_tmp));
-        return true;
-    }
-
+    JS_ReportErrorUTF8(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
-static bool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    return false;
-}
-
-static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
-{
+static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp) {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
     return true;
@@ -107,10 +75,11 @@ static JSBool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 #endif
 JSClass  *jsb_sdkbox_PluginAdColony_class;
+#if MOZJS_MAJOR_VERSION < 33
 JSObject *jsb_sdkbox_PluginAdColony_prototype;
-
+#endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_getVideosPerReward(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_getVideosPerReward(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -119,12 +88,12 @@ bool js_PluginAdColonyJS_PluginAdColony_getVideosPerReward(JSContext *cx, uint32
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginAdColonyJS_PluginAdColony_getVideosPerReward : Error processing arguments");
         int ret = sdkbox::PluginAdColony::getVideosPerReward(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::Int32Value(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_getVideosPerReward : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_getVideosPerReward : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -138,7 +107,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getVideosPerReward(JSContext *cx, uint
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         int ret = sdkbox::PluginAdColony::getVideosPerReward(arg0);
         jsval jsret;
-        jsret = int32_to_jsval(cx, ret);
+        jsret = JS::Int32Value(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -147,17 +116,17 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getVideosPerReward(JSContext *cx, uint
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_getCustomID(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_getCustomID(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         std::string ret = sdkbox::PluginAdColony::getCustomID();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_getCustomID : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_getCustomID : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -166,7 +135,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getCustomID(JSContext *cx, uint32_t ar
     if (argc == 0) {
         std::string ret = sdkbox::PluginAdColony::getCustomID();
         jsval jsret;
-        jsret = std_string_to_jsval(cx, ret);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -175,7 +144,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getCustomID(JSContext *cx, uint32_t ar
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_zoneStatusForZone(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_zoneStatusForZone(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -184,12 +153,12 @@ bool js_PluginAdColonyJS_PluginAdColony_zoneStatusForZone(JSContext *cx, uint32_
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginAdColonyJS_PluginAdColony_zoneStatusForZone : Error processing arguments");
         int ret = sdkbox::PluginAdColony::zoneStatusForZone(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::Int32Value(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_zoneStatusForZone : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_zoneStatusForZone : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -203,7 +172,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_zoneStatusForZone(JSContext *cx, uint3
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         int ret = sdkbox::PluginAdColony::zoneStatusForZone(arg0);
         jsval jsret;
-        jsret = int32_to_jsval(cx, ret);
+        jsret = JS::Int32Value(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -212,7 +181,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_zoneStatusForZone(JSContext *cx, uint3
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_show(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_show(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -224,7 +193,7 @@ bool js_PluginAdColonyJS_PluginAdColony_show(JSContext *cx, uint32_t argc, jsval
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_show : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_show : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -245,7 +214,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_show(JSContext *cx, uint32_t argc, jsv
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_getStatus(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_getStatus(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -254,12 +223,12 @@ bool js_PluginAdColonyJS_PluginAdColony_getStatus(JSContext *cx, uint32_t argc, 
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginAdColonyJS_PluginAdColony_getStatus : Error processing arguments");
         int ret = (int)sdkbox::PluginAdColony::getStatus(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::Int32Value(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_getStatus : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_getStatus : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -273,7 +242,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getStatus(JSContext *cx, uint32_t argc
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::AdColonyAdStatus ret = sdkbox::PluginAdColony::getStatus(arg0);
         jsval jsret;
-        jsret = int32_to_jsval(cx, ret);
+        jsret = JS::Int32Value(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -282,17 +251,17 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getStatus(JSContext *cx, uint32_t argc
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_videoAdCurrentlyRunning(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_videoAdCurrentlyRunning(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         bool ret = sdkbox::PluginAdColony::videoAdCurrentlyRunning();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_videoAdCurrentlyRunning : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_videoAdCurrentlyRunning : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -301,7 +270,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_videoAdCurrentlyRunning(JSContext *cx,
     if (argc == 0) {
         bool ret = sdkbox::PluginAdColony::videoAdCurrentlyRunning();
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -310,7 +279,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_videoAdCurrentlyRunning(JSContext *cx,
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_turnAllAdsOff(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_turnAllAdsOff(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -318,7 +287,7 @@ bool js_PluginAdColonyJS_PluginAdColony_turnAllAdsOff(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_turnAllAdsOff : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_turnAllAdsOff : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -334,17 +303,17 @@ JSBool js_PluginAdColonyJS_PluginAdColony_turnAllAdsOff(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_getVendorIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_getVendorIdentifier(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         std::string ret = sdkbox::PluginAdColony::getVendorIdentifier();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_getVendorIdentifier : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_getVendorIdentifier : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -353,7 +322,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getVendorIdentifier(JSContext *cx, uin
     if (argc == 0) {
         std::string ret = sdkbox::PluginAdColony::getVendorIdentifier();
         jsval jsret;
-        jsret = std_string_to_jsval(cx, ret);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -362,7 +331,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getVendorIdentifier(JSContext *cx, uin
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_setUserMetadata(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_setUserMetadata(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -376,7 +345,7 @@ bool js_PluginAdColonyJS_PluginAdColony_setUserMetadata(JSContext *cx, uint32_t 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_setUserMetadata : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_setUserMetadata : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -399,7 +368,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_setUserMetadata(JSContext *cx, uint32_
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_init(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -407,7 +376,7 @@ bool js_PluginAdColonyJS_PluginAdColony_init(JSContext *cx, uint32_t argc, jsval
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_init : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_init : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -423,17 +392,17 @@ JSBool js_PluginAdColonyJS_PluginAdColony_init(JSContext *cx, uint32_t argc, jsv
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_getUniqueDeviceID(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_getUniqueDeviceID(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         std::string ret = sdkbox::PluginAdColony::getUniqueDeviceID();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_getUniqueDeviceID : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_getUniqueDeviceID : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -442,7 +411,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getUniqueDeviceID(JSContext *cx, uint3
     if (argc == 0) {
         std::string ret = sdkbox::PluginAdColony::getUniqueDeviceID();
         jsval jsret;
-        jsret = std_string_to_jsval(cx, ret);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -451,17 +420,17 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getUniqueDeviceID(JSContext *cx, uint3
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_getAdvertisingIdentifier(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_getAdvertisingIdentifier(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         std::string ret = sdkbox::PluginAdColony::getAdvertisingIdentifier();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_getAdvertisingIdentifier : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_getAdvertisingIdentifier : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -470,7 +439,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getAdvertisingIdentifier(JSContext *cx
     if (argc == 0) {
         std::string ret = sdkbox::PluginAdColony::getAdvertisingIdentifier();
         jsval jsret;
-        jsret = std_string_to_jsval(cx, ret);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -479,7 +448,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getAdvertisingIdentifier(JSContext *cx
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_userInterestedIn(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_userInterestedIn(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -491,7 +460,7 @@ bool js_PluginAdColonyJS_PluginAdColony_userInterestedIn(JSContext *cx, uint32_t
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_userInterestedIn : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_userInterestedIn : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -512,7 +481,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_userInterestedIn(JSContext *cx, uint32
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_setCustomID(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_setCustomID(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -524,7 +493,7 @@ bool js_PluginAdColonyJS_PluginAdColony_setCustomID(JSContext *cx, uint32_t argc
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_setCustomID : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_setCustomID : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -545,7 +514,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_setCustomID(JSContext *cx, uint32_t ar
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_notifyIAPComplete(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_notifyIAPComplete(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -565,7 +534,7 @@ bool js_PluginAdColonyJS_PluginAdColony_notifyIAPComplete(JSContext *cx, uint32_
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_notifyIAPComplete : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_notifyIAPComplete : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -594,7 +563,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_notifyIAPComplete(JSContext *cx, uint3
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_getVideoCreditBalance(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_getVideoCreditBalance(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -603,12 +572,12 @@ bool js_PluginAdColonyJS_PluginAdColony_getVideoCreditBalance(JSContext *cx, uin
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginAdColonyJS_PluginAdColony_getVideoCreditBalance : Error processing arguments");
         int ret = sdkbox::PluginAdColony::getVideoCreditBalance(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::Int32Value(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_getVideoCreditBalance : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_getVideoCreditBalance : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -622,7 +591,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getVideoCreditBalance(JSContext *cx, u
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         int ret = sdkbox::PluginAdColony::getVideoCreditBalance(arg0);
         jsval jsret;
-        jsret = int32_to_jsval(cx, ret);
+        jsret = JS::Int32Value(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -631,7 +600,7 @@ JSBool js_PluginAdColonyJS_PluginAdColony_getVideoCreditBalance(JSContext *cx, u
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginAdColonyJS_PluginAdColony_cancelAd(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginAdColonyJS_PluginAdColony_cancelAd(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -639,7 +608,7 @@ bool js_PluginAdColonyJS_PluginAdColony_cancelAd(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginAdColonyJS_PluginAdColony_cancelAd : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginAdColonyJS_PluginAdColony_cancelAd : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -658,33 +627,19 @@ JSBool js_PluginAdColonyJS_PluginAdColony_cancelAd(JSContext *cx, uint32_t argc,
 
 void js_PluginAdColonyJS_PluginAdColony_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginAdColony)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-#else
-    jsproxy = jsb_get_js_proxy(obj);
-#endif
-
-    if (jsproxy) {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-
-        sdkbox::PluginAdColony *nobj = static_cast<sdkbox::PluginAdColony *>(nproxy->ptr);
-        if (nobj)
-            delete nobj;
-
-        jsb_remove_proxy(nproxy, jsproxy);
-    }
 }
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
 void js_register_PluginAdColonyJS_PluginAdColony(JSContext *cx, JS::HandleObject global) {
-    jsb_sdkbox_PluginAdColony_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_sdkbox_PluginAdColony_class->name = "PluginAdColony";
+    static JSClass PluginAgeCheq_class = {
+        "PluginAdColony",
+        JSCLASS_HAS_PRIVATE,
+        nullptr
+    };
+    jsb_sdkbox_PluginAdColony_class = &PluginAgeCheq_class;
+
+#if MOZJS_MAJOR_VERSION < 52
     jsb_sdkbox_PluginAdColony_class->addProperty = JS_PropertyStub;
     jsb_sdkbox_PluginAdColony_class->delProperty = JS_DeletePropertyStub;
     jsb_sdkbox_PluginAdColony_class->getProperty = JS_PropertyStub;
@@ -694,9 +649,9 @@ void js_register_PluginAdColonyJS_PluginAdColony(JSContext *cx, JS::HandleObject
     jsb_sdkbox_PluginAdColony_class->convert = JS_ConvertStub;
     jsb_sdkbox_PluginAdColony_class->finalize = js_PluginAdColonyJS_PluginAdColony_finalize;
     jsb_sdkbox_PluginAdColony_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+#endif
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -725,24 +680,24 @@ void js_register_PluginAdColonyJS_PluginAdColony(JSContext *cx, JS::HandleObject
         JS_FS_END
     };
 
-    jsb_sdkbox_PluginAdColony_prototype = JS_InitClass(
+    JS::RootedObject parent_proto(cx, nullptr);
+    JSObject* objProto = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        parent_proto,
         jsb_sdkbox_PluginAdColony_class,
         dummy_constructor<sdkbox::PluginAdColony>, 0, // no constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27
-//  JS_SetPropertyAttributes(cx, global, "PluginAdColony", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
-    // add the proto and JSClass to the type->js info hash table
+    JS::RootedObject proto(cx, objProto);
 #if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JS::RootedObject proto(cx, jsb_sdkbox_PluginAdColony_prototype);
+#if MOZJS_MAJOR_VERSION >= 52
+    jsb_register_class<sdkbox::PluginAdColony>(cx, jsb_sdkbox_PluginAdColony_class, proto);
+#else
     jsb_register_class<sdkbox::PluginAdColony>(cx, jsb_sdkbox_PluginAdColony_class, proto, JS::NullPtr());
+#endif
 #else
     TypeTest<sdkbox::PluginAdColony> t;
     js_type_class_t *p;
@@ -751,11 +706,19 @@ void js_register_PluginAdColonyJS_PluginAdColony(JSContext *cx, JS::HandleObject
     {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_sdkbox_PluginAdColony_class;
-        p->proto = jsb_sdkbox_PluginAdColony_prototype;
+        p->proto = objProto;
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 #endif
+
+    // add the proto and JSClass to the type->js info hash table
+    JS::RootedValue className(cx);
+    JSString* jsstr = JS_NewStringCopyZ(cx, "PluginAdColony");
+    className = JS::StringValue(jsstr);
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::FalseHandleValue);
 }
 #else
 void js_register_PluginAdColonyJS_PluginAdColony(JSContext *cx, JSObject *global) {

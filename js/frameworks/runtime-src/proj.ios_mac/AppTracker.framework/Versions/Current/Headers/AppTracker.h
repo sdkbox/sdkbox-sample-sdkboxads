@@ -1,5 +1,5 @@
 //
-//  AppTracker.h - v7.0
+//  AppTracker.h - v7.2
 //
 //  Created by Leadbolt.
 //  Copyright (c) 2016 Leadbolt. All rights reserved.
@@ -20,14 +20,6 @@
 -(void) onModuleCached:(NSString *)placement;
 -(void) onModuleFailed:(NSString *)placement error:(NSString *)error cached:(BOOL)iscached;
 -(void) onMediaFinished:(BOOL)viewCompleted;
-
-@end
-
-@protocol ATNativeAdDelegate <NSObject>
-
-@optional
--(void) onAdsLoaded:(ATNativeAdCollection *)collection;
--(void) onAdsFailed:(ATNativeAdError)error;
 
 @end
 
@@ -72,8 +64,6 @@ typedef enum {
 //Demographics function
 +(void) setAgeRange:(NSString *)range; // accepted values "13-17", "18-25", "26-35", "36-45", "46+"
 +(void) setGender:(NSString *)gender; // accepted valued "Male", "Female"
-
-+(void) setFramework:(NSString *)framework;
 
 
 // Native Ad methods

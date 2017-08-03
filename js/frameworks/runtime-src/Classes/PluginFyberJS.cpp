@@ -5,47 +5,15 @@
 
 
 #if defined(MOZJS_MAJOR_VERSION)
-#if MOZJS_MAJOR_VERSION >= 33
+#if MOZJS_MAJOR_VERSION >= 52
+#elif MOZJS_MAJOR_VERSION >= 33
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedValue initializing(cx);
-    bool isNewValid = true;
-    if (isNewValid)
-    {
-        TypeTest<T> t;
-        js_type_class_t *typeClass = nullptr;
-        std::string typeName = t.s_name();
-        auto typeMapIter = _js_global_type_map.find(typeName);
-        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-        typeClass = typeMapIter->second;
-        CCASSERT(typeClass, "The value is null.");
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-        JS::RootedObject proto(cx, typeClass->proto.ref());
-        JS::RootedObject parent(cx, typeClass->parentProto.ref());
-#else
-        JS::RootedObject proto(cx, typeClass->proto.get());
-        JS::RootedObject parent(cx, typeClass->parentProto.get());
-#endif
-        JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-
-        T* cobj = new T();
-        js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-        AddObjectRoot(cx, &pp->obj);
-        args.rval().set(OBJECT_TO_JSVAL(_tmp));
-        return true;
-    }
-
+    JS_ReportErrorUTF8(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
-static bool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    return false;
-}
-
-static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
-{
+static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp) {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
     return true;
@@ -107,10 +75,11 @@ static JSBool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 #endif
 JSClass  *jsb_sdkbox_PluginFyber_class;
+#if MOZJS_MAJOR_VERSION < 33
 JSObject *jsb_sdkbox_PluginFyber_prototype;
-
+#endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setZipcode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setZipcode(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -122,7 +91,7 @@ bool js_PluginFyberJS_PluginFyber_setZipcode(JSContext *cx, uint32_t argc, jsval
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setZipcode : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setZipcode : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -143,7 +112,7 @@ JSBool js_PluginFyberJS_PluginFyber_setZipcode(JSContext *cx, uint32_t argc, jsv
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_showInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_showInterstitial(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -151,7 +120,7 @@ bool js_PluginFyberJS_PluginFyber_showInterstitial(JSContext *cx, uint32_t argc,
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_showInterstitial : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_showInterstitial : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -167,7 +136,7 @@ JSBool js_PluginFyberJS_PluginFyber_showInterstitial(JSContext *cx, uint32_t arg
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setNumberOfSessions(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setNumberOfSessions(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -179,7 +148,7 @@ bool js_PluginFyberJS_PluginFyber_setNumberOfSessions(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setNumberOfSessions : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setNumberOfSessions : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -200,7 +169,7 @@ JSBool js_PluginFyberJS_PluginFyber_setNumberOfSessions(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setNumberOfChildren(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setNumberOfChildren(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -212,7 +181,7 @@ bool js_PluginFyberJS_PluginFyber_setNumberOfChildren(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setNumberOfChildren : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setNumberOfChildren : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -233,7 +202,7 @@ JSBool js_PluginFyberJS_PluginFyber_setNumberOfChildren(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setLocation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setLocation(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -247,7 +216,7 @@ bool js_PluginFyberJS_PluginFyber_setLocation(JSContext *cx, uint32_t argc, jsva
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setLocation : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setLocation : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -270,19 +239,19 @@ JSBool js_PluginFyberJS_PluginFyber_setLocation(JSContext *cx, uint32_t argc, js
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setIap(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setIap(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginFyberJS_PluginFyber_setIap : Error processing arguments");
         sdkbox::PluginFyber::setIap(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setIap : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setIap : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -292,7 +261,7 @@ JSBool js_PluginFyberJS_PluginFyber_setIap(JSContext *cx, uint32_t argc, jsval *
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginFyber::setIap(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -303,7 +272,7 @@ JSBool js_PluginFyberJS_PluginFyber_setIap(JSContext *cx, uint32_t argc, jsval *
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setVersion(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setVersion(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -315,7 +284,7 @@ bool js_PluginFyberJS_PluginFyber_setVersion(JSContext *cx, uint32_t argc, jsval
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setVersion : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setVersion : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -336,7 +305,7 @@ JSBool js_PluginFyberJS_PluginFyber_setVersion(JSContext *cx, uint32_t argc, jsv
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_requestInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_requestInterstitial(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -344,7 +313,7 @@ bool js_PluginFyberJS_PluginFyber_requestInterstitial(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_requestInterstitial : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_requestInterstitial : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -360,7 +329,7 @@ JSBool js_PluginFyberJS_PluginFyber_requestInterstitial(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_showOfferWall(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_showOfferWall(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -377,7 +346,7 @@ bool js_PluginFyberJS_PluginFyber_showOfferWall(JSContext *cx, uint32_t argc, js
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_showOfferWall : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_showOfferWall : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -403,7 +372,7 @@ JSBool js_PluginFyberJS_PluginFyber_showOfferWall(JSContext *cx, uint32_t argc, 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_requestOffers(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_requestOffers(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -420,7 +389,7 @@ bool js_PluginFyberJS_PluginFyber_requestOffers(JSContext *cx, uint32_t argc, js
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_requestOffers : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_requestOffers : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -446,7 +415,7 @@ JSBool js_PluginFyberJS_PluginFyber_requestOffers(JSContext *cx, uint32_t argc, 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_init(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -473,7 +442,7 @@ bool js_PluginFyberJS_PluginFyber_init(JSContext *cx, uint32_t argc, jsval *vp)
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_init : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_init : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -509,7 +478,7 @@ JSBool js_PluginFyberJS_PluginFyber_init(JSContext *cx, uint32_t argc, jsval *vp
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setDevice(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setDevice(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -521,7 +490,7 @@ bool js_PluginFyberJS_PluginFyber_setDevice(JSContext *cx, uint32_t argc, jsval 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setDevice : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setDevice : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -542,7 +511,7 @@ JSBool js_PluginFyberJS_PluginFyber_setDevice(JSContext *cx, uint32_t argc, jsva
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setLastSession(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setLastSession(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -554,7 +523,7 @@ bool js_PluginFyberJS_PluginFyber_setLastSession(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setLastSession : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setLastSession : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -575,7 +544,7 @@ JSBool js_PluginFyberJS_PluginFyber_setLastSession(JSContext *cx, uint32_t argc,
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setAnnualHouseholdIncome(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setAnnualHouseholdIncome(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -587,7 +556,7 @@ bool js_PluginFyberJS_PluginFyber_setAnnualHouseholdIncome(JSContext *cx, uint32
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setAnnualHouseholdIncome : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setAnnualHouseholdIncome : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -608,7 +577,7 @@ JSBool js_PluginFyberJS_PluginFyber_setAnnualHouseholdIncome(JSContext *cx, uint
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setMaritalStatus(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setMaritalStatus(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -620,7 +589,7 @@ bool js_PluginFyberJS_PluginFyber_setMaritalStatus(JSContext *cx, uint32_t argc,
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setMaritalStatus : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setMaritalStatus : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -641,7 +610,7 @@ JSBool js_PluginFyberJS_PluginFyber_setMaritalStatus(JSContext *cx, uint32_t arg
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_showOffers(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_showOffers(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -658,7 +627,7 @@ bool js_PluginFyberJS_PluginFyber_showOffers(JSContext *cx, uint32_t argc, jsval
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_showOffers : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_showOffers : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -684,7 +653,7 @@ JSBool js_PluginFyberJS_PluginFyber_showOffers(JSContext *cx, uint32_t argc, jsv
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_cleanLocation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_cleanLocation(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -692,7 +661,7 @@ bool js_PluginFyberJS_PluginFyber_cleanLocation(JSContext *cx, uint32_t argc, js
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_cleanLocation : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_cleanLocation : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -708,7 +677,7 @@ JSBool js_PluginFyberJS_PluginFyber_cleanLocation(JSContext *cx, uint32_t argc, 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setSexualOrientation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setSexualOrientation(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -720,7 +689,7 @@ bool js_PluginFyberJS_PluginFyber_setSexualOrientation(JSContext *cx, uint32_t a
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setSexualOrientation : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setSexualOrientation : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -741,7 +710,7 @@ JSBool js_PluginFyberJS_PluginFyber_setSexualOrientation(JSContext *cx, uint32_t
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setGender(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setGender(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -753,7 +722,7 @@ bool js_PluginFyberJS_PluginFyber_setGender(JSContext *cx, uint32_t argc, jsval 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setGender : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setGender : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -774,7 +743,7 @@ JSBool js_PluginFyberJS_PluginFyber_setGender(JSContext *cx, uint32_t argc, jsva
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setBirthdate(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setBirthdate(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -786,7 +755,7 @@ bool js_PluginFyberJS_PluginFyber_setBirthdate(JSContext *cx, uint32_t argc, jsv
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setBirthdate : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setBirthdate : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -807,7 +776,7 @@ JSBool js_PluginFyberJS_PluginFyber_setBirthdate(JSContext *cx, uint32_t argc, j
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setAge(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setAge(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -819,7 +788,7 @@ bool js_PluginFyberJS_PluginFyber_setAge(JSContext *cx, uint32_t argc, jsval *vp
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setAge : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setAge : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -840,7 +809,7 @@ JSBool js_PluginFyberJS_PluginFyber_setAge(JSContext *cx, uint32_t argc, jsval *
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setConnectionType(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setConnectionType(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -852,7 +821,7 @@ bool js_PluginFyberJS_PluginFyber_setConnectionType(JSContext *cx, uint32_t argc
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setConnectionType : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setConnectionType : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -873,7 +842,7 @@ JSBool js_PluginFyberJS_PluginFyber_setConnectionType(JSContext *cx, uint32_t ar
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_addCustomParameters(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_addCustomParameters(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -887,7 +856,7 @@ bool js_PluginFyberJS_PluginFyber_addCustomParameters(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_addCustomParameters : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_addCustomParameters : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -910,7 +879,7 @@ JSBool js_PluginFyberJS_PluginFyber_addCustomParameters(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setInterests(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setInterests(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -922,7 +891,7 @@ bool js_PluginFyberJS_PluginFyber_setInterests(JSContext *cx, uint32_t argc, jsv
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setInterests : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setInterests : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -943,7 +912,7 @@ JSBool js_PluginFyberJS_PluginFyber_setInterests(JSContext *cx, uint32_t argc, j
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_requestDeltaOfCoins(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_requestDeltaOfCoins(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -960,7 +929,7 @@ bool js_PluginFyberJS_PluginFyber_requestDeltaOfCoins(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_requestDeltaOfCoins : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_requestDeltaOfCoins : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -986,7 +955,7 @@ JSBool js_PluginFyberJS_PluginFyber_requestDeltaOfCoins(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setPsTime(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setPsTime(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -998,7 +967,7 @@ bool js_PluginFyberJS_PluginFyber_setPsTime(JSContext *cx, uint32_t argc, jsval 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setPsTime : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setPsTime : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -1019,7 +988,7 @@ JSBool js_PluginFyberJS_PluginFyber_setPsTime(JSContext *cx, uint32_t argc, jsva
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_cleanCustomParameters(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_cleanCustomParameters(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -1027,7 +996,7 @@ bool js_PluginFyberJS_PluginFyber_cleanCustomParameters(JSContext *cx, uint32_t 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_cleanCustomParameters : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_cleanCustomParameters : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -1043,7 +1012,7 @@ JSBool js_PluginFyberJS_PluginFyber_cleanCustomParameters(JSContext *cx, uint32_
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setIapAmount(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setIapAmount(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -1055,7 +1024,7 @@ bool js_PluginFyberJS_PluginFyber_setIapAmount(JSContext *cx, uint32_t argc, jsv
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setIapAmount : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setIapAmount : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -1076,7 +1045,7 @@ JSBool js_PluginFyberJS_PluginFyber_setIapAmount(JSContext *cx, uint32_t argc, j
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setEthnicity(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setEthnicity(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -1088,7 +1057,7 @@ bool js_PluginFyberJS_PluginFyber_setEthnicity(JSContext *cx, uint32_t argc, jsv
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setEthnicity : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setEthnicity : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -1109,7 +1078,7 @@ JSBool js_PluginFyberJS_PluginFyber_setEthnicity(JSContext *cx, uint32_t argc, j
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginFyberJS_PluginFyber_setEducation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginFyberJS_PluginFyber_setEducation(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -1121,7 +1090,7 @@ bool js_PluginFyberJS_PluginFyber_setEducation(JSContext *cx, uint32_t argc, jsv
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginFyberJS_PluginFyber_setEducation : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginFyberJS_PluginFyber_setEducation : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -1145,33 +1114,19 @@ JSBool js_PluginFyberJS_PluginFyber_setEducation(JSContext *cx, uint32_t argc, j
 
 void js_PluginFyberJS_PluginFyber_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginFyber)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-#else
-    jsproxy = jsb_get_js_proxy(obj);
-#endif
-
-    if (jsproxy) {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-
-        sdkbox::PluginFyber *nobj = static_cast<sdkbox::PluginFyber *>(nproxy->ptr);
-        if (nobj)
-            delete nobj;
-
-        jsb_remove_proxy(nproxy, jsproxy);
-    }
 }
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
 void js_register_PluginFyberJS_PluginFyber(JSContext *cx, JS::HandleObject global) {
-    jsb_sdkbox_PluginFyber_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_sdkbox_PluginFyber_class->name = "PluginFyber";
+    static JSClass PluginAgeCheq_class = {
+        "PluginFyber",
+        JSCLASS_HAS_PRIVATE,
+        nullptr
+    };
+    jsb_sdkbox_PluginFyber_class = &PluginAgeCheq_class;
+
+#if MOZJS_MAJOR_VERSION < 52
     jsb_sdkbox_PluginFyber_class->addProperty = JS_PropertyStub;
     jsb_sdkbox_PluginFyber_class->delProperty = JS_DeletePropertyStub;
     jsb_sdkbox_PluginFyber_class->getProperty = JS_PropertyStub;
@@ -1181,9 +1136,9 @@ void js_register_PluginFyberJS_PluginFyber(JSContext *cx, JS::HandleObject globa
     jsb_sdkbox_PluginFyber_class->convert = JS_ConvertStub;
     jsb_sdkbox_PluginFyber_class->finalize = js_PluginFyberJS_PluginFyber_finalize;
     jsb_sdkbox_PluginFyber_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+#endif
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1225,24 +1180,24 @@ void js_register_PluginFyberJS_PluginFyber(JSContext *cx, JS::HandleObject globa
         JS_FS_END
     };
 
-    jsb_sdkbox_PluginFyber_prototype = JS_InitClass(
+    JS::RootedObject parent_proto(cx, nullptr);
+    JSObject* objProto = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        parent_proto,
         jsb_sdkbox_PluginFyber_class,
         dummy_constructor<sdkbox::PluginFyber>, 0, // no constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27
-//  JS_SetPropertyAttributes(cx, global, "PluginFyber", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
-    // add the proto and JSClass to the type->js info hash table
+    JS::RootedObject proto(cx, objProto);
 #if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JS::RootedObject proto(cx, jsb_sdkbox_PluginFyber_prototype);
+#if MOZJS_MAJOR_VERSION >= 52
+    jsb_register_class<sdkbox::PluginFyber>(cx, jsb_sdkbox_PluginFyber_class, proto);
+#else
     jsb_register_class<sdkbox::PluginFyber>(cx, jsb_sdkbox_PluginFyber_class, proto, JS::NullPtr());
+#endif
 #else
     TypeTest<sdkbox::PluginFyber> t;
     js_type_class_t *p;
@@ -1251,11 +1206,19 @@ void js_register_PluginFyberJS_PluginFyber(JSContext *cx, JS::HandleObject globa
     {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_sdkbox_PluginFyber_class;
-        p->proto = jsb_sdkbox_PluginFyber_prototype;
+        p->proto = objProto;
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 #endif
+
+    // add the proto and JSClass to the type->js info hash table
+    JS::RootedValue className(cx);
+    JSString* jsstr = JS_NewStringCopyZ(cx, "PluginFyber");
+    className = JS::StringValue(jsstr);
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::FalseHandleValue);
 }
 #else
 void js_register_PluginFyberJS_PluginFyber(JSContext *cx, JSObject *global) {

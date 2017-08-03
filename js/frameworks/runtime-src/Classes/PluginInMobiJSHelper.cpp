@@ -21,7 +21,7 @@ public:
 
     std::string _name;
 
-    jsval _paramVal[2];
+    JS::Value _paramVal[2];
     int _paramLen;
 
     sdkbox::PluginInMobi::SBIMStatusCode _code;
@@ -193,14 +193,14 @@ public:
 #endif
 
         cb->transParams(cx);
-        jsval* pVals = cb->_paramVal;
+        JS::Value* pVals = cb->_paramVal;
         int valueSize = cb->_paramLen;
 
         if (JS_HasProperty(cx, obj, func_name, &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -246,14 +246,16 @@ void IMCallbackJS::transParams(JSContext* cx) {
     if (0 == _name.compare("bannerDidFailToLoadWithError")
         || 0 == _name.compare("interstitialDidFailToLoadWithError")
         || 0 == _name.compare("interstitialDidFailToPresentWithError")) {
-        _paramVal[0] = INT_TO_JSVAL(_code);
-        _paramVal[1] = std_string_to_jsval(cx, _description);
+        _paramVal[0] = JS::Int32Value(_code);
+        _paramVal[1] = SB_STR_TO_JSVAL(cx, _description);
         _paramLen = 2;
     } else if (0 == _name.compare("bannerDidInteractWithParams")
                || 0 == _name.compare("bannerRewardActionCompletedWithRewards")
                || 0 == _name.compare("interstitialDidInteractWithParams")
                || 0 == _name.compare("interstitialRewardActionCompletedWithRewards")) {
-        _paramVal[0] = sdkbox::std_map_string_string_to_jsval(cx, _params);
+        JS::RootedValue jsMap(cx);
+        sdkbox::std_map_string_string_to_jsval(cx, _params, &jsMap);
+        _paramVal[0] = jsMap;
         _paramLen = 1;
     } else {
         _paramLen = 0;
@@ -263,7 +265,7 @@ void IMCallbackJS::transParams(JSContext* cx) {
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
-bool js_PluginInMobiJS_PluginInMobi_setListener(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setListener(JSContext *cx, uint32_t argc, JS::Value *vp)
 #else
 bool js_PluginInMobiJS_PluginInMobi_setListener(JSContext *cx, uint32_t argc, jsval *vp)
 #endif
@@ -284,19 +286,19 @@ JSBool js_PluginInMobiJS_PluginInMobi_setListener(JSContext *cx, uint32_t argc, 
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginInMobiJS_PluginInMobi_setIAPListener : Error processing arguments");
         InMobiListenerJS* wrapper = new InMobiListenerJS();
-        wrapper->setJSDelegate(args.get(0));
+        wrapper->setJSDelegate(cx, args.get(0));
         sdkbox::PluginInMobi::setListener(wrapper);
 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setIAPListener : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setIAPListener : wrong number of arguments");
     return false;
 }
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
-bool js_PluginInMobiJS_PluginInMobi_setLocation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setLocation(JSContext *cx, uint32_t argc, JS::Value *vp)
 #else
 bool js_PluginInMobiJS_PluginInMobi_setLocation(JSContext *cx, uint32_t argc, jsval *vp)
 #endif
@@ -335,13 +337,13 @@ JSBool js_PluginInMobiJS_PluginInMobi_setLocation(JSContext *cx, uint32_t argc, 
             return true;
         }
     } while (0);
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setLocation : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setLocation : wrong number of arguments");
     return false;
 }
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
-bool js_PluginInMobiJS_PluginInMobi_showInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_showInterstitial(JSContext *cx, uint32_t argc, JS::Value *vp)
 #else
 bool js_PluginInMobiJS_PluginInMobi_showInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
 #endif
@@ -353,9 +355,16 @@ JSBool js_PluginInMobiJS_PluginInMobi_showInterstitial(JSContext *cx, uint32_t a
     bool ok = true;
 
     do {
+        if (argc == 0) {
+            sdkbox::PluginInMobi::showInterstitial("");
+            return true;
+        }
+    } while (0);
+
+    do {
         if (argc == 1) {
-            sdkbox::PluginInMobi::SBIMInterstitialAnimationType arg0;
-            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
             sdkbox::PluginInMobi::showInterstitial(arg0);
             return true;
@@ -363,8 +372,24 @@ JSBool js_PluginInMobiJS_PluginInMobi_showInterstitial(JSContext *cx, uint32_t a
     } while (0);
 
     do {
-        if (argc == 0) {
-            sdkbox::PluginInMobi::showInterstitial();
+        if (argc == 1) {
+            sdkbox::PluginInMobi::SBIMInterstitialAnimationType arg0;
+            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            if (!ok) { ok = true; break; }
+            sdkbox::PluginInMobi::showInterstitial(arg0, "");
+            return true;
+        }
+    } while (0);
+
+    do {
+        if (argc == 2) {
+            sdkbox::PluginInMobi::SBIMInterstitialAnimationType arg0;
+            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            if (!ok) { ok = true; break; }
+            std::string arg1;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg1);
+            if (!ok) { ok = true; break; }
+            sdkbox::PluginInMobi::showInterstitial(arg0, arg1);
             return true;
         }
     } while (0);
@@ -377,11 +402,28 @@ JSBool js_PluginInMobiJS_PluginInMobi_showInterstitial(JSContext *cx, uint32_t a
             int arg1;
             ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
             if (!ok) { ok = true; break; }
-            sdkbox::PluginInMobi::showInterstitial(arg0, arg1);
+            sdkbox::PluginInMobi::showInterstitial(arg0, arg1, "");
             return true;
         }
     } while (0);
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_showInterstitial : wrong number of arguments");
+
+    do {
+        if (argc == 3) {
+            int arg0;
+            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            if (!ok) { ok = true; break; }
+            int arg1;
+            ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+            if (!ok) { ok = true; break; }
+            std::string arg2;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg2);
+            if (!ok) { ok = true; break; }
+            sdkbox::PluginInMobi::showInterstitial(arg0, arg1, arg2);
+            return true;
+        }
+    } while (0);
+
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_showInterstitial : wrong number of arguments");
     return false;
 }
 
@@ -391,7 +433,8 @@ void inmobi_set_constants(JSContext* cx, const JS::RootedObject& obj, const std:
 void inmobi_set_constants(JSContext* cx, JSObject* obj, const std::string& name, const std::map<std::string, int>& params)
 #endif
 {
-    jsval val = sdkbox::std_map_string_int_to_jsval(cx, params);
+    JS::RootedValue val(cx);
+    sdkbox::std_map_string_int_to_jsval(cx, params, &val);
 
     JS::RootedValue rv(cx);
     rv = val;

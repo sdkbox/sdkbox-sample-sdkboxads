@@ -17,11 +17,11 @@ public:
     LBCallbackJS();
     void schedule();
     void notityJs(float dt);
-    int transParams(jsval** pp);
+    int transParams(JS::Value** pp);
 
     std::string _name;
 
-    jsval _paramVal[3];
+    JS::Value _paramVal[3];
     int _paramLen;
 
     std::string _placement;
@@ -104,14 +104,14 @@ public:
         jsval func_handle;
 #endif
         int valueSize = 0;
-        jsval* pVals = nullptr;
+        JS::Value* pVals = nullptr;
         valueSize = cb->transParams(&pVals);
 
         if (JS_HasProperty(cx, obj, func_name, &hasAction) && hasAction) {
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -153,18 +153,18 @@ void LBCallbackJS::notityJs(float dt) {
     release();
 }
 
-int LBCallbackJS::transParams(jsval** pp) {
+int LBCallbackJS::transParams(JS::Value** pp) {
     JSContext* cx = s_cx;
     if (0 == _name.compare("onMediaFinished")) {
-        _paramVal[0] = BOOLEAN_TO_JSVAL(_bool);
+        _paramVal[0] = JS::BooleanValue(_bool);
         _paramLen = 1;
     } else if(0 == _name.compare("onModuleFailed")) {
-        _paramVal[0] = std_string_to_jsval(cx, _placement);
-        _paramVal[1] = std_string_to_jsval(cx, _error);
-        _paramVal[2] = BOOLEAN_TO_JSVAL(_bool);
+        _paramVal[0] = SB_STR_TO_JSVAL(cx, _placement);
+        _paramVal[1] = SB_STR_TO_JSVAL(cx, _error);
+        _paramVal[2] = JS::BooleanValue(_bool);
         _paramLen = 3;
     } else {
-        _paramVal[0] = std_string_to_jsval(cx, _placement);
+        _paramVal[0] = SB_STR_TO_JSVAL(cx, _placement);
         _paramLen = 1;
     }
 
@@ -175,7 +175,7 @@ int LBCallbackJS::transParams(jsval** pp) {
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
-bool js_PluginLeadBoltJS_PluginLeadBolt_setListener(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_setListener(JSContext *cx, uint32_t argc, JS::Value *vp)
 #else
 bool js_PluginLeadBoltJS_PluginLeadBolt_setListener(JSContext *cx, uint32_t argc, jsval *vp)
 #endif
@@ -196,19 +196,19 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_setListener(JSContext *cx, uint32_t ar
 
         JSB_PRECONDITION2(ok, cx, false, "js_PluginLeadBoltJS_PluginLeadBolt_setIAPListener : Error processing arguments");
         LeadBoltListenerJS* wrapper = new LeadBoltListenerJS();
-        wrapper->setJSDelegate(args.get(0));
+        wrapper->setJSDelegate(cx, args.get(0));
         sdkbox::PluginLeadBolt::setListener(wrapper);
 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setIAPListener : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setIAPListener : wrong number of arguments");
     return false;
 }
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
-bool js_PluginLeadBoltJS_PluginLeadBolt_event(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_event(JSContext *cx, uint32_t argc, JS::Value *vp)
 #else
 bool js_PluginLeadBoltJS_PluginLeadBolt_event(JSContext *cx, uint32_t argc, jsval *vp)
 #endif
@@ -241,7 +241,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_event(JSContext *cx, uint32_t argc, js
             return true;
         }
     } while (0);
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_event : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_event : wrong number of arguments");
     return false;
 }
 
@@ -252,7 +252,8 @@ void leadbolt_set_constants(JSContext* cx, const JS::RootedObject& obj, const st
 void leadbolt_set_constants(JSContext* cx, JSObject* obj, const std::string& name, const std::map<std::string, int>& params)
 #endif
 {
-    jsval val = sdkbox::std_map_string_int_to_jsval(cx, params);
+    JS::RootedValue val(cx);
+    sdkbox::std_map_string_int_to_jsval(cx, params, &val);
 
     JS::RootedValue rv(cx);
     rv = val;

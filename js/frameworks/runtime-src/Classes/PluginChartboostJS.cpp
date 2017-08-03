@@ -5,47 +5,15 @@
 
 
 #if defined(MOZJS_MAJOR_VERSION)
-#if MOZJS_MAJOR_VERSION >= 33
+#if MOZJS_MAJOR_VERSION >= 52
+#elif MOZJS_MAJOR_VERSION >= 33
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedValue initializing(cx);
-    bool isNewValid = true;
-    if (isNewValid)
-    {
-        TypeTest<T> t;
-        js_type_class_t *typeClass = nullptr;
-        std::string typeName = t.s_name();
-        auto typeMapIter = _js_global_type_map.find(typeName);
-        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-        typeClass = typeMapIter->second;
-        CCASSERT(typeClass, "The value is null.");
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-        JS::RootedObject proto(cx, typeClass->proto.ref());
-        JS::RootedObject parent(cx, typeClass->parentProto.ref());
-#else
-        JS::RootedObject proto(cx, typeClass->proto.get());
-        JS::RootedObject parent(cx, typeClass->parentProto.get());
-#endif
-        JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-
-        T* cobj = new T();
-        js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-        AddObjectRoot(cx, &pp->obj);
-        args.rval().set(OBJECT_TO_JSVAL(_tmp));
-        return true;
-    }
-
+    JS_ReportErrorUTF8(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
-static bool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    return false;
-}
-
-static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
-{
+static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp) {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
     return true;
@@ -107,10 +75,11 @@ static JSBool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 #endif
 JSClass  *jsb_sdkbox_PluginChartboost_class;
+#if MOZJS_MAJOR_VERSION < 33
 JSObject *jsb_sdkbox_PluginChartboost_prototype;
-
+#endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_handleOpenURL(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_handleOpenURL(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -121,12 +90,12 @@ bool js_PluginChartboostJS_PluginChartboost_handleOpenURL(JSContext *cx, uint32_
         ok &= jsval_to_std_string(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_handleOpenURL : Error processing arguments");
         bool ret = sdkbox::PluginChartboost::handleOpenURL(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_handleOpenURL : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_handleOpenURL : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -142,7 +111,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_handleOpenURL(JSContext *cx, uint3
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         bool ret = sdkbox::PluginChartboost::handleOpenURL(arg0, arg1);
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -151,19 +120,19 @@ JSBool js_PluginChartboostJS_PluginChartboost_handleOpenURL(JSContext *cx, uint3
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_setAutoCacheAds(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_setAutoCacheAds(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_setAutoCacheAds : Error processing arguments");
         sdkbox::PluginChartboost::setAutoCacheAds(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_setAutoCacheAds : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_setAutoCacheAds : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -173,7 +142,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_setAutoCacheAds(JSContext *cx, uin
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginChartboost::setAutoCacheAds(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -184,7 +153,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_setAutoCacheAds(JSContext *cx, uin
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_setStatusBarBehavior(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_setStatusBarBehavior(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -196,7 +165,7 @@ bool js_PluginChartboostJS_PluginChartboost_setStatusBarBehavior(JSContext *cx, 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_setStatusBarBehavior : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_setStatusBarBehavior : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -217,17 +186,17 @@ JSBool js_PluginChartboostJS_PluginChartboost_setStatusBarBehavior(JSContext *cx
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_isAnyViewVisible(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_isAnyViewVisible(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         bool ret = sdkbox::PluginChartboost::isAnyViewVisible();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_isAnyViewVisible : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_isAnyViewVisible : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -236,7 +205,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_isAnyViewVisible(JSContext *cx, ui
     if (argc == 0) {
         bool ret = sdkbox::PluginChartboost::isAnyViewVisible();
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -245,17 +214,17 @@ JSBool js_PluginChartboostJS_PluginChartboost_isAnyViewVisible(JSContext *cx, ui
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_getCustomID(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_getCustomID(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         std::string ret = sdkbox::PluginChartboost::getCustomID();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_getCustomID : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_getCustomID : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -264,7 +233,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_getCustomID(JSContext *cx, uint32_
     if (argc == 0) {
         std::string ret = sdkbox::PluginChartboost::getCustomID();
         jsval jsret;
-        jsret = std_string_to_jsval(cx, ret);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -273,7 +242,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_getCustomID(JSContext *cx, uint32_
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_show(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_show(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -285,7 +254,7 @@ bool js_PluginChartboostJS_PluginChartboost_show(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_show : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_show : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -306,7 +275,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_show(JSContext *cx, uint32_t argc,
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_cache(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_cache(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -318,7 +287,7 @@ bool js_PluginChartboostJS_PluginChartboost_cache(JSContext *cx, uint32_t argc, 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_cache : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_cache : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -339,19 +308,19 @@ JSBool js_PluginChartboostJS_PluginChartboost_cache(JSContext *cx, uint32_t argc
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_setShouldDisplayLoadingViewForMoreApps(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_setShouldDisplayLoadingViewForMoreApps(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_setShouldDisplayLoadingViewForMoreApps : Error processing arguments");
         sdkbox::PluginChartboost::setShouldDisplayLoadingViewForMoreApps(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_setShouldDisplayLoadingViewForMoreApps : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_setShouldDisplayLoadingViewForMoreApps : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -361,7 +330,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_setShouldDisplayLoadingViewForMore
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginChartboost::setShouldDisplayLoadingViewForMoreApps(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -372,19 +341,19 @@ JSBool js_PluginChartboostJS_PluginChartboost_setShouldDisplayLoadingViewForMore
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_setShouldRequestInterstitialsInFirstSession(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_setShouldRequestInterstitialsInFirstSession(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_setShouldRequestInterstitialsInFirstSession : Error processing arguments");
         sdkbox::PluginChartboost::setShouldRequestInterstitialsInFirstSession(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_setShouldRequestInterstitialsInFirstSession : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_setShouldRequestInterstitialsInFirstSession : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -394,7 +363,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_setShouldRequestInterstitialsInFir
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginChartboost::setShouldRequestInterstitialsInFirstSession(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -405,19 +374,19 @@ JSBool js_PluginChartboostJS_PluginChartboost_setShouldRequestInterstitialsInFir
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_didPassAgeGate(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_didPassAgeGate(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_didPassAgeGate : Error processing arguments");
         sdkbox::PluginChartboost::didPassAgeGate(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_didPassAgeGate : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_didPassAgeGate : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -427,7 +396,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_didPassAgeGate(JSContext *cx, uint
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginChartboost::didPassAgeGate(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -438,19 +407,19 @@ JSBool js_PluginChartboostJS_PluginChartboost_didPassAgeGate(JSContext *cx, uint
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_setShouldPrefetchVideoContent(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_setShouldPrefetchVideoContent(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_setShouldPrefetchVideoContent : Error processing arguments");
         sdkbox::PluginChartboost::setShouldPrefetchVideoContent(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_setShouldPrefetchVideoContent : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_setShouldPrefetchVideoContent : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -460,7 +429,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_setShouldPrefetchVideoContent(JSCo
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginChartboost::setShouldPrefetchVideoContent(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -471,7 +440,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_setShouldPrefetchVideoContent(JSCo
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_init(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -488,7 +457,7 @@ bool js_PluginChartboostJS_PluginChartboost_init(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_init : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_init : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -514,17 +483,17 @@ JSBool js_PluginChartboostJS_PluginChartboost_init(JSContext *cx, uint32_t argc,
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_getAutoCacheAds(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_getAutoCacheAds(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         bool ret = sdkbox::PluginChartboost::getAutoCacheAds();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_getAutoCacheAds : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_getAutoCacheAds : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -533,7 +502,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_getAutoCacheAds(JSContext *cx, uin
     if (argc == 0) {
         bool ret = sdkbox::PluginChartboost::getAutoCacheAds();
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -542,7 +511,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_getAutoCacheAds(JSContext *cx, uin
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_closeImpression(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_closeImpression(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -550,7 +519,7 @@ bool js_PluginChartboostJS_PluginChartboost_closeImpression(JSContext *cx, uint3
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_closeImpression : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_closeImpression : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -566,7 +535,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_closeImpression(JSContext *cx, uin
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_setCustomID(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_setCustomID(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -578,7 +547,7 @@ bool js_PluginChartboostJS_PluginChartboost_setCustomID(JSContext *cx, uint32_t 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_setCustomID : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_setCustomID : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -599,7 +568,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_setCustomID(JSContext *cx, uint32_
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_isAvailable(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_isAvailable(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -608,12 +577,12 @@ bool js_PluginChartboostJS_PluginChartboost_isAvailable(JSContext *cx, uint32_t 
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_isAvailable : Error processing arguments");
         bool ret = sdkbox::PluginChartboost::isAvailable(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_isAvailable : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_isAvailable : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -627,7 +596,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_isAvailable(JSContext *cx, uint32_
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         bool ret = sdkbox::PluginChartboost::isAvailable(arg0);
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -636,19 +605,19 @@ JSBool js_PluginChartboostJS_PluginChartboost_isAvailable(JSContext *cx, uint32_
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginChartboostJS_PluginChartboost_setShouldPauseClickForConfirmation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginChartboostJS_PluginChartboost_setShouldPauseClickForConfirmation(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginChartboostJS_PluginChartboost_setShouldPauseClickForConfirmation : Error processing arguments");
         sdkbox::PluginChartboost::setShouldPauseClickForConfirmation(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginChartboostJS_PluginChartboost_setShouldPauseClickForConfirmation : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginChartboostJS_PluginChartboost_setShouldPauseClickForConfirmation : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -658,7 +627,7 @@ JSBool js_PluginChartboostJS_PluginChartboost_setShouldPauseClickForConfirmation
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginChartboost::setShouldPauseClickForConfirmation(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -672,33 +641,19 @@ JSBool js_PluginChartboostJS_PluginChartboost_setShouldPauseClickForConfirmation
 
 void js_PluginChartboostJS_PluginChartboost_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginChartboost)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-#else
-    jsproxy = jsb_get_js_proxy(obj);
-#endif
-
-    if (jsproxy) {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-
-        sdkbox::PluginChartboost *nobj = static_cast<sdkbox::PluginChartboost *>(nproxy->ptr);
-        if (nobj)
-            delete nobj;
-
-        jsb_remove_proxy(nproxy, jsproxy);
-    }
 }
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
 void js_register_PluginChartboostJS_PluginChartboost(JSContext *cx, JS::HandleObject global) {
-    jsb_sdkbox_PluginChartboost_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_sdkbox_PluginChartboost_class->name = "PluginChartboost";
+    static JSClass PluginAgeCheq_class = {
+        "PluginChartboost",
+        JSCLASS_HAS_PRIVATE,
+        nullptr
+    };
+    jsb_sdkbox_PluginChartboost_class = &PluginAgeCheq_class;
+
+#if MOZJS_MAJOR_VERSION < 52
     jsb_sdkbox_PluginChartboost_class->addProperty = JS_PropertyStub;
     jsb_sdkbox_PluginChartboost_class->delProperty = JS_DeletePropertyStub;
     jsb_sdkbox_PluginChartboost_class->getProperty = JS_PropertyStub;
@@ -708,9 +663,9 @@ void js_register_PluginChartboostJS_PluginChartboost(JSContext *cx, JS::HandleOb
     jsb_sdkbox_PluginChartboost_class->convert = JS_ConvertStub;
     jsb_sdkbox_PluginChartboost_class->finalize = js_PluginChartboostJS_PluginChartboost_finalize;
     jsb_sdkbox_PluginChartboost_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+#endif
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -739,24 +694,24 @@ void js_register_PluginChartboostJS_PluginChartboost(JSContext *cx, JS::HandleOb
         JS_FS_END
     };
 
-    jsb_sdkbox_PluginChartboost_prototype = JS_InitClass(
+    JS::RootedObject parent_proto(cx, nullptr);
+    JSObject* objProto = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        parent_proto,
         jsb_sdkbox_PluginChartboost_class,
         dummy_constructor<sdkbox::PluginChartboost>, 0, // no constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27
-//  JS_SetPropertyAttributes(cx, global, "PluginChartboost", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
-    // add the proto and JSClass to the type->js info hash table
+    JS::RootedObject proto(cx, objProto);
 #if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JS::RootedObject proto(cx, jsb_sdkbox_PluginChartboost_prototype);
+#if MOZJS_MAJOR_VERSION >= 52
+    jsb_register_class<sdkbox::PluginChartboost>(cx, jsb_sdkbox_PluginChartboost_class, proto);
+#else
     jsb_register_class<sdkbox::PluginChartboost>(cx, jsb_sdkbox_PluginChartboost_class, proto, JS::NullPtr());
+#endif
 #else
     TypeTest<sdkbox::PluginChartboost> t;
     js_type_class_t *p;
@@ -765,11 +720,19 @@ void js_register_PluginChartboostJS_PluginChartboost(JSContext *cx, JS::HandleOb
     {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_sdkbox_PluginChartboost_class;
-        p->proto = jsb_sdkbox_PluginChartboost_prototype;
+        p->proto = objProto;
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 #endif
+
+    // add the proto and JSClass to the type->js info hash table
+    JS::RootedValue className(cx);
+    JSString* jsstr = JS_NewStringCopyZ(cx, "PluginChartboost");
+    className = JS::StringValue(jsstr);
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::FalseHandleValue);
 }
 #else
 void js_register_PluginChartboostJS_PluginChartboost(JSContext *cx, JSObject *global) {

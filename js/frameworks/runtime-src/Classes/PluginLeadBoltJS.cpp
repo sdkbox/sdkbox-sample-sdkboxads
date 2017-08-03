@@ -5,47 +5,15 @@
 
 
 #if defined(MOZJS_MAJOR_VERSION)
-#if MOZJS_MAJOR_VERSION >= 33
+#if MOZJS_MAJOR_VERSION >= 52
+#elif MOZJS_MAJOR_VERSION >= 33
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedValue initializing(cx);
-    bool isNewValid = true;
-    if (isNewValid)
-    {
-        TypeTest<T> t;
-        js_type_class_t *typeClass = nullptr;
-        std::string typeName = t.s_name();
-        auto typeMapIter = _js_global_type_map.find(typeName);
-        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-        typeClass = typeMapIter->second;
-        CCASSERT(typeClass, "The value is null.");
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-        JS::RootedObject proto(cx, typeClass->proto.ref());
-        JS::RootedObject parent(cx, typeClass->parentProto.ref());
-#else
-        JS::RootedObject proto(cx, typeClass->proto.get());
-        JS::RootedObject parent(cx, typeClass->parentProto.get());
-#endif
-        JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-
-        T* cobj = new T();
-        js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-        AddObjectRoot(cx, &pp->obj);
-        args.rval().set(OBJECT_TO_JSVAL(_tmp));
-        return true;
-    }
-
+    JS_ReportErrorUTF8(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
-static bool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    return false;
-}
-
-static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
-{
+static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp) {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
     return true;
@@ -107,22 +75,23 @@ static JSBool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 #endif
 JSClass  *jsb_sdkbox_PluginLeadBolt_class;
+#if MOZJS_MAJOR_VERSION < 33
 JSObject *jsb_sdkbox_PluginLeadBolt_prototype;
-
+#endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_setCrashHandlerStatus(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_setCrashHandlerStatus(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginLeadBoltJS_PluginLeadBolt_setCrashHandlerStatus : Error processing arguments");
         sdkbox::PluginLeadBolt::setCrashHandlerStatus(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setCrashHandlerStatus : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setCrashHandlerStatus : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -132,7 +101,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_setCrashHandlerStatus(JSContext *cx, u
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginLeadBolt::setCrashHandlerStatus(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -143,7 +112,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_setCrashHandlerStatus(JSContext *cx, u
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_transaction(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_transaction(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -183,13 +152,13 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_transaction(JSContext *cx, uint32_t argc
         ok &= sdkbox::js_to_number(cx, args.get(1), &arg1);
         ok &= jsval_to_std_string(cx, args.get(2), &arg2);
         ok &= jsval_to_std_string(cx, args.get(3), &arg3);
-        arg4 = JS::ToBoolean(args.get(4));
+        ok &= sdkbox::js_to_bool(cx, args.get(4), (bool *)&arg4);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginLeadBoltJS_PluginLeadBolt_transaction : Error processing arguments");
         sdkbox::PluginLeadBolt::transaction(arg0, arg1, arg2, arg3, arg4);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_transaction : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_transaction : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -233,7 +202,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_transaction(JSContext *cx, uint32_t ar
         ok &= sdkbox::js_to_number(cx, argv[1], &arg1);
         ok &= jsval_to_std_string(cx, argv[2], &arg2);
         ok &= jsval_to_std_string(cx, argv[3], &arg3);
-        arg4 = JS::ToBoolean(argv[4]);
+        ok &= sdkbox::js_to_bool(cx, argv[4], (bool *)&arg4);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginLeadBolt::transaction(arg0, arg1, arg2, arg3, arg4);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -244,7 +213,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_transaction(JSContext *cx, uint32_t ar
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_setGender(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_setGender(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -256,7 +225,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_setGender(JSContext *cx, uint32_t argc, 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setGender : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setGender : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -277,7 +246,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_setGender(JSContext *cx, uint32_t argc
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_setSyncDataPeriodInSecond(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_setSyncDataPeriodInSecond(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -289,7 +258,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_setSyncDataPeriodInSecond(JSContext *cx,
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setSyncDataPeriodInSecond : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setSyncDataPeriodInSecond : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -310,7 +279,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_setSyncDataPeriodInSecond(JSContext *c
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_crashWithName(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_crashWithName(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -324,7 +293,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_crashWithName(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_crashWithName : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_crashWithName : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -347,7 +316,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_crashWithName(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_closeSession(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_closeSession(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -355,7 +324,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_closeSession(JSContext *cx, uint32_t arg
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_closeSession : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_closeSession : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -371,7 +340,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_closeSession(JSContext *cx, uint32_t a
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_isAdReady(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_isAdReady(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -380,12 +349,12 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_isAdReady(JSContext *cx, uint32_t argc, 
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginLeadBoltJS_PluginLeadBolt_isAdReady : Error processing arguments");
         bool ret = sdkbox::PluginLeadBolt::isAdReady(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_isAdReady : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_isAdReady : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -399,7 +368,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_isAdReady(JSContext *cx, uint32_t argc
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         bool ret = sdkbox::PluginLeadBolt::isAdReady(arg0);
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -408,7 +377,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_isAdReady(JSContext *cx, uint32_t argc
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_sync(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_sync(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -416,7 +385,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_sync(JSContext *cx, uint32_t argc, jsval
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_sync : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_sync : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -432,7 +401,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_sync(JSContext *cx, uint32_t argc, jsv
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_fixAdOrientation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_fixAdOrientation(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -444,7 +413,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_fixAdOrientation(JSContext *cx, uint32_t
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_fixAdOrientation : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_fixAdOrientation : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -465,17 +434,17 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_fixAdOrientation(JSContext *cx, uint32
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_init(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         bool ret = sdkbox::PluginLeadBolt::init();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_init : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_init : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -484,7 +453,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_init(JSContext *cx, uint32_t argc, jsv
     if (argc == 0) {
         bool ret = sdkbox::PluginLeadBolt::init();
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -493,7 +462,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_init(JSContext *cx, uint32_t argc, jsv
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_startSession(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_startSession(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -505,7 +474,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_startSession(JSContext *cx, uint32_t arg
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_startSession : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_startSession : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -526,7 +495,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_startSession(JSContext *cx, uint32_t a
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_loadModule(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_loadModule(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -548,7 +517,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_loadModule(JSContext *cx, uint32_t argc,
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_loadModule : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_loadModule : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -579,7 +548,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_loadModule(JSContext *cx, uint32_t arg
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_setFramework(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_setFramework(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -591,7 +560,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_setFramework(JSContext *cx, uint32_t arg
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setFramework : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setFramework : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -612,7 +581,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_setFramework(JSContext *cx, uint32_t a
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_destroyModule(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_destroyModule(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -620,7 +589,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_destroyModule(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_destroyModule : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_destroyModule : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -636,7 +605,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_destroyModule(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_setAgeRange(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_setAgeRange(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -648,7 +617,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_setAgeRange(JSContext *cx, uint32_t argc
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setAgeRange : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_setAgeRange : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -669,7 +638,7 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_setAgeRange(JSContext *cx, uint32_t ar
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginLeadBoltJS_PluginLeadBolt_loadModuleToCache(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginLeadBoltJS_PluginLeadBolt_loadModuleToCache(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -691,7 +660,7 @@ bool js_PluginLeadBoltJS_PluginLeadBolt_loadModuleToCache(JSContext *cx, uint32_
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginLeadBoltJS_PluginLeadBolt_loadModuleToCache : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginLeadBoltJS_PluginLeadBolt_loadModuleToCache : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -725,33 +694,19 @@ JSBool js_PluginLeadBoltJS_PluginLeadBolt_loadModuleToCache(JSContext *cx, uint3
 
 void js_PluginLeadBoltJS_PluginLeadBolt_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginLeadBolt)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-#else
-    jsproxy = jsb_get_js_proxy(obj);
-#endif
-
-    if (jsproxy) {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-
-        sdkbox::PluginLeadBolt *nobj = static_cast<sdkbox::PluginLeadBolt *>(nproxy->ptr);
-        if (nobj)
-            delete nobj;
-
-        jsb_remove_proxy(nproxy, jsproxy);
-    }
 }
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
 void js_register_PluginLeadBoltJS_PluginLeadBolt(JSContext *cx, JS::HandleObject global) {
-    jsb_sdkbox_PluginLeadBolt_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_sdkbox_PluginLeadBolt_class->name = "PluginLeadBolt";
+    static JSClass PluginAgeCheq_class = {
+        "PluginLeadBolt",
+        JSCLASS_HAS_PRIVATE,
+        nullptr
+    };
+    jsb_sdkbox_PluginLeadBolt_class = &PluginAgeCheq_class;
+
+#if MOZJS_MAJOR_VERSION < 52
     jsb_sdkbox_PluginLeadBolt_class->addProperty = JS_PropertyStub;
     jsb_sdkbox_PluginLeadBolt_class->delProperty = JS_DeletePropertyStub;
     jsb_sdkbox_PluginLeadBolt_class->getProperty = JS_PropertyStub;
@@ -761,9 +716,9 @@ void js_register_PluginLeadBoltJS_PluginLeadBolt(JSContext *cx, JS::HandleObject
     jsb_sdkbox_PluginLeadBolt_class->convert = JS_ConvertStub;
     jsb_sdkbox_PluginLeadBolt_class->finalize = js_PluginLeadBoltJS_PluginLeadBolt_finalize;
     jsb_sdkbox_PluginLeadBolt_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+#endif
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -791,24 +746,24 @@ void js_register_PluginLeadBoltJS_PluginLeadBolt(JSContext *cx, JS::HandleObject
         JS_FS_END
     };
 
-    jsb_sdkbox_PluginLeadBolt_prototype = JS_InitClass(
+    JS::RootedObject parent_proto(cx, nullptr);
+    JSObject* objProto = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        parent_proto,
         jsb_sdkbox_PluginLeadBolt_class,
         dummy_constructor<sdkbox::PluginLeadBolt>, 0, // no constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27
-//  JS_SetPropertyAttributes(cx, global, "PluginLeadBolt", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
-    // add the proto and JSClass to the type->js info hash table
+    JS::RootedObject proto(cx, objProto);
 #if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JS::RootedObject proto(cx, jsb_sdkbox_PluginLeadBolt_prototype);
+#if MOZJS_MAJOR_VERSION >= 52
+    jsb_register_class<sdkbox::PluginLeadBolt>(cx, jsb_sdkbox_PluginLeadBolt_class, proto);
+#else
     jsb_register_class<sdkbox::PluginLeadBolt>(cx, jsb_sdkbox_PluginLeadBolt_class, proto, JS::NullPtr());
+#endif
 #else
     TypeTest<sdkbox::PluginLeadBolt> t;
     js_type_class_t *p;
@@ -817,11 +772,19 @@ void js_register_PluginLeadBoltJS_PluginLeadBolt(JSContext *cx, JS::HandleObject
     {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_sdkbox_PluginLeadBolt_class;
-        p->proto = jsb_sdkbox_PluginLeadBolt_prototype;
+        p->proto = objProto;
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 #endif
+
+    // add the proto and JSClass to the type->js info hash table
+    JS::RootedValue className(cx);
+    JSString* jsstr = JS_NewStringCopyZ(cx, "PluginLeadBolt");
+    className = JS::StringValue(jsstr);
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::FalseHandleValue);
 }
 #else
 void js_register_PluginLeadBoltJS_PluginLeadBolt(JSContext *cx, JSObject *global) {

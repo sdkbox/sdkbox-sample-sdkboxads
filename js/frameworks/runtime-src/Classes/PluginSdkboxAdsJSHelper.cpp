@@ -11,7 +11,7 @@ static JSContext* s_cx = nullptr;
 class SdkboxAdsListenerWrapper : public sdkbox::PluginSdkboxAdsListener, public sdkbox::JSListenerBase
 {
 private:
-    void invokeDelegate(std::string& fName, jsval dataVal[], int argc) {
+    void invokeDelegate(std::string& fName, JS::Value dataVal[], int argc) {
         if (!s_cx) {
             return;
         }
@@ -39,7 +39,7 @@ private:
             if(!JS_GetProperty(cx, obj, func_name, &func_handle)) {
                 return;
             }
-            if(func_handle == JSVAL_VOID) {
+            if(func_handle == JS::NullValue()) {
                 return;
             }
 
@@ -65,20 +65,26 @@ public:
 
     virtual void onAdAction( const std::string& ad_unit_id, const std::string& zone_place_location, sdkbox::AdActionType action_type) {
         std::string name("onAdAction");
-        jsval dataVal[3];
-        dataVal[0] = std_string_to_jsval(s_cx, ad_unit_id);
-        dataVal[1] = std_string_to_jsval(s_cx, zone_place_location);
-        dataVal[2] = INT_TO_JSVAL(action_type);
+        JS::Value dataVal[3];
+#if MOZJS_MAJOR_VERSION < 52
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+#endif
+        dataVal[0] = SB_STR_TO_JSVAL(s_cx, ad_unit_id);
+        dataVal[1] = SB_STR_TO_JSVAL(s_cx, zone_place_location);
+        dataVal[2] = JS::Int32Value(action_type);
         invokeDelegate(name, dataVal, 3);
     }
 
     virtual void onRewardAction( const std::string& ad_unit_id, const std::string& zone_place_location, float reward_amount, bool reward_succeed) {
         std::string name("onRewardAction");
-        jsval dataVal[5];
-        dataVal[0] = std_string_to_jsval(s_cx, ad_unit_id);
-        dataVal[1] = std_string_to_jsval(s_cx, zone_place_location);
-        dataVal[2] = DOUBLE_TO_JSVAL(reward_amount);
-        dataVal[3] = int32_to_jsval(s_cx, reward_succeed?1:0);
+        JS::Value dataVal[5];
+#if MOZJS_MAJOR_VERSION < 52
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+#endif
+        dataVal[0] = SB_STR_TO_JSVAL(s_cx, ad_unit_id);
+        dataVal[1] = SB_STR_TO_JSVAL(s_cx, zone_place_location);
+        dataVal[2] = JS::DoubleValue(reward_amount);
+        dataVal[3] = JS::Int32Value(reward_succeed?1:0);
         invokeDelegate(name, dataVal, 4);
     }
 
@@ -86,7 +92,7 @@ public:
 };
 
 
-    sdkbox::JS_BOOL js_PluginSdkboxAdsJS_PluginSdkboxAds_setListener(JSContext *cx, uint32_t argc, jsval *vp)
+sdkbox::JS_BOOL js_PluginSdkboxAdsJS_PluginSdkboxAds_setListener(JSContext *cx, uint32_t argc, JS::Value *vp)
     {
         s_cx = cx;
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -101,18 +107,18 @@ public:
 
             JSB_PRECONDITION2(ok, cx, false, "js_PluginSdkboxAdsJS_PluginSdkboxAds_setListener : Error processing arguments");
             SdkboxAdsListenerWrapper* wrapper = new SdkboxAdsListenerWrapper();
-            wrapper->setJSDelegate(args.get(0));
+            wrapper->setJSDelegate(cx, args.get(0));
             sdkbox::PluginSdkboxAds::setListener(wrapper);
 
             args.rval().setUndefined();
             return true;
         }
-        JS_ReportError(cx, "js_PluginSdkboxAdsJS_PluginSdkboxAds_setListener : wrong number of arguments");
+        JS_ReportErrorUTF8(cx, "js_PluginSdkboxAdsJS_PluginSdkboxAds_setListener : wrong number of arguments");
         return false;
     }
 
 
-    sdkbox::JS_BOOL js_PluginSdkboxAdsJS_PluginSdkboxAds_playAd(JSContext *cx, uint32_t argc, jsval *vp)
+sdkbox::JS_BOOL js_PluginSdkboxAdsJS_PluginSdkboxAds_playAd(JSContext *cx, uint32_t argc, JS::Value *vp)
     {
         JS_FUNCTION_ARGS args = JS_FUNCTION_GET_ARGS(argc, vp);
         JS_BOOL ok = true;
@@ -165,14 +171,14 @@ public:
 
         } else {
 
-            JS_ReportError(cx, "js_PluginFacebookJS_PluginFacebook_inviteFriendsWithInviteIds : wrong number of arguments");
+            JS_ReportErrorUTF8(cx, "js_PluginFacebookJS_PluginFacebook_inviteFriendsWithInviteIds : wrong number of arguments");
         }
 
         return true;
     }
 
 
-    sdkbox::JS_BOOL js_PluginSdkboxAdsJS_PluginSdkboxAds_cacheControl(JSContext *cx, uint32_t argc, jsval *vp)
+sdkbox::JS_BOOL js_PluginSdkboxAdsJS_PluginSdkboxAds_cacheControl(JSContext *cx, uint32_t argc, JS::Value *vp)
     {
         JS_FUNCTION_ARGS args = JS_FUNCTION_GET_ARGS(argc, vp);
         JS_BOOL ok = true;
@@ -224,7 +230,7 @@ JS_DefineFunction(cx, pluginObj, "cacheControl",js_PluginSdkboxAdsJS_PluginSdkbo
             subChar = sub.c_str();
 
             JS_GetProperty(cx, obj, subChar, &nsval);
-            if (nsval == JSVAL_VOID) {
+            if (nsval == JS::NullValue()) {
                 pluginObj = JS_NewObject(cx, NULL, NULL, NULL);
                 nsval = OBJECT_TO_JSVAL(pluginObj);
                 JS_SetProperty(cx, obj, subChar, nsval);

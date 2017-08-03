@@ -5,47 +5,15 @@
 
 
 #if defined(MOZJS_MAJOR_VERSION)
-#if MOZJS_MAJOR_VERSION >= 33
+#if MOZJS_MAJOR_VERSION >= 52
+#elif MOZJS_MAJOR_VERSION >= 33
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedValue initializing(cx);
-    bool isNewValid = true;
-    if (isNewValid)
-    {
-        TypeTest<T> t;
-        js_type_class_t *typeClass = nullptr;
-        std::string typeName = t.s_name();
-        auto typeMapIter = _js_global_type_map.find(typeName);
-        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-        typeClass = typeMapIter->second;
-        CCASSERT(typeClass, "The value is null.");
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-        JS::RootedObject proto(cx, typeClass->proto.ref());
-        JS::RootedObject parent(cx, typeClass->parentProto.ref());
-#else
-        JS::RootedObject proto(cx, typeClass->proto.get());
-        JS::RootedObject parent(cx, typeClass->parentProto.get());
-#endif
-        JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-
-        T* cobj = new T();
-        js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
-        AddObjectRoot(cx, &pp->obj);
-        args.rval().set(OBJECT_TO_JSVAL(_tmp));
-        return true;
-    }
-
+    JS_ReportErrorUTF8(cx, "Constructor for the requested class is not available, please refer to the API reference.");
     return false;
 }
 
-static bool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
-    return false;
-}
-
-static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
-{
+static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp) {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
     return true;
@@ -107,10 +75,11 @@ static JSBool empty_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 #endif
 JSClass  *jsb_sdkbox_PluginInMobi_class;
+#if MOZJS_MAJOR_VERSION < 33
 JSObject *jsb_sdkbox_PluginInMobi_prototype;
-
+#endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_removeIdType(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_removeIdType(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -122,7 +91,7 @@ bool js_PluginInMobiJS_PluginInMobi_removeIdType(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_removeIdType : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_removeIdType : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -143,7 +112,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_removeIdType(JSContext *cx, uint32_t argc,
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setRefreshInterval(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setRefreshInterval(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -155,7 +124,7 @@ bool js_PluginInMobiJS_PluginInMobi_setRefreshInterval(JSContext *cx, uint32_t a
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setRefreshInterval : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setRefreshInterval : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -176,7 +145,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setRefreshInterval(JSContext *cx, uint32_t
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setInterstitialKeywords(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setInterstitialKeywords(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -188,7 +157,17 @@ bool js_PluginInMobiJS_PluginInMobi_setInterstitialKeywords(JSContext *cx, uint3
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setInterstitialKeywords : wrong number of arguments");
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_PluginInMobiJS_PluginInMobi_setInterstitialKeywords : Error processing arguments");
+        sdkbox::PluginInMobi::setInterstitialKeywords(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setInterstitialKeywords : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -204,12 +183,22 @@ JSBool js_PluginInMobiJS_PluginInMobi_setInterstitialKeywords(JSContext *cx, uin
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        ok &= jsval_to_std_string(cx, argv[1], &arg1);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        sdkbox::PluginInMobi::setInterstitialKeywords(arg0, arg1);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
     JS_ReportError(cx, "wrong number of arguments");
     return JS_FALSE;
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_hideBanner(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_hideBanner(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -217,7 +206,7 @@ bool js_PluginInMobiJS_PluginInMobi_hideBanner(JSContext *cx, uint32_t argc, jsv
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_hideBanner : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_hideBanner : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -233,7 +222,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_hideBanner(JSContext *cx, uint32_t argc, j
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_addIdForType(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_addIdForType(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -247,7 +236,7 @@ bool js_PluginInMobiJS_PluginInMobi_addIdForType(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_addIdForType : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_addIdForType : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -270,7 +259,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_addIdForType(JSContext *cx, uint32_t argc,
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setIncome(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setIncome(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -282,7 +271,7 @@ bool js_PluginInMobiJS_PluginInMobi_setIncome(JSContext *cx, uint32_t argc, jsva
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setIncome : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setIncome : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -303,7 +292,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setIncome(JSContext *cx, uint32_t argc, js
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setAgeGroup(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setAgeGroup(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -315,7 +304,7 @@ bool js_PluginInMobiJS_PluginInMobi_setAgeGroup(JSContext *cx, uint32_t argc, js
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setAgeGroup : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setAgeGroup : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -336,7 +325,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setAgeGroup(JSContext *cx, uint32_t argc, 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setBannerKeywords(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setBannerKeywords(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -348,7 +337,7 @@ bool js_PluginInMobiJS_PluginInMobi_setBannerKeywords(JSContext *cx, uint32_t ar
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setBannerKeywords : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setBannerKeywords : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -369,7 +358,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setBannerKeywords(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setHouseholdIncome(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setHouseholdIncome(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -381,7 +370,7 @@ bool js_PluginInMobiJS_PluginInMobi_setHouseholdIncome(JSContext *cx, uint32_t a
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setHouseholdIncome : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setHouseholdIncome : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -402,7 +391,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setHouseholdIncome(JSContext *cx, uint32_t
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setInterests(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setInterests(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -414,7 +403,7 @@ bool js_PluginInMobiJS_PluginInMobi_setInterests(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setInterests : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setInterests : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -435,7 +424,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setInterests(JSContext *cx, uint32_t argc,
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setLogLevel(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setLogLevel(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -447,7 +436,7 @@ bool js_PluginInMobiJS_PluginInMobi_setLogLevel(JSContext *cx, uint32_t argc, js
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setLogLevel : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setLogLevel : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -468,17 +457,17 @@ JSBool js_PluginInMobiJS_PluginInMobi_setLogLevel(JSContext *cx, uint32_t argc, 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_init(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         bool ret = sdkbox::PluginInMobi::init();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_init : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_init : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -487,7 +476,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_init(JSContext *cx, uint32_t argc, jsval *
     if (argc == 0) {
         bool ret = sdkbox::PluginInMobi::init();
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -496,46 +485,41 @@ JSBool js_PluginInMobiJS_PluginInMobi_init(JSContext *cx, uint32_t argc, jsval *
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_loadInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_loadInterstitial(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     if (argc == 0) {
         sdkbox::PluginInMobi::loadInterstitial();
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_loadInterstitial : wrong number of arguments");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_PluginInMobiJS_PluginInMobi_loadInterstitial : Error processing arguments");
+        sdkbox::PluginInMobi::loadInterstitial(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_loadInterstitial : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
 JSBool js_PluginInMobiJS_PluginInMobi_loadInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
     if (argc == 0) {
         sdkbox::PluginInMobi::loadInterstitial();
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
-    JS_ReportError(cx, "wrong number of arguments");
-    return JS_FALSE;
-}
-#endif
-#if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        sdkbox::PluginInMobi::disableHardwareAccelerationForInterstitial();
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForInterstitial : wrong number of arguments");
-    return false;
-}
-#elif defined(JS_VERSION)
-JSBool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    if (argc == 0) {
-        sdkbox::PluginInMobi::disableHardwareAccelerationForInterstitial();
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        sdkbox::PluginInMobi::loadInterstitial(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
@@ -544,7 +528,50 @@ JSBool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForInterstitial
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setNationality(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForInterstitial(JSContext *cx, uint32_t argc, JS::Value *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 0) {
+        sdkbox::PluginInMobi::disableHardwareAccelerationForInterstitial();
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForInterstitial : Error processing arguments");
+        sdkbox::PluginInMobi::disableHardwareAccelerationForInterstitial(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForInterstitial : wrong number of arguments");
+    return false;
+}
+#elif defined(JS_VERSION)
+JSBool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForInterstitial(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    if (argc == 0) {
+        sdkbox::PluginInMobi::disableHardwareAccelerationForInterstitial();
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        sdkbox::PluginInMobi::disableHardwareAccelerationForInterstitial(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "wrong number of arguments");
+    return JS_FALSE;
+}
+#endif
+#if defined(MOZJS_MAJOR_VERSION)
+bool js_PluginInMobiJS_PluginInMobi_setNationality(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -556,7 +583,7 @@ bool js_PluginInMobiJS_PluginInMobi_setNationality(JSContext *cx, uint32_t argc,
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setNationality : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setNationality : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -577,7 +604,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setNationality(JSContext *cx, uint32_t arg
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setLanguage(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setLanguage(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -589,7 +616,7 @@ bool js_PluginInMobiJS_PluginInMobi_setLanguage(JSContext *cx, uint32_t argc, js
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setLanguage : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setLanguage : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -610,7 +637,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setLanguage(JSContext *cx, uint32_t argc, 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setGender(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setGender(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -622,7 +649,7 @@ bool js_PluginInMobiJS_PluginInMobi_setGender(JSContext *cx, uint32_t argc, jsva
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setGender : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setGender : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -643,7 +670,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setGender(JSContext *cx, uint32_t argc, js
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setYearOfBirth(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setYearOfBirth(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -655,7 +682,7 @@ bool js_PluginInMobiJS_PluginInMobi_setYearOfBirth(JSContext *cx, uint32_t argc,
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setYearOfBirth : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setYearOfBirth : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -676,7 +703,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setYearOfBirth(JSContext *cx, uint32_t arg
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setBannerAnimationType(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setBannerAnimationType(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -688,7 +715,7 @@ bool js_PluginInMobiJS_PluginInMobi_setBannerAnimationType(JSContext *cx, uint32
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setBannerAnimationType : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setBannerAnimationType : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -709,7 +736,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setBannerAnimationType(JSContext *cx, uint
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setAreaCode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setAreaCode(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -721,7 +748,7 @@ bool js_PluginInMobiJS_PluginInMobi_setAreaCode(JSContext *cx, uint32_t argc, js
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setAreaCode : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setAreaCode : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -742,7 +769,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setAreaCode(JSContext *cx, uint32_t argc, 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setAge(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setAge(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -754,7 +781,7 @@ bool js_PluginInMobiJS_PluginInMobi_setAge(JSContext *cx, uint32_t argc, jsval *
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setAge : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setAge : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -775,7 +802,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setAge(JSContext *cx, uint32_t argc, jsval
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setInterstitialExtras(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setInterstitialExtras(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -787,7 +814,17 @@ bool js_PluginInMobiJS_PluginInMobi_setInterstitialExtras(JSContext *cx, uint32_
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setInterstitialExtras : wrong number of arguments");
+    if (argc == 2) {
+        std::map<std::string, std::string> arg0;
+        std::string arg1;
+        ok &= sdkbox::jsval_to_std_map_string_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_PluginInMobiJS_PluginInMobi_setInterstitialExtras : Error processing arguments");
+        sdkbox::PluginInMobi::setInterstitialExtras(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setInterstitialExtras : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -803,24 +840,34 @@ JSBool js_PluginInMobiJS_PluginInMobi_setInterstitialExtras(JSContext *cx, uint3
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return JS_TRUE;
     }
+    if (argc == 2) {
+        std::map<std::string, std::string> arg0;
+        std::string arg1;
+        ok &= sdkbox::jsval_to_std_map_string_string(cx, argv[0], &arg0);
+        ok &= jsval_to_std_string(cx, argv[1], &arg1);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        sdkbox::PluginInMobi::setInterstitialExtras(arg0, arg1);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
     JS_ReportError(cx, "wrong number of arguments");
     return JS_FALSE;
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_shouldAutoRefresh(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_shouldAutoRefresh(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
+        ok &= sdkbox::js_to_bool(cx, args.get(0), (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_PluginInMobiJS_PluginInMobi_shouldAutoRefresh : Error processing arguments");
         sdkbox::PluginInMobi::shouldAutoRefresh(arg0);
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_shouldAutoRefresh : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_shouldAutoRefresh : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -830,7 +877,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_shouldAutoRefresh(JSContext *cx, uint32_t 
     JSBool ok = JS_TRUE;
     if (argc == 1) {
         bool arg0;
-        arg0 = JS::ToBoolean(argv[0]);
+        ok &= sdkbox::js_to_bool(cx, argv[0], (bool *)&arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
         sdkbox::PluginInMobi::shouldAutoRefresh(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -841,17 +888,17 @@ JSBool js_PluginInMobiJS_PluginInMobi_shouldAutoRefresh(JSContext *cx, uint32_t 
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_getVersion(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_getVersion(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
         std::string ret = sdkbox::PluginInMobi::getVersion();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
+        JS::RootedValue jsret(cx);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_getVersion : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_getVersion : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -860,7 +907,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_getVersion(JSContext *cx, uint32_t argc, j
     if (argc == 0) {
         std::string ret = sdkbox::PluginInMobi::getVersion();
         jsval jsret;
-        jsret = std_string_to_jsval(cx, ret);
+        sdkbox::c_string_to_jsval(cx, ret.c_str(), &jsret, ret.size());
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -869,7 +916,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_getVersion(JSContext *cx, uint32_t argc, j
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setPostalCode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setPostalCode(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -881,7 +928,7 @@ bool js_PluginInMobiJS_PluginInMobi_setPostalCode(JSContext *cx, uint32_t argc, 
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setPostalCode : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setPostalCode : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -902,26 +949,49 @@ JSBool js_PluginInMobiJS_PluginInMobi_setPostalCode(JSContext *cx, uint32_t argc
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_isInterstitialReady(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_isInterstitialReady(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     if (argc == 0) {
         bool ret = sdkbox::PluginInMobi::isInterstitialReady();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_isInterstitialReady : wrong number of arguments");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_PluginInMobiJS_PluginInMobi_isInterstitialReady : Error processing arguments");
+        bool ret = sdkbox::PluginInMobi::isInterstitialReady(arg0);
+        JS::RootedValue jsret(cx);
+        jsret = JS::BooleanValue(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_isInterstitialReady : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
 JSBool js_PluginInMobiJS_PluginInMobi_isInterstitialReady(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
     if (argc == 0) {
         bool ret = sdkbox::PluginInMobi::isInterstitialReady();
         jsval jsret;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = JS::BooleanValue(ret);
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        bool ret = sdkbox::PluginInMobi::isInterstitialReady(arg0);
+        jsval jsret;
+        jsret = JS::BooleanValue(ret);
         JS_SET_RVAL(cx, vp, jsret);
         return JS_TRUE;
     }
@@ -930,7 +1000,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_isInterstitialReady(JSContext *cx, uint32_
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForBanner(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForBanner(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -938,7 +1008,7 @@ bool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForBanner(JSConte
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForBanner : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForBanner : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -954,7 +1024,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_disableHardwareAccelerationForBanner(JSCon
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setBannerExtras(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setBannerExtras(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -966,7 +1036,7 @@ bool js_PluginInMobiJS_PluginInMobi_setBannerExtras(JSContext *cx, uint32_t argc
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setBannerExtras : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setBannerExtras : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -987,7 +1057,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setBannerExtras(JSContext *cx, uint32_t ar
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setEthnicity(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setEthnicity(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -999,7 +1069,7 @@ bool js_PluginInMobiJS_PluginInMobi_setEthnicity(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setEthnicity : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setEthnicity : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -1020,7 +1090,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_setEthnicity(JSContext *cx, uint32_t argc,
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_loadBanner(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_loadBanner(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
@@ -1028,7 +1098,7 @@ bool js_PluginInMobiJS_PluginInMobi_loadBanner(JSContext *cx, uint32_t argc, jsv
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_loadBanner : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_loadBanner : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -1044,7 +1114,7 @@ JSBool js_PluginInMobiJS_PluginInMobi_loadBanner(JSContext *cx, uint32_t argc, j
 }
 #endif
 #if defined(MOZJS_MAJOR_VERSION)
-bool js_PluginInMobiJS_PluginInMobi_setEducation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_PluginInMobiJS_PluginInMobi_setEducation(JSContext *cx, uint32_t argc, JS::Value *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
@@ -1056,7 +1126,7 @@ bool js_PluginInMobiJS_PluginInMobi_setEducation(JSContext *cx, uint32_t argc, j
         args.rval().setUndefined();
         return true;
     }
-    JS_ReportError(cx, "js_PluginInMobiJS_PluginInMobi_setEducation : wrong number of arguments");
+    JS_ReportErrorUTF8(cx, "js_PluginInMobiJS_PluginInMobi_setEducation : wrong number of arguments");
     return false;
 }
 #elif defined(JS_VERSION)
@@ -1080,33 +1150,19 @@ JSBool js_PluginInMobiJS_PluginInMobi_setEducation(JSContext *cx, uint32_t argc,
 
 void js_PluginInMobiJS_PluginInMobi_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PluginInMobi)", obj);
-    js_proxy_t* nproxy;
-    js_proxy_t* jsproxy;
-
-#if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RootedObject jsobj(cx, obj);
-    jsproxy = jsb_get_js_proxy(jsobj);
-#else
-    jsproxy = jsb_get_js_proxy(obj);
-#endif
-
-    if (jsproxy) {
-        nproxy = jsb_get_native_proxy(jsproxy->ptr);
-
-        sdkbox::PluginInMobi *nobj = static_cast<sdkbox::PluginInMobi *>(nproxy->ptr);
-        if (nobj)
-            delete nobj;
-
-        jsb_remove_proxy(nproxy, jsproxy);
-    }
 }
 
 #if defined(MOZJS_MAJOR_VERSION)
 #if MOZJS_MAJOR_VERSION >= 33
 void js_register_PluginInMobiJS_PluginInMobi(JSContext *cx, JS::HandleObject global) {
-    jsb_sdkbox_PluginInMobi_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_sdkbox_PluginInMobi_class->name = "PluginInMobi";
+    static JSClass PluginAgeCheq_class = {
+        "PluginInMobi",
+        JSCLASS_HAS_PRIVATE,
+        nullptr
+    };
+    jsb_sdkbox_PluginInMobi_class = &PluginAgeCheq_class;
+
+#if MOZJS_MAJOR_VERSION < 52
     jsb_sdkbox_PluginInMobi_class->addProperty = JS_PropertyStub;
     jsb_sdkbox_PluginInMobi_class->delProperty = JS_DeletePropertyStub;
     jsb_sdkbox_PluginInMobi_class->getProperty = JS_PropertyStub;
@@ -1116,9 +1172,9 @@ void js_register_PluginInMobiJS_PluginInMobi(JSContext *cx, JS::HandleObject glo
     jsb_sdkbox_PluginInMobi_class->convert = JS_ConvertStub;
     jsb_sdkbox_PluginInMobi_class->finalize = js_PluginInMobiJS_PluginInMobi_finalize;
     jsb_sdkbox_PluginInMobi_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+#endif
 
     static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PS_END
     };
 
@@ -1161,24 +1217,24 @@ void js_register_PluginInMobiJS_PluginInMobi(JSContext *cx, JS::HandleObject glo
         JS_FS_END
     };
 
-    jsb_sdkbox_PluginInMobi_prototype = JS_InitClass(
+    JS::RootedObject parent_proto(cx, nullptr);
+    JSObject* objProto = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
+        parent_proto,
         jsb_sdkbox_PluginInMobi_class,
         dummy_constructor<sdkbox::PluginInMobi>, 0, // no constructor
         properties,
         funcs,
         NULL, // no static properties
         st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27
-//  JS_SetPropertyAttributes(cx, global, "PluginInMobi", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
-    // add the proto and JSClass to the type->js info hash table
+    JS::RootedObject proto(cx, objProto);
 #if (SDKBOX_COCOS_JSB_VERSION >= 2)
-    JS::RootedObject proto(cx, jsb_sdkbox_PluginInMobi_prototype);
+#if MOZJS_MAJOR_VERSION >= 52
+    jsb_register_class<sdkbox::PluginInMobi>(cx, jsb_sdkbox_PluginInMobi_class, proto);
+#else
     jsb_register_class<sdkbox::PluginInMobi>(cx, jsb_sdkbox_PluginInMobi_class, proto, JS::NullPtr());
+#endif
 #else
     TypeTest<sdkbox::PluginInMobi> t;
     js_type_class_t *p;
@@ -1187,11 +1243,19 @@ void js_register_PluginInMobiJS_PluginInMobi(JSContext *cx, JS::HandleObject glo
     {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_sdkbox_PluginInMobi_class;
-        p->proto = jsb_sdkbox_PluginInMobi_prototype;
+        p->proto = objProto;
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 #endif
+
+    // add the proto and JSClass to the type->js info hash table
+    JS::RootedValue className(cx);
+    JSString* jsstr = JS_NewStringCopyZ(cx, "PluginInMobi");
+    className = JS::StringValue(jsstr);
+    JS_SetProperty(cx, proto, "_className", className);
+    JS_SetProperty(cx, proto, "__nativeObj", JS::TrueHandleValue);
+    JS_SetProperty(cx, proto, "__is_ref", JS::FalseHandleValue);
 }
 #else
 void js_register_PluginInMobiJS_PluginInMobi(JSContext *cx, JSObject *global) {
