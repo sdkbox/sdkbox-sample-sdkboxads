@@ -166,6 +166,20 @@ void HelloWorld::createTestMenu()
     }));
 
     menu->alignItemsVerticallyWithPadding(10);
+    menu->setPositionX(220);
+    addChild(menu);
+    
+    menu = Menu::create();
+    menu->setPositionX(450);
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Unity video", "sans", 24), [](Ref*) {
+        CCLOG("UnityAds video");
+        sdkbox::PluginSdkboxAds::playAd("UnityAds", "video");
+    }));
+    menu->addChild(MenuItemLabel::create(Label::createWithSystemFont("Unity rewardedVideo", "sans", 24), [](Ref*) {
+        CCLOG("UnityAds rewardedVideo");
+        sdkbox::PluginSdkboxAds::playAd("UnityAds", "rewardedVideo");
+    }));
+    menu->alignItemsVerticallyWithPadding(10);
     addChild(menu);
 }
 
