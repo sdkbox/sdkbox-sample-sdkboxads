@@ -1,6 +1,9 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 #ifdef SDKBOX_ENABLED
+#include "PluginUnityAds/PluginUnityAds.h"
+#endif
+#ifdef SDKBOX_ENABLED
 #include "PluginChartboost/PluginChartboost.h"
 #endif
 #ifdef SDKBOX_ENABLED
@@ -35,6 +38,9 @@ void AppDelegate::initGLContextAttrs()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+#ifdef SDKBOX_ENABLED
+    sdkbox::PluginUnityAds::init();
+#endif
 #ifdef SDKBOX_ENABLED
     sdkbox::PluginChartboost::init();
 #endif

@@ -226,6 +226,11 @@ namespace sdkbox
         * @see onAdColonyIAPRequest:quantity
         */
         static void notifyIAPComplete(const std::string& transactionID, const std::string& productID, int quantity, float price, const std::string& currencyCode);
+        
+        /**
+         * Request all ads
+         */
+        static void requestAllAds();
     };
 }
 

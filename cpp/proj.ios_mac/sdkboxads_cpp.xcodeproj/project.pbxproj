@@ -15,6 +15,7 @@
 		1DAF4BD080E714B52766F325 /* PluginInMobi.framework */ = {isa = PBXBuildFile; fileRef = 0B4F41678EBD6D04FE8BB4A9 /* PluginInMobi.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		221B4FE28C507CB2CC96C1FB /* EventKit.framework */ = {isa = PBXBuildFile; fileRef = 82C94547BF1CC0D113CF679C /* EventKit.framework */; };
+		25AB44E1839968582B1A8AB9 /* PluginUnityAds.framework */ = {isa = PBXBuildFile; fileRef = 3B874760962CB638DBBAA500 /* PluginUnityAds.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3146498DAB6297AFCB3F7992 /* PluginVungle.framework */ = {isa = PBXBuildFile; fileRef = 035B4EC0A08DE75B71E93085 /* PluginVungle.framework */; };
 		35F14FEFBBC1C8AD6C26FE8D /* MediaPlayer.framework */ = {isa = PBXBuildFile; fileRef = F3084B01B30651C1D430DBBE /* MediaPlayer.framework */; };
@@ -51,6 +52,7 @@
 		52B47A471A53D09C004E4C60 /* Security.framework */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		5FA94F758ED9809D52D2CCEC /* PluginChartboost.framework */ = {isa = PBXBuildFile; fileRef = B2D34F36ABBA1B024EE3F679 /* PluginChartboost.framework */; };
 		608D4388A3F6CB59AE8EFDF6 /* CoreTelephony.framework */ = {isa = PBXBuildFile; fileRef = EE8544FF9A5C7DD576780D78 /* CoreTelephony.framework */; };
+		60CD4E50A20F444C8C6A9823 /* JavaScriptCore.framework */ = {isa = PBXBuildFile; fileRef = 131641F384C7591521A1D421 /* JavaScriptCore.framework */; };
 		60F14BFE8492D1B466403262 /* Social.framework */ = {isa = PBXBuildFile; fileRef = FC4E4B66BCA6C07837A19FB1 /* Social.framework */; };
 		73774226ADC887850C2F2140 /* libsqlite3.dylib */ = {isa = PBXBuildFile; fileRef = 6A2040A5B3B22ED97B06FBE5 /* libsqlite3.dylib */; };
 		865942DB930908BFA911A7FF /* GoogleMobileAds.framework */ = {isa = PBXBuildFile; fileRef = 28D348078128D54B3CF4DCDC /* GoogleMobileAds.framework */; };
@@ -58,8 +60,10 @@
 		8C554825AF7034FF9CC77960 /* CFNetwork.framework */ = {isa = PBXBuildFile; fileRef = 0D204FDE8506DB2223D86F99 /* CFNetwork.framework */; };
 		8CC74798AB456B7BE26E1C5A /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = E9F74498AF54BB9A6A1EEF64 /* WebKit.framework */; };
 		8FE64579B71EC8FE66252C34 /* MobileCoreServices.framework */ = {isa = PBXBuildFile; fileRef = 8A094DD285D22ECAA8BF6991 /* MobileCoreServices.framework */; };
+		92A34470B1C0822D22B07843 /* UnityAds.framework */ = {isa = PBXBuildFile; fileRef = D2814871880CF09DE88DB5C7 /* UnityAds.framework */; };
 		93D944D1A32AA5AAD01D7326 /* sdkbox_config.json */ = {isa = PBXBuildFile; fileRef = ED2F4DAC950ECF2D31D1FB3E /* sdkbox_config.json */; };
 		945C4C46816370C538C4DD99 /* EventKitUI.framework */ = {isa = PBXBuildFile; fileRef = 87DE49E09ACC71A43BB1AD95 /* EventKitUI.framework */; };
+		9B9C410E9E0006EF6AEBC46F /* WatchConnectivity.framework */ = {isa = PBXBuildFile; fileRef = A4664A3F8E4B249F4214C36C /* WatchConnectivity.framework */; };
 		A66F4BFEA7A0974783AE103F /* libc++.tbd */ = {isa = PBXBuildFile; fileRef = B48B490CB96E48E06FEAA3BA /* libc++.tbd */; };
 		ABE24482A4DE8B41DC0DB077 /* InMobiSDK.framework */ = {isa = PBXBuildFile; fileRef = 1DD14CA18CBEDE6D2989AE30 /* InMobiSDK.framework */; };
 		ABE24AA78C277630B4A33051 /* GameController.framework */ = {isa = PBXBuildFile; fileRef = D95E415FA69D1B4BECEF2884 /* GameController.framework */; };
@@ -91,6 +95,7 @@
 		03614417A4B08A13C3812FE4 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VungleSDK.framework; path = VungleSDK.framework; sourceTree = SOURCE_ROOT; };
 		0B4F41678EBD6D04FE8BB4A9 /* PluginInMobi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginInMobi.framework; path = PluginInMobi.framework; sourceTree = SOURCE_ROOT; };
 		0D204FDE8506DB2223D86F99 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
+		131641F384C7591521A1D421 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		14E7496C84EBE8DEF3713902 /* sdkbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = sdkbox.framework; path = sdkbox.framework; sourceTree = SOURCE_ROOT; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -104,6 +109,7 @@
 		2CA844B7914E093B46B618A9 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
 		324B41CEB78889FDC62D225D /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chartboost.framework; path = Chartboost.framework; sourceTree = SOURCE_ROOT; };
 		3A604213AD8BF06DA55BF8B4 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
+		3B874760962CB638DBBAA500 /* PluginUnityAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginUnityAds.framework; path = PluginUnityAds.framework; sourceTree = SOURCE_ROOT; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
@@ -151,6 +157,7 @@
 		8ABD47BD9E7A23DEC3CC3532 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreBluetooth.framework; sourceTree = DEVELOPER_DIR; };
 		998148AB9CA175AF24FD51F4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
 		9BB74010A7DCA073F2516569 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = file.tbd; name = libsqlite3.0.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libsqlite3.0.tbd; sourceTree = DEVELOPER_DIR; };
+		A4664A3F8E4B249F4214C36C /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		A8384A0C9D400804C75C0AB0 /* PluginFyber.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginFyber.framework; path = PluginFyber.framework; sourceTree = SOURCE_ROOT; };
 		A960440AB6CDA9BF1D804FA7 /* PluginSdkboxAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginSdkboxAds.framework; path = PluginSdkboxAds.framework; sourceTree = SOURCE_ROOT; };
 		AC2442DA89AEF4E293BBA2EC /* PluginAdMob.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PluginAdMob.framework; path = PluginAdMob.framework; sourceTree = SOURCE_ROOT; };
@@ -164,6 +171,7 @@
 		C3A64B5CB0DFAD054184973E /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
 		C71847AEAF4AF89089F81BCA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		CE894B2895886C257115ED33 /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdColony.framework; path = AdColony.framework; sourceTree = SOURCE_ROOT; };
+		D2814871880CF09DE88DB5C7 /* UnityAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UnityAds.framework; path = UnityAds.framework; sourceTree = SOURCE_ROOT; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -237,6 +245,10 @@
 				145F416DA894A96EE0DE5F90 /* AppTracker.framework */,
 				ABE24482A4DE8B41DC0DB077 /* InMobiSDK.framework */,
 				39CA4272B066B3AF994338D0 /* libz.tbd */,
+				60CD4E50A20F444C8C6A9823 /* JavaScriptCore.framework */,
+				9B9C410E9E0006EF6AEBC46F /* WatchConnectivity.framework */,
+				25AB44E1839968582B1A8AB9 /* PluginUnityAds.framework */,
+				92A34470B1C0822D22B07843 /* UnityAds.framework */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +352,10 @@
 				630A4969B8FF00DC6035B4C7 /* AppTracker.framework */,
 				1DD14CA18CBEDE6D2989AE30 /* InMobiSDK.framework */,
 				B4294024A94937E2618F66B3 /* libz.tbd */,
+				131641F384C7591521A1D421 /* JavaScriptCore.framework */,
+				A4664A3F8E4B249F4214C36C /* WatchConnectivity.framework */,
+				3B874760962CB638DBBAA500 /* PluginUnityAds.framework */,
+				D2814871880CF09DE88DB5C7 /* UnityAds.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -539,6 +555,8 @@
 					"\"PluginLeadBolt.framework\"",
 					"\"AppTracker.framework\"",
 					"\"InMobiSDK.framework\"",
+					"\"PluginUnityAds.framework\"",
+					"\"UnityAds.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,
@@ -599,6 +617,8 @@
 					"\"PluginLeadBolt.framework\"",
 					"\"AppTracker.framework\"",
 					"\"InMobiSDK.framework\"",
+					"\"PluginUnityAds.framework\"",
+					"\"UnityAds.framework\"",
 				);
 				OTHER_CFLAGS = (
 					-DSDKBOX_ENABLED,

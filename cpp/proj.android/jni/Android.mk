@@ -1,5 +1,4 @@
-LOCAL_PATH := $(call \
-my-dir)
+LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
@@ -19,6 +18,8 @@ LOCAL_CPPFLAGS := -DSDKBOX_ENABLED
 LOCAL_LDLIBS := -landroid \
 -llog
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_SHARED_LIBRARIES := libadcolonyso \
+libjsso
 LOCAL_WHOLE_STATIC_LIBRARIES := PluginSdkboxAds \
 sdkbox \
 PluginAdColony \
@@ -32,6 +33,15 @@ PluginLeadBolt
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
 
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginSdkboxAds
+LOCAL_WHOLE_STATIC_LIBRARIES += sdkbox
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginAdMob
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginFyber
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginInMobi
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginLeadBolt
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginChartboost
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginAdColony
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginUnityAds
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
 
@@ -51,6 +61,7 @@ $(call import-module, ./pluginvungle)
 $(call import-module, ./pluginadmob)
 $(call import-module, ./plugininmobi)
 $(call import-module, ./pluginleadbolt)
+$(call import-module, ./pluginunityads)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
