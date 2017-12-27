@@ -38,9 +38,9 @@ void AppDelegate::initGLContextAttrs()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
-#ifdef SDKBOX_ENABLED
-    sdkbox::PluginUnityAds::init();
-#endif
+//#ifdef SDKBOX_ENABLED
+//  sdkbox::PluginUnityAds::init();
+//#endif
 #ifdef SDKBOX_ENABLED
     sdkbox::PluginChartboost::init();
 #endif
