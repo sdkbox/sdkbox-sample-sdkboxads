@@ -41,15 +41,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
 //#ifdef SDKBOX_ENABLED
 //  sdkbox::PluginUnityAds::init();
 //#endif
-#ifdef SDKBOX_ENABLED
-    sdkbox::PluginChartboost::init();
-#endif
-#ifdef SDKBOX_ENABLED
-    sdkbox::PluginFyber::init();
-#endif
-#ifdef SDKBOX_ENABLED
-    sdkbox::PluginAdColony::init();
-#endif
+//    sdkbox::PluginUnityAds::setGDPR(true);
+//#ifdef SDKBOX_ENABLED
+//    sdkbox::PluginChartboost::init();
+//#endif
+//#ifdef SDKBOX_ENABLED
+//    sdkbox::PluginFyber::init();
+//#endif
+//#ifdef SDKBOX_ENABLED
+//    sdkbox::PluginAdColony::init();
+//#endif
 #ifdef SDKBOX_ENABLED
     sdkbox::PluginSdkboxAds::init();
 #endif
